@@ -12,6 +12,6 @@ public class DesktopLauncher {
 		config.setWindowedMode(600, 800);
 		config.setTitle("CPT 2024");
 		new Lwjgl3Application(new CPTGame(), config);
-		System.out.println("Hello World!!!");
+
 	}
 }
