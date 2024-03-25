@@ -13,10 +13,8 @@ public class Object
     public Vector2 position;
     public Sprite object;
     Rectangle object_rect;
-    int[] location;
     public Object(Texture img, int[] location)
     {
-        this.location = location;
         object = new Sprite(img);
 
         position = new Vector2(location[0] * object.getWidth(), location[1] * object.getWidth());
@@ -36,5 +34,17 @@ public class Object
     public void draw(SpriteBatch batch)
     {
         object.draw(batch);
+    }
+
+    public void updatex(int scroll)
+    {
+        object_rect.x -= scroll;
+        object.setPosition(object_rect.x, object_rect.y);
+    }
+
+    public void updatey(int scroll)
+    {
+        object_rect.y -= scroll;
+        object.setPosition(object_rect.x, object_rect.y);
     }
 }

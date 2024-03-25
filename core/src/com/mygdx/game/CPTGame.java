@@ -8,24 +8,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Game_Elements.Object;
 import com.mygdx.game.Game_Elements.Player;
+import com.mygdx.game.Game_Elements.World;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class CPTGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	private Texture bucketImage;
 	private Sound susSound;
-	Player player;
+	World level;
 
 	@Override
-	public void create () {
+	public void create ()
+	{
 		batch = new SpriteBatch();
 		img = new Texture("idle_0.png");
-		player = new Player(img);
 
 		// declares images
+		level = new World(img);
 		bucketImage = new Texture(Gdx.files.internal("bucketPicture.jpeg"));
-		susSound = Gdx.audio.newSound(Gdx.files.internal("among-us-start-sound.mp3"));
-		susSound.play();
+		susSound = Gdx.audio.newSound(Gdx.files.internal("Music/among-us-start-sound.mp3"));
 
 	}
 
@@ -33,10 +38,11 @@ public class CPTGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 1);
 		batch.begin();
-		player.draw(batch);
+		level.run(batch);
 		batch.end();
 	}
-	
+
+
 	@Override
 	public void dispose () {
 		batch.dispose();

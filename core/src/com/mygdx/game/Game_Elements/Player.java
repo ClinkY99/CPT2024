@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player
 {
@@ -17,32 +18,19 @@ public class Player
     public float speed = 150;
     public float move;
     Rectangle player_rect;
-    ArrayList<Object> tiles;
     int[] data;
     public Player(Texture img)
     {
         player = new Sprite(img);
-        tiles = new ArrayList<>();
-        makeObject(img);
         int mid = Gdx.graphics.getWidth() / 2;
-
-        position = new Vector2(mid, mid);
+        int midy = Gdx.graphics.getHeight() / 2;
+        position = new Vector2(mid, midy);
+        System.out.println(position);
         positionChange = new Vector2(0, 0);
 
         data = new int[]{0, 0, 0, 0};
-
+        player.setPosition(position.x, position.y);
         player_rect = new Rectangle(position.x, position.y, player.getWidth(), player.getHeight());
-    }
-
-    public void makeObject(Texture img)
-    {
-        int[] loc = {0, 10};
-        for (int i = 0; i < 25; i++)
-        {
-            loc[0] = i;
-            Object tile = new Object(img, loc);
-            tiles.add(tile);
-        }
     }
 
     public void move(float deltaTime)
@@ -68,17 +56,15 @@ public class Player
 
     }
 
-    public void collision_detection(ArrayList<Object> tiles) //data is [left, right, up, down]
+    public void collision_detectionx(ArrayList<Object> tiles, int[] scroll)
     {
         position.x += move * positionChange.x;
         player_rect.setX((int) position.x);
 
         for (Object tile: tiles)
         {
-
             if (player_rect.overlaps(tile.getObject_rect()))
             {
-                System.out.println("Collided");
                 float right = tile.getObject_rect().getX() + tile.getWidth();
                 float left = tile.getObject_rect().getX() - tile.getWidth();
 
@@ -94,46 +80,36 @@ public class Player
                 }
             }
         }
+    }
 
+    public void collision_detectiony(ArrayList<Object> tiles, int[] scroll) {
         position.y += move * positionChange.y;
         player_rect.setY((int) position.y);
 
-        for (Object tile: tiles)
-        {
+        for (Object tile : tiles) {
             if (player_rect.overlaps(tile.getObject_rect())) {
                 float top = tile.getObject_rect().getY() + tile.getWidth();
                 float bottom = tile.getObject_rect().getY() - tile.getWidth();
 
-                if (positionChange.y > 0)
-                {
+                if (positionChange.y > 0) {
                     position.y = bottom;
                     player_rect.setY(position.y);
-                }
-                else if (positionChange.y < 0)
-                {
+                    System.out.println("Collided:\t" + Arrays.toString(scroll) + "\nPos: " + position);
+                } else if (positionChange.y < 0) {
                     position.y = top;
                     player_rect.setY(position.y);
                 }
             }
         }
     }
-    
-    public void update(float deltaTime)
-    {
-        move(deltaTime);
-    }
-
-
-
     public void draw(SpriteBatch batch)
     {
-        update(Gdx.graphics.getDeltaTime());
         player.draw(batch);
-        collision_detection(tiles);
-        player.setPosition(position.x, position.y);
-        for (Object tile: tiles)
-        {
-            tile.draw(batch);
-        }
+    }
+    public void update(float deltaTime, ArrayList<Object> tiles, int[] scroll)
+    {
+        move(deltaTime);
+        position.x -= scroll[0];
+        position.y -= scroll[1];
     }
 }
