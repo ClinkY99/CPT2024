@@ -1,6 +1,9 @@
 package com.mygdx.game.Game_Elements;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,12 +22,16 @@ public class Object
 
         position = new Vector2(location[0] * object.getWidth(), location[1] * object.getWidth());
         object.setPosition(position.x, position.y);
+
         object_rect = new Rectangle(position.x, position.y, object.getWidth(), object.getHeight());
     }
 
     public float getWidth()
     {
         return object.getWidth();
+    }
+    public void setColor(Color color) {
+        object.setColor(color);
     }
 
     public Rectangle getObject_rect()

@@ -4,7 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,16 +16,20 @@ import java.util.Scanner;
 
 public class World
 {
-
     ArrayList<String> map;
     Player player;
+    int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
     ArrayList<Object> objects;
+    int colorListIncrementer = 0;
+    Color[] colorList;
     int[] scroll;
+    TextButton newButton;
 
     public World(Texture img)
     {
         player = new Player (img);
         objects = new ArrayList<>();
+        colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(img);
     }
 
@@ -81,5 +89,18 @@ public class World
             tile.draw(batch);
         }
         player.collision_detectiony(objects, scroll);
+        // color change loop is here
+        for (int i = 0; i < objects.size();i++) {
+            if (oneInFour == 6) {
+                oneInFour = 0;
+                objects.get(i).setColor(colorList[colorListIncrementer]);
+                if (colorListIncrementer == colorList.length-1) {
+                    colorListIncrementer = 0;
+                }
+                colorListIncrementer++;
+            } else {
+                oneInFour++;
+            }
+        }
     }
 }
