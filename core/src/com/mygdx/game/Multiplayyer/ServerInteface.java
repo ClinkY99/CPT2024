@@ -1,5 +1,6 @@
 package com.mygdx.game.Multiplayyer;
 
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -13,8 +14,12 @@ public class ServerInteface {
     public int portTCP;
     public int portUDP;
 
+    public Array<Reactions> Functions;
+    public Array<Class> Classes;
+
     ServerInteface(){
         server = new Server();
+
     }
 
     public void init(int portTCP, int portUDP) throws IOException {
@@ -24,18 +29,24 @@ public class ServerInteface {
         this.portUDP = portUDP;
         server.addListener(new Listener(){
             public void recieved(Connection connection, Object object){
-
+                for (int i = 0; i < Classes.size; i++) {
+                    if(Classes.get(i) == object.getClass()){
+                        Functions.get(i).Reaction(connection);
+                    }
+                }
             }
         });
     }
 
-    public void bindClass(Class classToBind){
+    void bindClass(Class classToBind){
         Kryo kryo = server.getKryo();
         kryo.register(classToBind);
     }
 
-    public void BindFunction(Void function, Class classBound){
-
+    public void BindFunction(Reactions function, Class classBound){
+        if (Classes.contains(classBound, true)){
+            Functions.set(Classes.indexOf(classBound, true), function);
+        }
     }
 
 }
