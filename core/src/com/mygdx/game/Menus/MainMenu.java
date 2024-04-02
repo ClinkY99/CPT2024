@@ -44,7 +44,7 @@ public class MainMenu implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(MenuBackground, 0,0);
+        game.batch.draw(MenuBackground, 0,0,1920,1080);
         MenuFont.draw(game.batch, "Host Game", 331,496);
         MenuFont.draw(game.batch, "Join Game", 325,533,72,72,true);
         MenuFont.draw(game.batch, "Settings", 331,601);
