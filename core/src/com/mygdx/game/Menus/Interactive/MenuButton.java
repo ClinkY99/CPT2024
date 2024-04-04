@@ -25,7 +25,7 @@ public class MenuButton extends Button {
     }
     public MenuButton(String Text, float scale){
         super();
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("MainMenu/tempus_sans_itc.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Menu/tempus_sans_itc.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         parameter.size = 55;

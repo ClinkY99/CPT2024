@@ -85,11 +85,11 @@ public class MainMenu implements Screen {
 
 
 
-        MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Like_the_Flow_of_Time.mp3"));
+        MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/Like_the_Flow_of_Time.mp3"));
         MainMenuMusic.setLooping(true);
 
 
-        MenuBackground = new Texture(Gdx.files.internal("MainMenu/MainMenu.png"));
+        MenuBackground = new Texture(Gdx.files.internal("Menu/MainMenu.png"));
 
 
         Menulayout.setPosition(250, 1080/2 -50);
