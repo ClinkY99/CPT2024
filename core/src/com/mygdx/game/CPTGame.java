@@ -1,16 +1,18 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Menus.MainMenu;
 
 public class CPTGame extends Game {
 	public SpriteBatch batch;
-	public BitmapFont DefaultFont;
+	public FreeTypeFontGenerator DefaultFont;
 	//	SpriteBatch batch;
 //	Texture img;
 //	private Stage stage;
@@ -22,7 +24,7 @@ public class CPTGame extends Game {
 	public void create ()
 	{
 		batch = new SpriteBatch();
-		DefaultFont = new BitmapFont();
+		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 
 		setScreen(new MainMenu(this));
 

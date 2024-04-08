@@ -22,24 +22,16 @@ import java.util.Set;
 public class MainMenu implements Screen {
 
     final CPTGame game;
-    OrthographicCamera camera;
     Music MainMenuMusic;
     Texture MenuBackground;
     Stage stage;
     Table Menulayout;
 
     public MainMenu(CPTGame game) {
-
-        stage = new Stage(new FitViewport(1920,1080));
-
-        Gdx.input.setInputProcessor(stage);
-
         this.game = game;
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1920,1080);
-
-
+        stage = new Stage(new FitViewport(1920,1080), game.batch);
+        Gdx.input.setInputProcessor(stage);
 
         //Ui Setup
         Menulayout = new Table();
@@ -62,7 +54,7 @@ public class MainMenu implements Screen {
         MenuButton Settings = new MenuButton( "Settings");
         Settings.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-
+                game.setScreen(new com.mygdx.game.Menus.Settings(game));
             }
         });
         MenuButton Quit = new MenuButton( "Quit");
@@ -144,6 +136,8 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose(){
-
+        MenuBackground.dispose();
+        MainMenuMusic.dispose();
+        stage.dispose();
     }
 }

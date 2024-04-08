@@ -9,38 +9,37 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.ray3k.stripe.FreeTypeSkin;
 
 import java.awt.*;
 
-public class MenuButton extends Button {
-    private Label label;
-    private FreeTypeFontGenerator generator;
-
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+public class MenuButton extends TextButton {
 
     public MenuButton(String Text){
-
         this(Text, -1);
     }
     public MenuButton(String Text, float scale){
-        super();
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Menu/tempus_sans_itc.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        this(Text, scale, new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf")));
+    }
 
-        parameter.size = 55;
-        if(scale != -1) parameter.size = 75;
+    public MenuButton(String Text, float scale, FreeTypeFontGenerator generator){
+        super(Text, new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuButton.json")), "MenuButton");
+        if(scale !=-1){
+            FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.color = Color.BLACK;
+            parameter.size = (int) (55*scale);
+            parameter.color = Color.BLACK;
 
-        BitmapFont font = generator.generateFont(parameter);
+            BitmapFont font = generator.generateFont(parameter);
 
-        setStyle(new ButtonStyle());
-        label = new Label(Text, new LabelStyle(font, null));
-        label.setAlignment(Align.center);
+            setLabel(newLabel(Text, new LabelStyle(font, getStyle().fontColor)));
+        }
 
-        add(label).expand().fill();
-        setSize(getPrefWidth(),getPrefHeight());
+
+
+
     }
 
 
