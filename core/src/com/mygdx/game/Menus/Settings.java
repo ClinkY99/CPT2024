@@ -8,13 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
+import com.mygdx.game.Menus.Interactive.SelectionBar;
 
 public class Settings implements Screen {
     final CPTGame game;
 
     Texture SettingsBackground;
-
     Stage stage;
+    SelectionBar selectionMenu;
+
+
 
     public Settings(CPTGame Game){
         game = Game;
@@ -23,6 +26,12 @@ public class Settings implements Screen {
 
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
+
+        selectionMenu = new SelectionBar("Graphics", "Audio", "Multiplayer");
+
+        selectionMenu.getTable().setPosition(1920/2-25, 1080/6*5);
+
+        stage.addActor(selectionMenu.getTable());
 
     }
 
@@ -42,6 +51,7 @@ public class Settings implements Screen {
         stage.getBatch().draw(SettingsBackground, 0,0,1920,1080);
         stage.getBatch().end();
 
+        stage.draw();
     }
 
     @Override
