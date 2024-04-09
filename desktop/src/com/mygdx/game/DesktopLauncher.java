@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
@@ -14,6 +15,7 @@ public class DesktopLauncher {
 		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		//config.setWindowedMode(1920, 1080);
 		config.setTitle("CPT 2024");
+		config.setWindowIcon( Files.FileType.Internal,"among_us.png");
 		new Lwjgl3Application(new CPTGame(), config);
 
 	}

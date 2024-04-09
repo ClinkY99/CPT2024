@@ -29,7 +29,7 @@ public class SelectionBar extends ButtonGroup {
         table = new Table();
 
         for(String Label: labels){
-            SelectionButton button = new SelectionButton(Label, size!=-1?size:-1, generator);
+            SelectionButton button = new SelectionButton(Label, size, generator);
             add(button);
             table.add(button).width(1080/3).height(100);
         }
