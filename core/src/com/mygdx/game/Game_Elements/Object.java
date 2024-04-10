@@ -20,7 +20,7 @@ public class Object
     {
         object = new Sprite(img);
 
-        position = new Vector2(location[0] * object.getWidth(), location[1] * object.getWidth());
+        position = new Vector2(location[0] * object.getWidth(), location[1] * object.getHeight());
         object.setPosition(position.x, position.y);
 
         object_rect = new Rectangle(position.x, position.y, object.getWidth(), object.getHeight());
@@ -30,6 +30,7 @@ public class Object
     {
         return object.getWidth();
     }
+    public float getHeight() {return object.getHeight();}
     public void setColor(Color color) {
         object.setColor(color);
     }

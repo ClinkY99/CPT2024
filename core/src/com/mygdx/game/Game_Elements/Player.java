@@ -15,7 +15,7 @@ public class Player
 {
     public Vector2 position, positionChange;
     public Sprite player;
-    public float speed = 150;
+    public float speed = 2000;
     public float move;
     Rectangle player_rect;
     int[] data;
@@ -88,8 +88,8 @@ public class Player
 
         for (Object tile : tiles) {
             if (player_rect.overlaps(tile.getObject_rect())) {
-                float top = tile.getObject_rect().getY() + tile.getWidth();
-                float bottom = tile.getObject_rect().getY() - tile.getWidth();
+                float top = tile.getObject_rect().getY() + tile.getHeight();
+                float bottom = tile.getObject_rect().getY() - tile.getHeight();
 
                 if (positionChange.y > 0) {
                     position.y = bottom;

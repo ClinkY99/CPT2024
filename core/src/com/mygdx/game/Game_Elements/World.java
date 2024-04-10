@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class World
 {
+    public String printOut;
     ArrayList<String> map;
     Player player;
     int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
@@ -36,19 +37,26 @@ public class World
     public void map(Texture img)
     {
         int[] loc = {0, 0};
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 10; i++)
         {
             loc[0] = i;
             Object tile = new Object(img, loc);
             objects.add(tile);
         }
         loc = new int[]{0, 1};
-        for (int i = 1; i < 50; i++)
+        for (int i = 1; i < 10; i++)
         {
             loc[1] = i;
             Object tile = new Object(img, loc);
             objects.add(tile);
         }
+        loc = new int[]{20,0};
+        for (int i = 1; i < 50; i++) {
+            loc[1] = i;
+            Object tile = new Object(img,loc);
+            objects.add(tile);
+        }
+
     }
     public void scrolling()
     {
@@ -75,6 +83,9 @@ public class World
     {
         scrolling();
         player.update(Gdx.graphics.getDeltaTime(), objects, scroll);
+        if (printOut != null) {
+            System.out.println(printOut);
+        }
         for (Object tile: objects)
         {
             tile.updatex(scroll[0]);
@@ -90,8 +101,9 @@ public class World
         }
         player.collision_detectiony(objects, scroll);
         // color change loop is here
+
         for (int i = 0; i < objects.size();i++) {
-            if (oneInFour == 6) {
+            if (oneInFour == 14) {
                 oneInFour = 0;
                 objects.get(i).setColor(colorList[colorListIncrementer]);
                 if (colorListIncrementer == colorList.length-1) {
@@ -102,5 +114,6 @@ public class World
                 oneInFour++;
             }
         }
+
     }
 }
