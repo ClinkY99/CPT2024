@@ -33,13 +33,13 @@ public class Settings implements Screen {
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
         selectionMenu = new SelectionBar("Graphics", "Audio", "Multiplayer");
-        backButton = new MenuButton("Back",2);
+        backButton = new MenuButton("Back",1);
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MainMenu(game));
             }
         });
-        backButton.setPosition(200,750);
+        backButton.setPosition(200,850);
         selectionMenu.getTable().setPosition(1920/2-25, 1080/6*5);
 
         stage.addActor(selectionMenu.getTable());
