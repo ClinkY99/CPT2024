@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.Game_Elements.World;
 
+import java.util.logging.Level;
+
 public class PuzzleTable extends Table {
     // to hold puzzlebutton
     // to use this class, declare starting x and y when calling it (if not declaring stage make sure you use the
@@ -27,10 +29,11 @@ public class PuzzleTable extends Table {
         if (!LevelWorld.player.isCollidingX) {
             X -= (float) ((float) LevelWorld.player.positionChange.x * LevelWorld.player.move);
         }
+
         if (!LevelWorld.player.isCollidingY) {
             Y -= (float) ((float) LevelWorld.player.positionChange.y * LevelWorld.player.move);
-
         }
+
         this.setPosition(X,Y);
     }
 }

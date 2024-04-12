@@ -14,6 +14,8 @@ import jdk.incubator.vector.VectorOperators;
 
 public class CPTGame extends Game {
 	public SpriteBatch batch;
+	MainMenu menuLevel;
+
 	public FreeTypeFontGenerator DefaultFont;
 	//	SpriteBatch batch;
 	Texture img;
@@ -22,11 +24,11 @@ public class CPTGame extends Game {
 	@Override
 	public void create ()
 	{
-		img = new Texture(Gdx.files.internal("Images/brick.jpeg"));
+		img = new Texture(Gdx.files.internal("Images/whiteRectangle.png"));
 		batch = new SpriteBatch();
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
-		//setScreen(new MainMenu(this));
-		setScreen(new TestLevel(this,img));
+		menuLevel = new MainMenu(this);;
+		setScreen(menuLevel);
 		// declares images
 //		stage = new Stage(new ScreenViewport());
 //		Gdx.input.setInputProcessor(stage);
@@ -36,6 +38,7 @@ public class CPTGame extends Game {
 	@Override
 	public void render () {
 		super.render();
+
 		//ScreenUtils.clear(0, 0, 0, 1);
 //		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //		batch.begin();

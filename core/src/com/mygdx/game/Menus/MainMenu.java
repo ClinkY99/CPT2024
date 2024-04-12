@@ -1,7 +1,18 @@
 package com.mygdx.game.Menus;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.mygdx.game.Game_Elements.World;
+import com.mygdx.game.Levels.TestLevel;
+import com.mygdx.game.Menus.MainMenu;
+import jdk.incubator.vector.VectorOperators;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
+import com.mygdx.game.Levels.TestLevel;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 
 import java.util.Set;
@@ -23,6 +35,7 @@ public class MainMenu implements Screen {
 
     final CPTGame game;
     Music MainMenuMusic;
+
     Texture MenuBackground;
     Stage stage;
     Table Menulayout;
@@ -40,7 +53,7 @@ public class MainMenu implements Screen {
         MenuButton HostGame = new MenuButton("Host Game");
         HostGame.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                //
+                game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
             }
         });
         MenuButton JoinGame = new MenuButton("Join Game", 1.25f);

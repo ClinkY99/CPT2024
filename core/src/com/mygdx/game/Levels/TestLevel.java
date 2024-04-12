@@ -49,7 +49,7 @@ public class TestLevel implements Screen {
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
         // Table for UI Widgets
-        levelTable = new PuzzleTable(500,340,stage);
+        levelTable = new PuzzleTable(-300,340,stage);
         PuzzleButton clickMe = new PuzzleButton("How is it going?",2, levelTable);
 
         clickMe.addListener(new ClickListener() {
