@@ -19,6 +19,7 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Player;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleTable;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.sun.source.util.TaskListener;
@@ -38,31 +39,29 @@ public class TestLevel implements Screen {
     PuzzleButton newButton;
     final CPTGame game;
     World LevelWorld;
-    float LevelTableX = 300;
-    float LevelTableY = 540;
-    Table levelTable;
+
+    PuzzleTable levelTable;
 
     public TestLevel(CPTGame game, Texture img) {
         this.game = game;
+        LevelWorld = new World(img);
         camera = new OrthographicCamera();
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
         // Table for UI Widgets
-        levelTable = new Table();
+        levelTable = new PuzzleTable(500,340,stage);
+        PuzzleButton clickMe = new PuzzleButton("How is it going?",2, levelTable);
 
-        PuzzleButton clickMe = new PuzzleButton("Click Me",5);
         clickMe.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("AAA");
+                LevelWorld.colorSpasm = true;
             }
         });
-        levelTable.add(clickMe);
+
         camera.setToOrtho(false, 1920,1080);
         LevelBackground = new Texture(Gdx.files.internal("Images/among us.png"));
         FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
-        LevelWorld = new World(img);
-        stage.addActor(levelTable);
-        levelTable.setDebug(true);
+
     }
     @Override
     public void show() {
@@ -71,26 +70,18 @@ public class TestLevel implements Screen {
     @Override
     public void render(float delta) {
         game.batch.begin();
-
+        levelTable.loadPosition(LevelWorld);
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        levelTable.setPosition(LevelTableX,LevelTableY);
         stage.act();
         game.batch.draw(LevelBackground, 0,0,1920,1080);
-
         //LevelFont.draw(game.batch, "SUS", 331,496);
         LevelWorld.run(game.batch);
 
         game.batch.end();
         stage.draw();
-if (!LevelWorld.player.isCollidingX) {
-    LevelTableX -= (float) ((float) LevelWorld.player.positionChange.x * LevelWorld.player.move);
-}
-if (!LevelWorld.player.isCollidingY) {
-    LevelTableY -= (float) ((float) LevelWorld.player.positionChange.y * LevelWorld.player.move);
 
-}
 
 
 

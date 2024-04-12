@@ -24,6 +24,7 @@ public class World
     ArrayList<Object> objects;
     int colorListIncrementer = 0;
     Color[] colorList;
+    public boolean colorSpasm;
     public static int[] scroll;
 
     TextButton newButton;
@@ -107,19 +108,21 @@ public class World
         player.isCollidingY = false;
         player.collision_detectiony(objects, scroll);
         // color change loop is here
-
-        for (int i = 0; i < objects.size();i++) {
-            if (oneInFour == 14) {
-                oneInFour = 0;
-                objects.get(i).setColor(colorList[colorListIncrementer]);
-                if (colorListIncrementer == colorList.length-1) {
-                    colorListIncrementer = 0;
+        if (colorSpasm) {
+            for (int i = 0; i < objects.size(); i++) {
+                if (oneInFour == 4) {
+                    oneInFour = 0;
+                    objects.get(i).setColor(colorList[colorListIncrementer]);
+                    if (colorListIncrementer == colorList.length - 1) {
+                        colorListIncrementer = 0;
+                    }
+                    colorListIncrementer++;
+                } else {
+                    oneInFour++;
                 }
-                colorListIncrementer++;
-            } else {
-                oneInFour++;
             }
         }
 
     }
+
 }
