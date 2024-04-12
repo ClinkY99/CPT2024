@@ -18,12 +18,14 @@ public class World
 {
     public String printOut;
     ArrayList<String> map;
-    Player player;
+    public static float[] TableScroll = new float[2];
+    public Player player;
     int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
     ArrayList<Object> objects;
     int colorListIncrementer = 0;
     Color[] colorList;
-    int[] scroll;
+    public static int[] scroll;
+
     TextButton newButton;
 
     public World(Texture img)
@@ -63,7 +65,9 @@ public class World
         float[] true_scroll = new float[]{0, 0};
         scroll = new int[]{0, 0};
         true_scroll[0] += (player.position.x - true_scroll[0] - (float) Gdx.graphics.getWidth() / 2);
+        TableScroll[0] = true_scroll[0];
         true_scroll[1] += (player.position.y - true_scroll[1] - (float) Gdx.graphics.getHeight() / 2);
+        TableScroll[1] = true_scroll[1];
         scroll[0] = (int) true_scroll[0]; scroll[1] = (int) true_scroll[1];
     }
     public void loadMap(String path) throws IOException
@@ -92,6 +96,7 @@ public class World
             tile.draw(batch);
         }
         player.draw(batch);
+        player.isCollidingX = false;
         player.collision_detectionx(objects, scroll);
 
         for (Object tile: objects)
@@ -99,6 +104,7 @@ public class World
             tile.updatey(scroll[1]);
             tile.draw(batch);
         }
+        player.isCollidingY = false;
         player.collision_detectiony(objects, scroll);
         // color change loop is here
 

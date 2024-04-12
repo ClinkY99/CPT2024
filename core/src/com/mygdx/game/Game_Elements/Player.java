@@ -19,6 +19,10 @@ public class Player
     public float move;
     Rectangle player_rect;
     int[] data;
+    public boolean isCollidingX;
+    public boolean isCollidingY;
+
+
     public Player(Texture img)
     {
         player = new Sprite(img);
@@ -37,21 +41,26 @@ public class Player
     {
         move = speed * deltaTime;
         positionChange.x = positionChange.y = 0;
+
         if (Gdx.input.isKeyPressed(Input.Keys.A))
         {
             positionChange.x = -1;
+
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D))
         {
             positionChange.x = 1;
+
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W))
         {
             positionChange.y = 1;
+
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S))
         {
             positionChange.y = -1;
+
         }
 
     }
@@ -60,11 +69,12 @@ public class Player
     {
         position.x += move * positionChange.x;
         player_rect.setX((int) position.x);
-
         for (Object tile: tiles)
         {
             if (player_rect.overlaps(tile.getObject_rect()))
             {
+                isCollidingX = true;
+
                 float right = tile.getObject_rect().getX() + tile.getWidth();
                 float left = tile.getObject_rect().getX() - tile.getWidth();
 
@@ -85,12 +95,12 @@ public class Player
     public void collision_detectiony(ArrayList<Object> tiles, int[] scroll) {
         position.y += move * positionChange.y;
         player_rect.setY((int) position.y);
-
         for (Object tile : tiles) {
+
             if (player_rect.overlaps(tile.getObject_rect())) {
                 float top = tile.getObject_rect().getY() + tile.getHeight();
                 float bottom = tile.getObject_rect().getY() - tile.getHeight();
-
+                isCollidingY = true;
                 if (positionChange.y > 0) {
                     position.y = bottom;
                     player_rect.setY(position.y);
