@@ -11,13 +11,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 
-public class Object
-{
+public class Object {
     public Vector2 position;
     public Sprite object;
     Rectangle object_rect;
-    public Object(Texture img, int[] location)
-    {
+
+    public Object(Texture img, int[] location) {
         object = new Sprite(img);
 
         position = new Vector2(location[0] * object.getWidth(), location[1] * object.getHeight());
@@ -26,33 +25,36 @@ public class Object
         object_rect = new Rectangle(position.x, position.y, object.getWidth(), object.getHeight());
     }
 
-    public float getWidth()
-    {
+    public float getWidth() {
         return object.getWidth();
     }
-    public float getHeight() {return object.getHeight();}
+
+    public float getHeight() {
+        return object.getHeight();
+    }
+
     public void setColor(Color color) {
         object.setColor(color);
     }
 
-    public Rectangle getObject_rect()
-    {
+    public Rectangle getObject_rect() {
         return object_rect;
     }
-    public void draw(SpriteBatch batch)
-    {
+
+    public void draw(SpriteBatch batch) {
         object.draw(batch);
     }
 
-    public void updatex(int scroll)
-    {
+    public void updatex(int scroll) {
         object_rect.x -= scroll;
         object.setPosition(object_rect.x, object_rect.y);
     }
 
-    public void updatey(int scroll)
-    {
+    public void updatey(int scroll) {
         object_rect.y -= scroll;
         object.setPosition(object_rect.x, object_rect.y);
+    }
+    public float[] getPosition() {
+        return new float[]{object_rect.x,object_rect.y};
     }
 }

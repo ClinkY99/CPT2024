@@ -86,7 +86,7 @@ public class TestLevel implements Screen {
     @Override
     public void render(float delta) {
         game.batch.begin();
-        levelTable.loadPosition(LevelWorld);
+        levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

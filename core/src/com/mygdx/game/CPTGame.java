@@ -24,7 +24,7 @@ public class CPTGame extends Game {
 	@Override
 	public void create ()
 	{
-		img = new Texture(Gdx.files.internal("Images/whiteRectangle.png"));
+		img = new Texture(Gdx.files.internal("Images/rectangleImg.png"));
 		batch = new SpriteBatch();
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 		menuLevel = new MainMenu(this);;
