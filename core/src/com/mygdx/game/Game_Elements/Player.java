@@ -33,8 +33,10 @@ public class Player
         positionChange = new Vector2(0, 0);
 
         data = new int[]{0, 0, 0, 0};
-        player.setPosition(position.x, position.y);
-        player_rect = new Rectangle(position.x, position.y, player.getWidth(), player.getHeight());
+        // need to subtract the width and height divided by 2 to put player in middle
+        player.setPosition(position.x - (float) img.getWidth() /2, position.y - (float) img.getHeight()/2);
+        player_rect = new Rectangle(position.x , position.y, player.getWidth(), player.getHeight());
+
     }
 
     public void move(float deltaTime)
@@ -71,7 +73,6 @@ public class Player
         player_rect.setX((int) position.x);
         for (Object tile: tiles)
         {
-            if (player_rect.overlaps(tile.getObject_rect()))
             if (player_rect.overlaps(tile.getObject_rect()))
             {
                 isCollidingX = true;

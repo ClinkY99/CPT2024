@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Player;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.ColorGridPuzzle;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleTable;
@@ -33,6 +34,7 @@ public class TestLevel implements Screen {
     OrthographicCamera camera;
     Texture LevelBackground;
     Stage stage;
+    ColorGridPuzzle gridPuzzle;
     FreeTypeFontGenerator LevelFont;
     float lastTrueScrollX = 0;
     float lastTrueScrollY = 0;
@@ -49,7 +51,8 @@ public class TestLevel implements Screen {
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
         // Table for UI Widgets
-        levelTable = new PuzzleTable(500,540,stage);
+        levelTable = new PuzzleTable(640,540,stage);
+        /*
         PuzzleButton clickMe = new PuzzleButton("How is it going?",2, levelTable);
 
         clickMe.addListener(new ClickListener() {
@@ -69,10 +72,18 @@ public class TestLevel implements Screen {
         PuzzleButton doClickMe = new PuzzleButton("Well",1,levelTable);
         doClickMe.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+                levelTable.row();
+                PuzzleButton goodToHearThat = new PuzzleButton("Good to hear that!",2,levelTable);
+                goodToHearThat.addListener(new ClickListener() {
+                   public void clicked(InputEvent event,float x, float y) {
+                       goodToHearThat.setPosition(x,y);
+                   }
+                });
             }
         });
 
-
+         */
+        gridPuzzle = new ColorGridPuzzle(levelTable);
 
         camera.setToOrtho(false, 1920,1080);
         LevelBackground = new Texture(Gdx.files.internal("Images/among us.png"));
@@ -86,11 +97,13 @@ public class TestLevel implements Screen {
     @Override
     public void render(float delta) {
         game.batch.begin();
+
         levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         stage.act();
+        gridPuzzle.updateGridColor();
         game.batch.draw(LevelBackground, 0,0,1920,1080);
         //LevelFont.draw(game.batch, "SUS", 331,496);
         LevelWorld.run(game.batch);
