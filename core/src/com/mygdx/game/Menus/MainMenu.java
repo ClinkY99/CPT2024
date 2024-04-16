@@ -1,32 +1,16 @@
 package com.mygdx.game.Menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.TestLevel;
-import com.mygdx.game.Menus.MainMenu;
-import jdk.incubator.vector.VectorOperators;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
-import com.mygdx.game.Levels.TestLevel;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 
 import java.util.Set;
@@ -59,7 +43,7 @@ public class MainMenu implements Screen {
         MenuButton JoinGame = new MenuButton("Join Game", 1.25f);
         JoinGame.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                //
+                game.setScreen(new com.mygdx.game.Menus.JoinGame(game));
             }
         });
 
@@ -78,7 +62,6 @@ public class MainMenu implements Screen {
             }
         });
 
-
         Menulayout.add(HostGame).width(250).height(100);
         Menulayout.row();
         Menulayout.add(JoinGame).width(320).height(150);
@@ -88,14 +71,10 @@ public class MainMenu implements Screen {
         Menulayout.add(Quit).width(250).height(100);
         //Menulayout.debug();
 
-
-
         MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/Like_the_Flow_of_Time.mp3"));
         MainMenuMusic.setLooping(true);
 
-
         MenuBackground = new Texture(Gdx.files.internal("Menu/MainMenu.png"));
-
 
         Menulayout.setPosition(250, 1080/2 -50);
         stage.addActor(Menulayout);
