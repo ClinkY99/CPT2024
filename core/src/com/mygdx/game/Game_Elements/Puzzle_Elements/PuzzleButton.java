@@ -3,6 +3,7 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game_Elements.World;
@@ -56,14 +57,15 @@ public class PuzzleButton extends TextButton {
         if(scale !=-1) {
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
             parameter.size = (int) (30 * scale);
+            parameter.color = color;
             BitmapFont font = generator.generateFont(parameter);
             setLabel(newLabel(Text, new LabelStyle(font, getStyle().fontColor)));
             table.add(this).width(100);
         }
 
 
-
     }
+
 
 
 

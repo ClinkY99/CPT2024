@@ -24,7 +24,7 @@ public class ColorGridPuzzle {
         };
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                PuzzleButton buttonToAdd = new PuzzleButton("",2,table,Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
+                PuzzleButton buttonToAdd = new PuzzleButton("A",2,table,Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
                 int finalI = i;
                 int finalJ = j;
                 buttonToAdd.addListener(new ClickListener() {
@@ -63,6 +63,12 @@ public class ColorGridPuzzle {
 
         }
 
+    }
+    public boolean isCompleted() {
+        if (puzzleWon) {
+            return true;
+        }
+        return false;
     }
     public Color convertToColor(int num) {
         if (num == 1) {

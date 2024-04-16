@@ -76,7 +76,6 @@ public class Player
             if (player_rect.overlaps(tile.getObject_rect()))
             {
                 isCollidingX = true;
-
                 float right = tile.getObject_rect().getX() + tile.getWidth();
                 float left = tile.getObject_rect().getX() - tile.getWidth();
 
