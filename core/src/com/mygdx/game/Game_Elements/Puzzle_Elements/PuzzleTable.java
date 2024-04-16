@@ -17,7 +17,7 @@ public class PuzzleTable extends Table {
         baseX = startingX;
         baseY = startingY;
 
-        this.setDebug(true);
+        //this.setDebug(false);
     }
     public PuzzleTable (float startingX, float startingY, Stage stage) {
         baseX = startingX;
@@ -27,8 +27,6 @@ public class PuzzleTable extends Table {
     }
 
     public void loadPosition(World LevelWorld, Object object) {
-        /* TODO: Instead of tying the position of this table to the player's movements,
-             maybe tie it to one of the objects? DONE */
 
         X = object.getPosition()[0] + baseX;
         Y = object.getPosition()[1] + baseY;
