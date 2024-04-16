@@ -21,7 +21,7 @@ public class World
     public static float[] TableScroll = new float[2];
     public Player player;
     int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
-    ArrayList<Object> objects;
+    public ArrayList<Object> objects;
     int colorListIncrementer = 0;
     Color[] colorList;
     public boolean colorSpasm;
@@ -31,7 +31,7 @@ public class World
 
     public World(Texture img)
     {
-        player = new Player (img);
+        player = new Player (new Texture(Gdx.files.internal("Images/rectangleImg.png")));
         objects = new ArrayList<>();
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(img);

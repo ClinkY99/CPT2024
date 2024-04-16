@@ -49,14 +49,30 @@ public class TestLevel implements Screen {
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
         // Table for UI Widgets
-        levelTable = new PuzzleTable(500,340,stage);
+        levelTable = new PuzzleTable(500,540,stage);
         PuzzleButton clickMe = new PuzzleButton("How is it going?",2, levelTable);
 
         clickMe.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                LevelWorld.colorSpasm = true;
+                LevelWorld.colorSpasm = !LevelWorld.colorSpasm;
             }
         });
+        levelTable.row();
+
+        PuzzleButton dontClickMe = new PuzzleButton("Not well",1,levelTable);
+        dontClickMe.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                System.exit(0);
+            }
+        });
+
+        PuzzleButton doClickMe = new PuzzleButton("Well",1,levelTable);
+        doClickMe.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+            }
+        });
+
+
 
         camera.setToOrtho(false, 1920,1080);
         LevelBackground = new Texture(Gdx.files.internal("Images/among us.png"));
@@ -70,7 +86,7 @@ public class TestLevel implements Screen {
     @Override
     public void render(float delta) {
         game.batch.begin();
-        levelTable.loadPosition(LevelWorld);
+        levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);

@@ -72,6 +72,7 @@ public class Player
         for (Object tile: tiles)
         {
             if (player_rect.overlaps(tile.getObject_rect()))
+            if (player_rect.overlaps(tile.getObject_rect()))
             {
                 isCollidingX = true;
 
@@ -105,9 +106,11 @@ public class Player
                     position.y = bottom;
                     player_rect.setY(position.y);
                     System.out.println("Collided:\t" + Arrays.toString(scroll) + "\nPos: " + position);
+
                 } else if (positionChange.y < 0) {
                     position.y = top;
                     player_rect.setY(position.y);
+
                 }
             }
         }
