@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Levels.TestLevel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,26 +44,25 @@ public class Player
     {
         move = speed * deltaTime;
         positionChange.x = positionChange.y = 0;
+        if (!TestLevel.gridPuzzle.ipsumLoaded) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A))
-        {
-            positionChange.x = -1;
 
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
-        {
-            positionChange.x = 1;
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                positionChange.x = -1;
 
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W))
-        {
-            positionChange.y = 1;
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                positionChange.x = 1;
 
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S))
-        {
-            positionChange.y = -1;
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                positionChange.y = 1;
 
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                positionChange.y = -1;
+
+            }
         }
 
     }

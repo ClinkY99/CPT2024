@@ -37,7 +37,7 @@ public class TestLevel implements Screen {
     OrthographicCamera camera;
     Texture LevelBackground;
     Stage stage;
-    ColorGridPuzzle gridPuzzle;
+   public static ColorGridPuzzle gridPuzzle;
     PuzzleTable buttonTable;
     FreeTypeFontGenerator LevelFont;
     float lastTrueScrollX = 0;
@@ -91,7 +91,7 @@ public class TestLevel implements Screen {
         });
 
 
-        gridPuzzle = new ColorGridPuzzle(levelTable);
+        gridPuzzle = new ColorGridPuzzle(levelTable,stage);
 
         camera.setToOrtho(false, 1920,1080);
         LevelBackground = new Texture(Gdx.files.internal("Images/among us.png"));
@@ -111,15 +111,22 @@ public class TestLevel implements Screen {
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        stage.act();
         gridPuzzle.updateGridColor();
+        if (gridPuzzle.ipsumLoaded) {
+            gridPuzzle.ipsum.setPosition(gridPuzzle.ipsumHolder.getX(), gridPuzzle.ipsumHolder.getY());
+            gridPuzzle.ipsumHolder.loadPosition(LevelWorld, LevelWorld.objects.get(0));
+        }
+        if (!gridPuzzle.ipsumLoaded) {
+            stage.act();
+        }
         game.batch.draw(LevelBackground, 0,0,1920,1080);
         //LevelFont.draw(game.batch, "SUS", 331,496);
         LevelWorld.run(game.batch);
+        gridPuzzle.ipsum.draw(game.batch);
 
         game.batch.end();
-        stage.draw();
 
+        stage.draw();
 
 
 

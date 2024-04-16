@@ -2,7 +2,11 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
@@ -13,15 +17,25 @@ import java.util.ArrayList;
 public class ColorGridPuzzle {
     //0 = red, 1 = green
     int[][] gridData;
+    public boolean ipsumLoaded;
     boolean puzzleWon;
+    public float lastX;
+    public float lastY;
     ArrayList<PuzzleButton> buttons = new ArrayList<>();
+    public PuzzleTable ipsumHolder;
+    public Sprite ipsum = new Sprite(new Texture(Gdx.files.internal("Images/Lorem Ipsum.png")));
 
-    public ColorGridPuzzle(PuzzleTable table) {
+    public ColorGridPuzzle(PuzzleTable table,Stage stage) {
+        ipsumHolder = new PuzzleTable(200,300,stage);
+        ipsumHolder.setDebug(true);
+        ipsum.setPosition(10000,10000);
+        ipsumLoaded = false;
         gridData = new int[][]{
                 {0,0,0},
                 {0,0,0},
                 {0,0,0}
         };
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 PuzzleButton buttonToAdd = new PuzzleButton("A",2,table,Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
@@ -31,6 +45,17 @@ public class ColorGridPuzzle {
                     public void clicked(InputEvent event, float x, float y) {
                         if (!puzzleWon) {
                             gridData[finalI][finalJ] = (gridData[finalI][finalJ] == 1) ? 0 : 1;
+                            if (ipsumLoaded) {
+                                ipsumLoaded = false;
+                                ipsum.setPosition(10000,10000);
+
+                            } else {
+                                lastX = buttonToAdd.getX()+200;
+                                lastY = buttonToAdd.getY()+300;
+                                //sends it far off screen
+                                ipsumLoaded = true;
+                            }
+
                         }
                     }
                 });
@@ -39,7 +64,7 @@ public class ColorGridPuzzle {
             table.row();
         }
     }
-    public void updateGridColor() {
+    public void updateGridColor(){
         if (!puzzleWon) {
             for (int i = 0; i < 9; i++) {
                 if (buttons.get(i).getColor() != convertToColor(gridData[convertToCoordinates(i)[0]][convertToCoordinates(i)[1]])) {
