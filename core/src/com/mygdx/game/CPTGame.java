@@ -2,15 +2,10 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.mygdx.game.Game_Elements.World;
-import com.mygdx.game.Levels.TestLevel;
 import com.mygdx.game.Menus.MainMenu;
-import jdk.incubator.vector.VectorOperators;
 
 public class CPTGame extends Game {
 	public SpriteBatch batch;
@@ -53,5 +48,11 @@ public class CPTGame extends Game {
 		batch.dispose();
 		DefaultFont.dispose();
 		//img.dispose();
+	}
+
+	private class defaultSetup{
+		defaultSetup(){
+			
+		}
 	}
 }

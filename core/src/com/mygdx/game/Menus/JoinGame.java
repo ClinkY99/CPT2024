@@ -10,48 +10,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.mygdx.game.Menus.Interactive.SelectionBar;
 
-import java.awt.*;
-
-public class Settings implements Screen {
+public class JoinGame implements Screen {
     final CPTGame game;
 
-    Texture SettingsBackground;
-    Stage stage;
-    SelectionBar selectionMenu;
+    private Stage stage;
+    private Texture background;
+    private SelectionBar selectionBar;
+
     private Array<Button> otherButtons;
 
-
-    public Settings(CPTGame Game){
-        game = Game;
+    public JoinGame(CPTGame Game){
+        this.game = Game;
 
         otherButtons = new Array<>();
 
-        SettingsBackground = new Texture(Gdx.files.internal("Menu/Settings.png"));
+        background = new Texture("Menu/JoinGame.png");
 
-        stage = new Stage(new FitViewport(1920,1080), game.batch);
+        stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        selectionMenu = new SelectionBar(1080/3, 100,"Graphics", "Audio", "Controls", "Multiplayer");
+        selectionBar = new SelectionBar(1080/3,100,"Online", "LAN");
+        selectionBar.getTable().setPosition(1920/3+125,1080/8*7);
 
-        selectionMenu.getTable().setPosition((float) (1920/2)+110, 1080/8*7);
+        Array<Button> buttons = selectionBar.getButtons();
 
-        Array<Button> buttons = selectionMenu.getButtons();
-
-        for(Button button: buttons){
-            button.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-
-                }
-            });
-        }
-
-        Button backButton = new MenuButton("back", .8f);
+        Button backButton = new MenuButton("back", .9f);
         otherButtons.add(backButton);
 
         backButton.setPosition(1920/4.5f, 30);
@@ -62,11 +49,10 @@ public class Settings implements Screen {
             }
         });
 
-        stage.addActor(selectionMenu.getTable());
+        stage.addActor(selectionBar.getTable());
         stage.addActor(backButton);
 
     }
-
 
     @Override
     public void show() {
@@ -80,14 +66,14 @@ public class Settings implements Screen {
         stage.act(delta);
 
         stage.getBatch().begin();
-        stage.getBatch().draw(SettingsBackground, 0,0,1920,1080);
+        stage.getBatch().draw(background, 0, 0);
         stage.getBatch().end();
 
         stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int i, int i1) {
 
     }
 
