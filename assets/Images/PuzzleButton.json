@@ -1,0 +1,37 @@
+{
+com.badlogic.gdx.graphics.Color: {
+	RGBA_7_0_0_255: {
+		r: 0.028089888
+		g: 0
+		b: 0
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	whiteDot: {
+		name: white-pixel
+		color: RGBA_7_0_0_255
+		minWidth: 50
+		minHeight: 50
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: whiteDot
+		down: whiteDot
+		over: whiteDot
+		focused: whiteDot
+		disabled: whiteDot
+		checked: whiteDot
+		checkedOver: whiteDot
+		checkedDown: whiteDot
+		checkedFocused: whiteDot
+	}
+},
+	default: {
+		font: TempusSansITC
+		fontColor: Black
+		downFontColor: Red
+		overFontColor: Grey,
+	}
+}

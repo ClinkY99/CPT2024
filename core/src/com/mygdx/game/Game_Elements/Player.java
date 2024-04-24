@@ -44,7 +44,6 @@ public class Player
     {
         move = speed * deltaTime;
         positionChange.x = positionChange.y = 0;
-        if (!TestLevel.gridPuzzle.ipsumLoaded) {
 
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -65,7 +64,7 @@ public class Player
             }
         }
 
-    }
+
 
     public void collision_detectionx(ArrayList<Object> tiles, int[] scroll)
     {

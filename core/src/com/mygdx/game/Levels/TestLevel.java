@@ -1,12 +1,14 @@
 package com.mygdx.game.Levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,10 +21,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Object;
 import com.mygdx.game.Game_Elements.Player;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.ColorGridPuzzle;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.*;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleTable;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
@@ -37,7 +37,7 @@ public class TestLevel implements Screen {
     OrthographicCamera camera;
     Texture LevelBackground;
     Stage stage;
-   public static ColorGridPuzzle gridPuzzle;
+   public static BookShelf TestBookShelf;
     PuzzleTable buttonTable;
     FreeTypeFontGenerator LevelFont;
     float lastTrueScrollX = 0;
@@ -45,6 +45,9 @@ public class TestLevel implements Screen {
     PuzzleButton newButton;
     final CPTGame game;
     Skin globalSkin;
+    PuzzleTable keyPadButtonHolder;
+    PuzzleTable keyPadTable;
+    KeyPad testKeyPad;
     World LevelWorld;
 
     PuzzleTable levelTable;
@@ -58,6 +61,7 @@ public class TestLevel implements Screen {
         globalSkin = new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"));
         Gdx.input.setInputProcessor(stage);
         // Table for UI Widgets
+
         levelTable = new PuzzleTable(640,540,stage);
         buttonTable = new PuzzleTable(1040,540,stage);
 
@@ -66,6 +70,16 @@ public class TestLevel implements Screen {
         clickMe.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 LevelWorld.colorSpasm = !LevelWorld.colorSpasm;
+            }
+        });
+
+        keyPadButtonHolder =new PuzzleTable(1500,540,stage);
+        PuzzleButton summonKeypadButton = new PuzzleButton("Summon KeyPad",2,keyPadButtonHolder,globalSkin);
+
+        summonKeypadButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                keyPadTable.setPosition(1000,600);
+                LevelWorld.allowMovement = false;
             }
         });
         buttonTable.row();
@@ -91,10 +105,11 @@ public class TestLevel implements Screen {
         });
 
 
-        gridPuzzle = new ColorGridPuzzle(levelTable,stage);
-
+        TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/bucketPicture.jpeg")), 3,3);
+        keyPadTable = new PuzzleTable(1500,540,stage);
+        testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
         camera.setToOrtho(false, 1920,1080);
-        LevelBackground = new Texture(Gdx.files.internal("Images/among us.png"));
+        LevelBackground = new Texture(Gdx.files.internal("Images/brick.jpeg"));
         FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 
     }
@@ -108,21 +123,31 @@ public class TestLevel implements Screen {
 
         levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         buttonTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        //keyPadTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        keyPadButtonHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        testKeyPad.updateKeyPad(game);
+        if (testKeyPad.correctCodeInputted) {
+            for (int i = 0; i < testKeyPad.buttons.size(); i++) {
+                testKeyPad.buttons.get(i).setColor(Color.BLUE);
+            }
+        }
         ScreenUtils.clear(0,0,0,1);
+
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        gridPuzzle.updateGridColor();
-        if (gridPuzzle.ipsumLoaded) {
-            gridPuzzle.ipsum.setPosition(gridPuzzle.ipsumHolder.getX(), gridPuzzle.ipsumHolder.getY());
-            gridPuzzle.ipsumHolder.loadPosition(LevelWorld, LevelWorld.objects.get(0));
-        }
-        if (!gridPuzzle.ipsumLoaded) {
-            stage.act();
-        }
         game.batch.draw(LevelBackground, 0,0,1920,1080);
-        //LevelFont.draw(game.batch, "SUS", 331,496);
         LevelWorld.run(game.batch);
-        gridPuzzle.ipsum.draw(game.batch);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            TestBookShelf.unloadText();
+            LevelWorld.allowMovement = true;
+            keyPadTable.setPosition(101010,10010101);
+        }
+        if (TestBookShelf.textLoaded) {
+            LevelWorld.allowMovement = false;
+        }
+        TestBookShelf.text.draw(game.batch);
+        stage.act();
 
         game.batch.end();
 
