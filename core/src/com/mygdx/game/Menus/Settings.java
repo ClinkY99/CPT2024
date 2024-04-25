@@ -2,6 +2,7 @@ package com.mygdx.game.Menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,34 +16,37 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.mygdx.game.Menus.Interactive.SelectionBar;
 
-import java.awt.*;
 
 public class Settings implements Screen {
     final CPTGame game;
 
+    Music music;
+
     Texture SettingsBackground;
     Stage stage;
     SelectionBar selectionMenu;
-    private Array<Button> otherButtons;
+    private final Array<Button> otherButtons;
 
 
-    public Settings(CPTGame Game){
+    public Settings(CPTGame Game, Music menuMusic){
         game = Game;
+
+        music = menuMusic;
 
         otherButtons = new Array<>();
 
-        SettingsBackground = new Texture(Gdx.files.internal("Menu/Settings.png"));
+        SettingsBackground = new Texture(Gdx.files.internal("Menu/Menu1.png"));
 
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
         selectionMenu = new SelectionBar(1080/3, 100,"Graphics", "Audio", "Controls", "Multiplayer");
 
-        selectionMenu.getTable().setPosition((float) (1920/2)+110, 1080/8*7);
+        selectionMenu.getTable().setPosition((float) (1920/2), 1080/8f*7);
 
         Array<Button> buttons = selectionMenu.getButtons();
 
-        for(Button button: buttons){
+        for(Button button: new Array.ArrayIterator<>(buttons)){
             button.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -58,19 +62,21 @@ public class Settings implements Screen {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenu(game));
+                game.setScreen(new MainMenu(game, music));
             }
         });
 
         stage.addActor(selectionMenu.getTable());
-        stage.addActor(backButton);
+        for (Button button: new Array.ArrayIterator<>(otherButtons)){
+            stage.addActor(button);
+        }
 
     }
 
 
     @Override
     public void show() {
-
+        music.play();
     }
 
     @Override
@@ -103,7 +109,7 @@ public class Settings implements Screen {
 
     @Override
     public void hide() {
-
+        music.pause();
     }
 
     @Override

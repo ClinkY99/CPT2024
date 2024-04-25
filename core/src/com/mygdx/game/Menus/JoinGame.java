@@ -2,6 +2,7 @@ package com.mygdx.game.Menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,46 +18,57 @@ import com.mygdx.game.Menus.Interactive.SelectionBar;
 public class JoinGame implements Screen {
     final CPTGame game;
 
-    private Stage stage;
-    private Texture background;
-    private SelectionBar selectionBar;
+    private final Music music;
+    private final Stage stage;
+    private final Texture background;
+    private final SelectionBar selectionBar;
 
-    private Array<Button> otherButtons;
+    private final Array<Button> otherButtons;
 
-    public JoinGame(CPTGame Game){
+    public JoinGame(CPTGame Game, Music menuMusic){
         this.game = Game;
+
+        music = menuMusic;
 
         otherButtons = new Array<>();
 
-        background = new Texture("Menu/JoinGame.png");
+        background = new Texture("Menu/Menu2.png");
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         selectionBar = new SelectionBar(1080/3,100,"Online", "LAN");
-        selectionBar.getTable().setPosition(1920/3+125,1080/8*7);
+        selectionBar.getTable().setPosition(1920/3.3f,1080/8f*7);
 
-        Array<Button> buttons = selectionBar.getButtons();
+        //Array<Button> buttons = selectionBar.getButtons();
 
-        Button backButton = new MenuButton("back", .9f);
+        Button backButton = new MenuButton("back", .8f);
         otherButtons.add(backButton);
 
         backButton.setPosition(1920/4.5f, 30);
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenu(game));
+                game.setScreen(new MainMenu(game,music));
             }
         });
 
+        Button joinButton = new MenuButton("Join Game", .8f);
+        otherButtons.add(joinButton);
+
+        joinButton.setPosition(1920/4.5f*3.1f, 30);
+
+
         stage.addActor(selectionBar.getTable());
-        stage.addActor(backButton);
+        for (Button button:new Array.ArrayIterator<>(otherButtons)){
+            stage.addActor(button);
+        }
 
     }
 
     @Override
     public void show() {
-
+        music.play();
     }
 
     @Override
@@ -89,7 +101,7 @@ public class JoinGame implements Screen {
 
     @Override
     public void hide() {
-
+        music.pause();
     }
 
     @Override

@@ -1,19 +1,12 @@
 package com.mygdx.game.Menus.Interactive;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.FreeTypeSkin;
-
-import java.awt.*;
 
 public class MenuButton extends TextButton {
 
@@ -25,7 +18,7 @@ public class MenuButton extends TextButton {
     }
 
     public MenuButton(String Text, float scale, FreeTypeFontGenerator generator){
-        super(Text, new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json")), "MenuButton");
+        super(Text, new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "MenuButton");
         if(scale !=-1) {
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
@@ -36,6 +29,7 @@ public class MenuButton extends TextButton {
             setLabel(newLabel(Text, new LabelStyle(font, getStyle().fontColor)));
 
         }
+        getLabel().setAlignment(Align.center);
 
 
 
