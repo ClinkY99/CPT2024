@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.FreeTypeSkin;
 
 public class SelectionButton extends TextButton {
@@ -17,7 +17,7 @@ public class SelectionButton extends TextButton {
     }
 
     public SelectionButton(String Text, float scale, FreeTypeFontGenerator generator){
-        super(Text, new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json")), "SelectionButton");
+        super(Text, new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "SelectionButton");
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         parameter.size = (int) (48*(scale!=-1?scale:1));
@@ -26,6 +26,7 @@ public class SelectionButton extends TextButton {
 
         setLabel(newLabel(Text, new Label.LabelStyle(font, getStyle().fontColor)));
 
+        getLabel().setAlignment(Align.center);
     }
 
 

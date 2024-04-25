@@ -2,7 +2,6 @@ package com.mygdx.game.Menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Levels.TestLevel;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,8 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Menus.Interactive.MenuButton;
 
-import java.util.Set;
-
 public class MainMenu implements Screen {
 
     final CPTGame game;
@@ -24,7 +21,9 @@ public class MainMenu implements Screen {
     Stage stage;
     Table Menulayout;
 
-    public MainMenu(CPTGame game) {
+    public MainMenu(CPTGame game) {this(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav")));}
+
+    public MainMenu(CPTGame game, Music mainMenuMusic) {
         this.game = game;
 
         stage = new Stage(new FitViewport(1920,1080), game.batch);
@@ -34,53 +33,53 @@ public class MainMenu implements Screen {
         Menulayout = new Table();
 
         //Button Setup
-        MenuButton HostGame = new MenuButton("Host Game");
-        HostGame.addListener(new ClickListener() {
+        MenuButton hostGameButton = new MenuButton("Host Game");
+        hostGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
+                //game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
+                game.setScreen(new HostGame(game, mainMenuMusic));
             }
         });
-        MenuButton JoinGame = new MenuButton("Join Game", 1.25f);
-        JoinGame.addListener(new ClickListener() {
+        MenuButton joinGameButton = new MenuButton("Join Game", 1.25f);
+        joinGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new com.mygdx.game.Menus.JoinGame(game));
+                game.setScreen(new JoinGame(game, mainMenuMusic));
             }
         });
-
-
-        MenuButton Settings = new MenuButton( "Settings");
-        Settings.addListener(new ClickListener() {
+        MenuButton settingsButton = new MenuButton( "Settings");
+        settingsButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new com.mygdx.game.Menus.Settings(game));
+                game.setScreen(new Settings(game, mainMenuMusic));
             }
         });
-        MenuButton Quit = new MenuButton( "Quit");
-        Quit.addListener(new ClickListener() {
+        MenuButton quitButton = new MenuButton( "Quit");
+        quitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
                 System.exit(-1);
             }
         });
 
-        Menulayout.add(HostGame).width(250).height(100);
+        Menulayout.add(hostGameButton).width(250).height(100);
         Menulayout.row();
-        Menulayout.add(JoinGame).width(320).height(150);
+        Menulayout.add(joinGameButton).width(320).height(150);
         Menulayout.row();
-        Menulayout.add(Settings).width(250).height(100);
+        Menulayout.add(settingsButton).width(250).height(100);
         Menulayout.row();
-        Menulayout.add(Quit).width(250).height(100);
+        Menulayout.add(quitButton).width(250).height(100);
         //Menulayout.debug();
 
-        MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/Like_the_Flow_of_Time.mp3"));
-        MainMenuMusic.setLooping(true);
+        MainMenuMusic = mainMenuMusic;
+
+        if(!MainMenuMusic.isPlaying()) {
+            MainMenuMusic.setLooping(true);
+            MainMenuMusic.play();
+        }
 
         MenuBackground = new Texture(Gdx.files.internal("Menu/MainMenu.png"));
 
-        Menulayout.setPosition(250, 1080/2 -50);
+        Menulayout.setPosition(250, 1080/2f -50);
         stage.addActor(Menulayout);
-
-
-
 
     }
 
@@ -123,13 +122,13 @@ public class MainMenu implements Screen {
 
     @Override
     public void hide() {
-
+        MainMenuMusic.pause();
     }
 
     @Override
     public void dispose(){
         MenuBackground.dispose();
-        MainMenuMusic.dispose();
+        //MainMenuMusic.dispose();
         stage.dispose();
     }
 }
