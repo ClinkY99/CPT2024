@@ -21,11 +21,13 @@ public class Player
     int[] data;
     public boolean isCollidingX;
     public boolean isCollidingY;
+    Texture[] img;
 
 
-    public Player(Texture img)
+    public Player(Texture[] img)
     {
-        player = new Sprite(img);
+        this.img = img;
+        player = new Sprite(img[0]);
         int mid = Gdx.graphics.getWidth() / 2;
         int midy = Gdx.graphics.getHeight() / 2;
         position = new Vector2(mid, midy);
@@ -34,7 +36,7 @@ public class Player
 
         data = new int[]{0, 0, 0, 0};
         // need to subtract the width and height divided by 2 to put player in middle
-        player.setPosition(position.x - (float) img.getWidth() /2, position.y - (float) img.getHeight()/2);
+        player.setPosition(position.x, position.y);
         player_rect = new Rectangle(position.x , position.y, player.getWidth(), player.getHeight());
 
     }
@@ -42,27 +44,39 @@ public class Player
     public void move(float deltaTime)
     {
         move = speed * deltaTime;
+        boolean press = false;
         positionChange.x = positionChange.y = 0;
 
         if (Gdx.input.isKeyPressed(Input.Keys.A))
         {
             positionChange.x = -1;
+            player.setTexture(img[2]);
+            press = true;
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D))
         {
             positionChange.x = 1;
+            player.setTexture(img[3]);
+            press = true;
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W))
         {
             positionChange.y = 1;
-
+            player.setTexture(img[1]);
+            press = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S))
         {
             positionChange.y = -1;
+            player.setTexture(img[0]);
+            press = true;
+        }
 
+        if (!press)
+        {
+            player.setTexture(img[0]);
         }
 
     }
@@ -99,13 +113,13 @@ public class Player
         for (Object tile : tiles) {
 
             if (player_rect.overlaps(tile.getObject_rect())) {
+                System.out.println("Collided:\t" + Arrays.toString(scroll) + "\nPos: " + position);
                 float top = tile.getObject_rect().getY() + tile.getHeight();
                 float bottom = tile.getObject_rect().getY() - tile.getHeight();
                 isCollidingY = true;
                 if (positionChange.y > 0) {
                     position.y = bottom;
                     player_rect.setY(position.y);
-                    System.out.println("Collided:\t" + Arrays.toString(scroll) + "\nPos: " + position);
 
                 } else if (positionChange.y < 0) {
                     position.y = top;
@@ -124,5 +138,8 @@ public class Player
         move(deltaTime);
         position.x -= scroll[0];
         position.y -= scroll[1];
+
+        player_rect.setY(position.y);
+        player_rect.setX(position.x);
     }
 }

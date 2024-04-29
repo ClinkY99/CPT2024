@@ -31,7 +31,8 @@ public class World
 
     public World(Texture img)
     {
-        player = new Player (new Texture(Gdx.files.internal("Images/gale.jpeg")));
+        Texture[] player_image = {new Texture(Gdx.files.internal("Images/character/idle/Forward.png")), new Texture(Gdx.files.internal("Images/character/idle/Back.png")), new Texture(Gdx.files.internal("Images/character/idle/left.png")), new Texture(Gdx.files.internal("Images/character/idle/right.png"))};
+        player = new Player (player_image);
         objects = new ArrayList<>();
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(img);
