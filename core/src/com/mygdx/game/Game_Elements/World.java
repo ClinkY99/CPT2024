@@ -25,6 +25,7 @@ public class World
     public Boolean allowMovement = true;
     int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
     public ArrayList<Object> objects;
+    public boolean shouldAct;
     int colorListIncrementer = 0;
     Color[] colorList;
     public boolean colorSpasm;

@@ -39,6 +39,7 @@ public class TestLevel implements Screen {
     Stage stage;
    public static BookShelf TestBookShelf;
     PuzzleTable buttonTable;
+    Sprite keyPadBackDrop;
     FreeTypeFontGenerator LevelFont;
     float lastTrueScrollX = 0;
     float lastTrueScrollY = 0;
@@ -73,12 +74,13 @@ public class TestLevel implements Screen {
             }
         });
 
-        keyPadButtonHolder =new PuzzleTable(1500,540,stage);
+        keyPadButtonHolder = new PuzzleTable(1500,540,stage);
         PuzzleButton summonKeypadButton = new PuzzleButton("Summon KeyPad",2,keyPadButtonHolder,globalSkin);
 
         summonKeypadButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 keyPadTable.setPosition(1000,600);
+                testKeyPad.isShown = true;
                 LevelWorld.allowMovement = false;
             }
         });
@@ -106,7 +108,7 @@ public class TestLevel implements Screen {
 
 
         TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/bucketPicture.jpeg")), 3,3);
-        keyPadTable = new PuzzleTable(1500,540,stage);
+        keyPadTable = new PuzzleTable(10000,10000,stage);
         testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
         camera.setToOrtho(false, 1920,1080);
         LevelBackground = new Texture(Gdx.files.internal("Images/brick.jpeg"));
@@ -123,16 +125,13 @@ public class TestLevel implements Screen {
 
         levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         buttonTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
-        //keyPadTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         keyPadButtonHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
-        testKeyPad.updateKeyPad(game);
         if (testKeyPad.correctCodeInputted) {
             for (int i = 0; i < testKeyPad.buttons.size(); i++) {
                 testKeyPad.buttons.get(i).setColor(Color.BLUE);
             }
         }
         ScreenUtils.clear(0,0,0,1);
-
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.draw(LevelBackground, 0,0,1920,1080);
@@ -142,13 +141,24 @@ public class TestLevel implements Screen {
             TestBookShelf.unloadText();
             LevelWorld.allowMovement = true;
             keyPadTable.setPosition(101010,10010101);
+            testKeyPad.isShown = false;
         }
         if (TestBookShelf.textLoaded) {
             LevelWorld.allowMovement = false;
         }
-        TestBookShelf.text.draw(game.batch);
-        stage.act();
 
+        if (TestBookShelf.textLoaded || testKeyPad.isShown) {
+            LevelWorld.shouldAct = false;
+        } else {
+            LevelWorld.shouldAct = true;
+        }
+        if (LevelWorld.shouldAct) {
+            stage.act();
+            TestBookShelf.text.draw(game.batch);
+        } else if (TestBookShelf.textLoaded) {
+            TestBookShelf.text.draw(game.batch);
+        }
+        testKeyPad.updateKeyPad(game.batch);
         game.batch.end();
 
         stage.draw();

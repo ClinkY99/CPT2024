@@ -2,6 +2,7 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.World;
 import com.ray3k.stripe.FreeTypeSkin;
@@ -19,6 +21,8 @@ public class KeyPad {
 
         public PuzzleTable keyPadTable;
         int gridData[][];
+        public boolean isShown;
+        Sprite whiteRectangleKeyPad;
         public boolean textLoaded;
         public float lastX;
         public float lastY;
@@ -31,8 +35,12 @@ public class KeyPad {
         TextButton displayCurrentCode;
     PuzzleButton codeDisplay;
     int codeIterator = 0;
+    OrthographicCamera camera;
+    Stage stage;
+    FreeTypeSkin globalSkin;
 
         public KeyPad(PuzzleTable table, int[] correctCodeNew) {
+            keyPadTable = table;
             correctCode = correctCodeNew;
             currentCode = new int[correctCode.length];
             codeDisplay = new PuzzleButton("",2,table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json"))));
@@ -91,12 +99,22 @@ public class KeyPad {
                 }
                 table.row();
             }
+            keyPadTable.setPosition(100000,100000);
         }
-        public void updateKeyPad(CPTGame game)
+        public void updateKeyPad(Batch batch)
 
          {
              displayCurrentCode = new TextButton("",new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json")));
              String textCode = "";
+
+                 whiteRectangleKeyPad = new Sprite(new Texture(Gdx.files.internal("Images/idle_0.png")));
+                 //whiteRectangleKeyPad.setScale(20,25);
+             whiteRectangleKeyPad.setScale(500,500);
+             whiteRectangleKeyPad.setPosition(keyPadTable.getX()-40,keyPadTable.getY());
+
+             batch.enableBlending();
+             whiteRectangleKeyPad.setColor(255,255,255, 0.5F);
+             whiteRectangleKeyPad.draw(batch,0.5F);
 
              //checks if keypad is done
              correctCodeInputted = true;
