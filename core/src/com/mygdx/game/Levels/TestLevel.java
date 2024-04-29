@@ -28,6 +28,7 @@ import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
 import com.sun.source.util.TaskListener;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 import static com.mygdx.game.Game_Elements.World.TableScroll;
@@ -49,7 +50,9 @@ public class TestLevel implements Screen {
     PuzzleTable keyPadButtonHolder;
     PuzzleTable keyPadTable;
     KeyPad testKeyPad;
-    World LevelWorld;
+    World LevelWorld; ArrayList<DragDropObject> dragDropObjectTest;
+
+    DragDrop testDragDropPuzzle;
 
     PuzzleTable levelTable;
 
@@ -64,13 +67,13 @@ public class TestLevel implements Screen {
         // Table for UI Widgets
 
         levelTable = new PuzzleTable(640,540,stage);
-        buttonTable = new PuzzleTable(1040,540,stage);
+        buttonTable = new PuzzleTable(1040,840,stage);
 
-        PuzzleButton clickMe = new PuzzleButton("How is it going?",2, buttonTable,globalSkin);
+        PuzzleButton clickMe = new PuzzleButton("Click to Summon Drag and Drop Puzzle",2, buttonTable,globalSkin);
 
         clickMe.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                LevelWorld.colorSpasm = !LevelWorld.colorSpasm;
+                testDragDropPuzzle.isLoaded = true;
             }
         });
 
@@ -85,7 +88,7 @@ public class TestLevel implements Screen {
             }
         });
         buttonTable.row();
-
+        /*
         PuzzleButton dontClickMe = new PuzzleButton("Not well",1,buttonTable,globalSkin);
         dontClickMe.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
@@ -105,15 +108,18 @@ public class TestLevel implements Screen {
                 });
             }
         });
-
-
+*/
         TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/bucketPicture.jpeg")), 3,3);
         keyPadTable = new PuzzleTable(10000,10000,stage);
         testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
         camera.setToOrtho(false, 1920,1080);
-        LevelBackground = new Texture(Gdx.files.internal("Images/brick.jpeg"));
+        LevelBackground = new Texture(Gdx.files.internal("Images/gale.jpeg"));
         FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 
+        dragDropObjectTest = new ArrayList<>();
+        dragDropObjectTest.add(new DragDropObject(new Texture(Gdx.files.internal("Images/gale.jpeg"))));
+
+        testDragDropPuzzle = new DragDrop(LevelWorld, game.batch);
     }
     @Override
     public void show() {
@@ -142,12 +148,13 @@ public class TestLevel implements Screen {
             LevelWorld.allowMovement = true;
             keyPadTable.setPosition(101010,10010101);
             testKeyPad.isShown = false;
+            testDragDropPuzzle.isLoaded = false;
         }
+
         if (TestBookShelf.textLoaded) {
             LevelWorld.allowMovement = false;
         }
-
-        if (TestBookShelf.textLoaded || testKeyPad.isShown) {
+        if (TestBookShelf.textLoaded || testKeyPad.isShown || testDragDropPuzzle.isLoaded) {
             LevelWorld.shouldAct = false;
         } else {
             LevelWorld.shouldAct = true;
@@ -159,6 +166,12 @@ public class TestLevel implements Screen {
             TestBookShelf.text.draw(game.batch);
         }
         testKeyPad.updateKeyPad(game.batch);
+
+
+        testDragDropPuzzle.render(dragDropObjectTest);
+
+
+
         game.batch.end();
 
         stage.draw();
