@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Levels.TestLevel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,7 +114,6 @@ public class Player
         for (Object tile : tiles) {
 
             if (player_rect.overlaps(tile.getObject_rect())) {
-                System.out.println("Collided:\t" + Arrays.toString(scroll) + "\nPos: " + position);
                 float top = tile.getObject_rect().getY() + tile.getHeight();
                 float bottom = tile.getObject_rect().getY() - tile.getHeight();
                 isCollidingY = true;

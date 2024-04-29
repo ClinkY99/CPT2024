@@ -1,12 +1,14 @@
 package com.mygdx.game.Game_Elements;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.BookShelf;
 
 import java.awt.*;
 import java.io.IOException;
@@ -20,8 +22,10 @@ public class World
     ArrayList<String> map;
     public static float[] TableScroll = new float[2];
     public Player player;
+    public Boolean allowMovement = true;
     int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
     public ArrayList<Object> objects;
+    public boolean shouldAct;
     int colorListIncrementer = 0;
     Color[] colorList;
     public boolean colorSpasm;
@@ -88,7 +92,10 @@ public class World
     public void run(SpriteBatch batch)
     {
         scrolling();
-        player.update(Gdx.graphics.getDeltaTime(), objects, scroll);
+        if (allowMovement) {
+            player.update(Gdx.graphics.getDeltaTime(), objects, scroll);
+        }
+
         if (printOut != null) {
             System.out.println(printOut);
         }
@@ -111,7 +118,7 @@ public class World
         // color change loop is here
         if (colorSpasm) {
             for (int i = 0; i < objects.size(); i++) {
-                if (oneInFour == 4) {
+                if (oneInFour == 1) {
                     oneInFour = 0;
                     objects.get(i).setColor(colorList[colorListIncrementer]);
                     if (colorListIncrementer == colorList.length - 1) {

@@ -2,12 +2,9 @@ package com.mygdx.game.Menus.Interactive;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 
 public class SelectionBar extends ButtonGroup {
     private final Table table;
@@ -15,28 +12,27 @@ public class SelectionBar extends ButtonGroup {
 
 
 
-    public SelectionBar(String... labels){
-        this(new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf")), labels);
+    public SelectionBar(int spacingX, int spacingY, String... labels){
+        this(new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf")), spacingX, spacingY, labels);
     }
 
-    public SelectionBar(FreeTypeFontGenerator generator, String... labels){
-        this(generator,-1,labels);
+    public SelectionBar(FreeTypeFontGenerator generator, int spacingX, int spacingY, String... labels){
+        this(generator,-1, spacingX, spacingY, labels);
     }
 
-    public SelectionBar(FreeTypeFontGenerator generator, float size, String... labels){
+    public SelectionBar(FreeTypeFontGenerator generator, float size, int spacingX, int spacingY, String... labels){
         super();
 
         table = new Table();
 
         for(String Label: labels){
             SelectionButton button = new SelectionButton(Label, size, generator);
+            button.center();
+            //button.debug();
             add(button);
-            table.add(button).width(1080/3).height(100);
+            table.add(button).width(spacingX).height(spacingY).center();
+            table.center();
         }
-
-        Array<SelectionButton> buttons = getButtons();
-
-        buttons.get(0).setChecked(true);
 
         setMinCheckCount(1);
         setMaxCheckCount(1);
@@ -46,4 +42,8 @@ public class SelectionBar extends ButtonGroup {
     }
 
     public Table getTable() { return table; }
+
+    public void add(String label) {
+        super.add(new SelectionButton(label));
+    }
 }

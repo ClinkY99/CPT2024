@@ -25,6 +25,7 @@ import java.awt.*;
 import java.util.function.Function;
 
 public class PuzzleButton extends TextButton {
+    public int data;
     //to use this class, you can either pass just text and a scale, or also pass a puzzletable and have it
     //added automatically. After that, just add a clickListener. If you dont pass a puzzletable directly,
     //add it later
