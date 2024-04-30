@@ -115,7 +115,7 @@ public class JoinGame implements Screen {
         if(arr.size > 0) {
             Table table = new Table();
             for (MPInterface.serverDetails s : new Array.ArrayIterable<>(arr)) {
-                if (s.isServerOpen()) {
+                if (s.serverOpen) {
                     table.addActor(new serverSelection(s));
 
                 }
@@ -197,10 +197,10 @@ public class JoinGame implements Screen {
         Array<Label> labels = new Array<>();
 
         serverSelection(MPInterface.serverDetails serverDetails){
-            super(serverDetails.getName(), new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "SelectionButton");
-            name = serverDetails.getName();
-            hostName = serverDetails.getHostName();
-            completion = serverDetails.getCompletion();
+            super(serverDetails.name, new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "SelectionButton");
+            name = serverDetails.name;
+            hostName = serverDetails.hostName;
+            completion = serverDetails.completion;
 
             FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
