@@ -24,8 +24,6 @@ public class MainMenu implements Screen {
     Stage stage;
     Table Menulayout;
 
-    public MainMenu(CPTGame game) {this(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav")));}
-
     public MainMenu(CPTGame game, Music mainMenuMusic) {
         this.game = game;
 
@@ -74,10 +72,6 @@ public class MainMenu implements Screen {
 
         MainMenuMusic = mainMenuMusic;
 
-        if(!MainMenuMusic.isPlaying()) {
-            MainMenuMusic.setLooping(true);
-            MainMenuMusic.play();
-        }
 
         MenuBackground = new Texture(Gdx.files.internal("Menu/MainMenu.png"));
 

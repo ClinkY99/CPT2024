@@ -5,11 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.mygdx.game.Menus.MainMenu;
+import com.mygdx.game.Menus.SplashScreen;
 
 public class CPTGame extends Game {
 	public SpriteBatch batch;
-	MainMenu menuLevel;
+	SplashScreen menuLevel;
 
 	public FreeTypeFontGenerator DefaultFont;
 	Texture img;
@@ -20,7 +20,7 @@ public class CPTGame extends Game {
 		img = new Texture(Gdx.files.internal("Images/rectangleImg.png"));
 		batch = new SpriteBatch();
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
-		menuLevel = new MainMenu(this);;
+		menuLevel = new SplashScreen(this);
 		setScreen(menuLevel);
 		// declares images
 //		stage = new Stage(new ScreenViewport());
@@ -48,9 +48,4 @@ public class CPTGame extends Game {
 		//img.dispose();
 	}
 
-	private class defaultSetup{
-		defaultSetup(){
-			
-		}
-	}
 }
