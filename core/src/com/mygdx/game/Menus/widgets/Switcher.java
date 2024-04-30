@@ -31,11 +31,9 @@ public class Switcher extends Actor {
     }
 
     public void switchFocused(int newFocus){
-        System.out.println("test");
         if(newFocus >=0 && newFocus < actorArray.size){
             focused = newFocus;
         }
-        System.out.println("focused = " + focused);
     }
     public Actor getFocused(){return actorArray.get(focused);}
 

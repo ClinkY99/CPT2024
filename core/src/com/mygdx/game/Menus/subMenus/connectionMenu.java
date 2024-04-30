@@ -75,7 +75,8 @@ public class connectionMenu implements Screen {
 
         server = new ServerInteface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
 
-        server.BindFunction((connection, object) -> System.out.println("Test"), MPInterface.connectionDetails.class);
+        server.BindFunction((connection, object) -> connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", true, 0)), MPInterface.connectionDetails.class);
+
 
         try {
             server.init();

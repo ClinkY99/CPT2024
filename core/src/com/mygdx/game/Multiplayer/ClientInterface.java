@@ -35,6 +35,7 @@ public class ClientInterface extends Client {
     }
     public void init(){
         start();
+        System.out.println("test");
         addListener(new Listener(){
             @Override
             public void received(Connection connection, Object object) {
@@ -64,13 +65,14 @@ public class ClientInterface extends Client {
 
     public void lanServers() {
 
-        new Thread(() -> {
+        //new Thread(() -> {
 
             List<InetAddress> addresses = discoverHosts(portUDP, timeoutMS);
 
             bindFunction((connection, object) -> availibleServerDetails.add((MPInterface.serverDetails) object), MPInterface.connectionDetails.class);
 
             for (InetAddress address : addresses) {
+                System.out.println("test");
                 try {
                     if (address.isReachable(timeoutMS)) {
                         connect(timeoutMS, address, portTCP, portUDP);
@@ -80,7 +82,7 @@ public class ClientInterface extends Client {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        //});
     }
 
     public Array<MPInterface.serverDetails> getAvailibleServerDetails() {
