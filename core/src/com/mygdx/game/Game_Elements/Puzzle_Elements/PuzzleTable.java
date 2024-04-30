@@ -23,7 +23,7 @@ public class PuzzleTable extends Table {
         baseX = startingX;
         baseY = startingY;
         stage.addActor(this);
-        this.setDebug(true);
+
     }
 
     public void loadPosition(World LevelWorld, Object object) {

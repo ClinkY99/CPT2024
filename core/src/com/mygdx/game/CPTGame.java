@@ -12,9 +12,7 @@ public class CPTGame extends Game {
 	MainMenu menuLevel;
 
 	public FreeTypeFontGenerator DefaultFont;
-	//	SpriteBatch batch;
 	Texture img;
-//	private Stage stage;
 
 	@Override
 	public void create ()

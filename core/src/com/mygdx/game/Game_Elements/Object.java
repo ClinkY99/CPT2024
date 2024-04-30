@@ -42,6 +42,7 @@ public class Object {
     }
 
     public void draw(SpriteBatch batch) {
+        object.setPosition(object_rect.x, object_rect.y);
         object.draw(batch);
     }
 
@@ -53,6 +54,7 @@ public class Object {
     public void updatey(int scroll) {
         object_rect.y -= scroll;
         object.setPosition(object_rect.x, object_rect.y);
+
     }
     public float[] getPosition() {
         return new float[]{object_rect.x,object_rect.y};

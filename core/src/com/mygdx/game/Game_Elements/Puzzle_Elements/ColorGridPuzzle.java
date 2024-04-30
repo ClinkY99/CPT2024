@@ -2,65 +2,67 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Game_Elements.World;
+import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class ColorGridPuzzle {
     //0 = red, 1 = green
     int[][] gridData;
+    public boolean ipsumLoaded;
     boolean puzzleWon;
+    public float lastX;
+    public float lastY;
+    public Sprite ipsum;
+    public boolean ipsumDrawn = false;
     ArrayList<PuzzleButton> buttons = new ArrayList<>();
+    public PuzzleTable ipsumHolder;
 
-    public ColorGridPuzzle(PuzzleTable table) {
+
+    public ColorGridPuzzle(PuzzleTable table,Stage stage) {
         gridData = new int[][]{
-                {0,0,0},
-                {0,0,0},
-                {0,0,0}
+                {0, 0, 0},
+                {0, 0, 0},
+                {0, 0, 0}
         };
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                PuzzleButton buttonToAdd = new PuzzleButton("A",2,table,Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
+                PuzzleButton buttonToAdd = new PuzzleButton("A", 2, table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
                 int finalI = i;
                 int finalJ = j;
-                buttonToAdd.addListener(new ClickListener() {
-                    public void clicked(InputEvent event, float x, float y) {
-                        if (!puzzleWon) {
-                            gridData[finalI][finalJ] = (gridData[finalI][finalJ] == 1) ? 0 : 1;
+                    buttonToAdd.addListener(new ClickListener() {
+                        public void clicked(InputEvent event, float x, float y) {
+                            if (!puzzleWon) {
+                                gridData[finalI][finalJ] = (gridData[finalI][finalJ] == 1) ? 0 : 1;
+                            }
                         }
-                    }
-                });
-                buttons.add(buttonToAdd);
-            }
-            table.row();
-        }
-    }
-    public void updateGridColor() {
-        if (!puzzleWon) {
-            for (int i = 0; i < 9; i++) {
-                if (buttons.get(i).getColor() != convertToColor(gridData[convertToCoordinates(i)[0]][convertToCoordinates(i)[1]])) {
-                    buttons.get(i).setColor(convertToColor(gridData[convertToCoordinates(i)[0]][convertToCoordinates(i)[1]]));
+
+                    });
+                    buttons.add(buttonToAdd);
                 }
+                table.row();
             }
-        }
-        int k = 0;
-        for (int i = 0; i < 9; i++) {
-            if (convertToColor(gridData[convertToCoordinates(i)[0]][convertToCoordinates(i)[1]]) != Color.GREEN) {
-                k = 1;
-            }
-        }
-        if (k == 0) {
-            for (int i = 0; i < 9; i++) {
-                buttons.get(i).setColor(Color.GOLD);
-            }
-            for (int i = 0; i < 9; i++) {
-                buttons.get(i).remove();
-            }
-
         }
 
+
+    public void updateGrid(World LevelWorld,Stage stage){
+        if (ipsumLoaded) {
+            this.ipsumHolder.setPosition(this.ipsumHolder.getX(), this.ipsumHolder.getY());
+            this.ipsumHolder.loadPosition(LevelWorld, LevelWorld.objects.get(0));
+        }
+        if (!this.ipsumLoaded) {
+            stage.act();
+        }
     }
     public boolean isCompleted() {
         return puzzleWon;
