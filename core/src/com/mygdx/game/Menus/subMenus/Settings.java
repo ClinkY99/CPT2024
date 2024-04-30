@@ -1,4 +1,4 @@
-package com.mygdx.game.Menus;
+package com.mygdx.game.Menus.subMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,36 +11,51 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
-import com.mygdx.game.Menus.Interactive.MenuButton;
-import com.mygdx.game.Menus.Interactive.SelectionBar;
+import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.Menus.widgets.SelectionBar;
+import com.mygdx.game.Menus.MainMenu;
+import com.mygdx.game.Menus.widgets.SelectionButton;
 
-public class JoinGame implements Screen {
+
+public class Settings implements Screen {
     final CPTGame game;
 
-    private final Music music;
-    private final Stage stage;
-    private final Texture background;
-    private final SelectionBar selectionBar;
+    Music music;
 
+    Texture SettingsBackground;
+    Stage stage;
+    SelectionBar selectionMenu;
     private final Array<Button> otherButtons;
 
-    public JoinGame(CPTGame Game, Music menuMusic){
-        this.game = Game;
+
+    public Settings(CPTGame Game, Music menuMusic){
+        game = Game;
 
         music = menuMusic;
 
         otherButtons = new Array<>();
 
-        background = new Texture("Menu/Menu2.png");
+        SettingsBackground = new Texture(Gdx.files.internal("Menu/Menu1.png"));
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
-        selectionBar = new SelectionBar(1080/3,100,"Online", "LAN");
-        selectionBar.getTable().setPosition(1920/3.3f,1080/8f*7);
+        selectionMenu = new SelectionBar(1080/3, 100,"Graphics", "Audio", "Controls", "Multiplayer");
 
-        //Array<Button> buttons = selectionBar.getButtons();
+        selectionMenu.getTable().setPosition((float) (1920/2), 1080/8f*7);
+
+        Array<SelectionButton> buttons = selectionMenu.getButtons();
+
+        for(Button button: new Array.ArrayIterator<>(buttons)){
+            button.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                }
+            });
+        }
 
         Button backButton = new MenuButton("back", .8f);
         otherButtons.add(backButton);
@@ -49,22 +64,17 @@ public class JoinGame implements Screen {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenu(game,music));
+                game.setScreen(new MainMenu(game, music));
             }
         });
 
-        Button joinButton = new MenuButton("Join Game", .8f);
-        otherButtons.add(joinButton);
-
-        joinButton.setPosition(1920/4.5f*3.1f, 30);
-
-
-        stage.addActor(selectionBar.getTable());
-        for (Button button:new Array.ArrayIterator<>(otherButtons)){
+        stage.addActor(selectionMenu.getTable());
+        for (Button button: new Array.ArrayIterator<>(otherButtons)){
             stage.addActor(button);
         }
 
     }
+
 
     @Override
     public void show() {
@@ -78,14 +88,14 @@ public class JoinGame implements Screen {
         stage.act(delta);
 
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0);
+        stage.getBatch().draw(SettingsBackground, 0,0,1920,1080);
         stage.getBatch().end();
 
         stage.draw();
     }
 
     @Override
-    public void resize(int i, int i1) {
+    public void resize(int width, int height) {
 
     }
 

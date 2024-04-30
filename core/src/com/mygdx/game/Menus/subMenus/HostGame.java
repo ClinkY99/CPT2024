@@ -1,4 +1,4 @@
-package com.mygdx.game.Menus;
+package com.mygdx.game.Menus.subMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,9 +15,10 @@ import com.badlogic.gdx.utils.*;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.TestLevel;
-import com.mygdx.game.Menus.Interactive.AutoFocusScrollpane;
-import com.mygdx.game.Menus.Interactive.MenuButton;
-import com.mygdx.game.Menus.Interactive.saveSelection;
+import com.mygdx.game.Menus.widgets.AutoFocusScrollpane;
+import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.Menus.widgets.saveSelection;
+import com.mygdx.game.Menus.MainMenu;
 
 
 public class HostGame implements Screen {
@@ -104,7 +105,7 @@ public class HostGame implements Screen {
 
 
         stage.addActor(table);
-        for (Button button: new Array.ArrayIterator<Button>(otherButtons)){
+        for (Button button: new Array.ArrayIterator<>(otherButtons)){
             stage.addActor(button);
         }
         stage.addActor(scrollPane);
@@ -127,7 +128,7 @@ public class HostGame implements Screen {
             sortSaves(0, array.size-1, array);
 
             buttonGroup = new ButtonGroup<>();
-            for (saveSelection i : new Array.ArrayIterable<saveSelection>(array)){
+            for (saveSelection i : new Array.ArrayIterable<>(array)){
                 buttonGroup.add(i);
 
 

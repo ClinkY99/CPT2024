@@ -1,4 +1,4 @@
-package com.mygdx.game.Menus;
+package com.mygdx.game.Menus.subMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,28 +8,40 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.esotericsoftware.kryonet.Connection;
 import com.mygdx.game.CPTGame;
-import com.mygdx.game.Menus.Interactive.MenuButton;
-import com.mygdx.game.Menus.Interactive.SelectionBar;
+import com.mygdx.game.Game_Elements.SaveFile;
+import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.Menus.MainMenu;
+import com.mygdx.game.Multiplayer.MPInterface;
+import com.mygdx.game.Multiplayer.ServerInteface;
+import com.ray3k.stripe.FreeTypeSkin;
 
+import java.io.IOException;
 
-public class Settings implements Screen {
+public class connectionMenu implements Screen {
     final CPTGame game;
 
     Music music;
 
     Texture SettingsBackground;
     Stage stage;
-    SelectionBar selectionMenu;
+    Label label;
     private final Array<Button> otherButtons;
 
+    private final SaveFile saveFile;
 
-    public Settings(CPTGame Game, Music menuMusic){
+    private final ServerInteface server;
+
+    public connectionMenu(CPTGame Game, SaveFile save, Music menuMusic) {
         game = Game;
+
+        saveFile = save;
 
         music = menuMusic;
 
@@ -40,37 +52,36 @@ public class Settings implements Screen {
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
-        selectionMenu = new SelectionBar(1080/3, 100,"Graphics", "Audio", "Controls", "Multiplayer");
+        label = new Label("Awaiting Connection...", new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")));
+        label.setWidth(1920/3f);
+        label.setPosition(1920/2f-1920/3f, 1080/2f);
 
-        selectionMenu.getTable().setPosition((float) (1920/2), 1080/8f*7);
-
-        Array<Button> buttons = selectionMenu.getButtons();
-
-        for(Button button: new Array.ArrayIterator<>(buttons)){
-            button.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-
-                }
-            });
-        }
-
-        Button backButton = new MenuButton("back", .8f);
+        Button backButton = new MenuButton("cancel", .8f);
         otherButtons.add(backButton);
 
         backButton.setPosition(1920/4.5f, 30);
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                server.close();
                 game.setScreen(new MainMenu(game, music));
             }
         });
 
-        stage.addActor(selectionMenu.getTable());
+        stage.addActor(label);
         for (Button button: new Array.ArrayIterator<>(otherButtons)){
             stage.addActor(button);
         }
 
+        server = new ServerInteface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
+
+        server.BindFunction((connection, object) -> System.out.println("Test"), MPInterface.connectionDetails.class);
+
+        try {
+            server.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

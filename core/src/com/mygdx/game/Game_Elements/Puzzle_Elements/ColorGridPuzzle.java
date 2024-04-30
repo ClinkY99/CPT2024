@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class ColorGridPuzzle {
@@ -65,10 +63,7 @@ public class ColorGridPuzzle {
 
     }
     public boolean isCompleted() {
-        if (puzzleWon) {
-            return true;
-        }
-        return false;
+        return puzzleWon;
     }
     public Color convertToColor(int num) {
         if (num == 1) {

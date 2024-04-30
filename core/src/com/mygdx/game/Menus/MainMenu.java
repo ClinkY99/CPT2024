@@ -10,7 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
-import com.mygdx.game.Menus.Interactive.MenuButton;
+import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.Menus.subMenus.HostGame;
+import com.mygdx.game.Menus.subMenus.JoinGame;
+import com.mygdx.game.Menus.subMenus.Settings;
 
 public class MainMenu implements Screen {
 

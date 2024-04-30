@@ -1,14 +1,16 @@
-package com.mygdx.game.Menus.Interactive;
+package com.mygdx.game.Menus.widgets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 
 public class SelectionBar extends ButtonGroup {
     private final Table table;
     private int margins;
+
+    private final Array<SelectionButton> buttons;
 
 
 
@@ -25,10 +27,13 @@ public class SelectionBar extends ButtonGroup {
 
         table = new Table();
 
+        buttons = new Array<>();
+
         for(String Label: labels){
             SelectionButton button = new SelectionButton(Label, size, generator);
             button.center();
-            //button.debug();
+            button.debug();
+            buttons.add(button);
             add(button);
             table.add(button).width(spacingX).height(spacingY).center();
             table.center();
@@ -45,5 +50,10 @@ public class SelectionBar extends ButtonGroup {
 
     public void add(String label) {
         super.add(new SelectionButton(label));
+    }
+
+    @Override
+    public Array<SelectionButton> getButtons() {
+        return buttons;
     }
 }

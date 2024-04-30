@@ -1,4 +1,4 @@
-package com.mygdx.game.Menus;
+package com.mygdx.game.Menus.subMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,8 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
-import com.mygdx.game.Levels.TestLevel;
-import com.mygdx.game.Menus.Interactive.MenuButton;
+import com.mygdx.game.Menus.widgets.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
 
 public class newSave implements Screen {
@@ -29,6 +28,7 @@ public class newSave implements Screen {
 
     Texture SettingsBackground;
     Stage stage;
+    MenuButton hostGameButton;
     private final Array<Button> otherButtons;
 
     TextField nameInput;
@@ -53,25 +53,18 @@ public class newSave implements Screen {
         cancelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainMenu(game, music));
+                game.setScreen(new HostGame(game, music));
             }
         });
 
-        MenuButton hostGameButton = new MenuButton("Host Game", .8f);
+        hostGameButton = new MenuButton("Host Game", .8f);
         otherButtons.add(hostGameButton);
 
         hostGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String savename = nameInput.getText();
-                if(!savename.isEmpty()){
-                    Json json = new Json();
-                    String savedata = json.toJson(new SaveFile(savename));
-
-                    FileHandle save = Gdx.files.local("Saves/"+savename+".eye");
-                    save.writeString(savedata,false);
-
-                    game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
+                if(!hostGameButton.isDisabled()) {
+                    game.setScreen(new connectionMenu(game, NewSave(), music));
                 }
             }
         });
@@ -92,12 +85,24 @@ public class newSave implements Screen {
 
         stage.addActor(nameInput);
         //stage.addActor(label);
-        for (Button button: new Array.ArrayIterator<Button>(otherButtons)){
+        for (Button button: new Array.ArrayIterator<>(otherButtons)){
             stage.addActor(button);
         }
 
     }
 
+    SaveFile NewSave(){
+        String savename = nameInput.getText();
+
+        Json json = new Json();
+        SaveFile saveFile = new SaveFile(savename);
+        String savedata = json.toJson(saveFile);
+
+        FileHandle save = Gdx.files.local("Saves/" + savename + ".eye");
+        //save.writeString(savedata, false);
+        return saveFile;
+
+    }
 
     @Override
     public void show() {
@@ -108,6 +113,10 @@ public class newSave implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
 
+        String savename = nameInput.getText();
+        hostGameButton.setDisabled(savename.isEmpty() || Gdx.files.local("Saves/" + savename + ".eye").exists());
+
+
         stage.act(delta);
 
         stage.getBatch().begin();
@@ -115,7 +124,7 @@ public class newSave implements Screen {
         stage.getBatch().end();
 
         stage.draw();
-    }
+        }
 
     @Override
     public void resize(int width, int height) {
