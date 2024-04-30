@@ -62,7 +62,7 @@ public class connectionMenu implements Screen {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //server.close();
+                server.close();
                 game.setScreen(new MainMenu(game, music));
             }
         });

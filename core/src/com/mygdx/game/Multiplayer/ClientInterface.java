@@ -23,7 +23,7 @@ public class ClientInterface extends Client {
 
 
     public ClientInterface(Class... classes){
-        timeoutMS = 5000;
+        timeoutMS = 250;
         portTCP = 54555;
         portUDP = 54777;
 
@@ -66,6 +66,8 @@ public class ClientInterface extends Client {
 
 
     public void lanServers() {
+
+        availibleServerDetails.clear();
 
         new Thread(() -> {
 
