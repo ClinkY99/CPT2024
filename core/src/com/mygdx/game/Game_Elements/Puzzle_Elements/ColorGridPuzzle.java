@@ -2,17 +2,12 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game_Elements.World;
-import com.mygdx.game.Menus.Interactive.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class ColorGridPuzzle {
