@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.TestLevel;
@@ -42,7 +43,7 @@ public class HostGame implements Screen {
 
         background = new Texture("Menu/Menu2.png");
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
         Table table = new Table();
@@ -103,7 +104,6 @@ public class HostGame implements Screen {
         scrollPane.setFadeScrollBars(false);
         //scrollPane.debug();
 
-
         stage.addActor(table);
         for (Button button: new Array.ArrayIterator<>(otherButtons)){
             stage.addActor(button);
@@ -130,8 +130,6 @@ public class HostGame implements Screen {
             buttonGroup = new ButtonGroup<>();
             for (saveSelection i : new Array.ArrayIterable<>(array)){
                 buttonGroup.add(i);
-
-
                 table.addActor(i);
             }
 
@@ -148,7 +146,6 @@ public class HostGame implements Screen {
 
             table.addActor(label);
         }
-
         return table;
     }
 

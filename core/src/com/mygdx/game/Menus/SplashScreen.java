@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.ray3k.stripe.FreeTypeSkin;
 
@@ -27,7 +28,7 @@ public class SplashScreen implements Screen {
     public SplashScreen(CPTGame game) {
         this.game = game;
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
         background = new Texture(Gdx.files.internal("Menu/SplashScreen.png"));

@@ -18,5 +18,6 @@ public class AutoFocusScrollpane extends ScrollPane {
                 getStage().setScrollFocus(null);
             }
         });
+        debug();
     }
 }

@@ -2,9 +2,12 @@ package com.mygdx.game.Menus.widgets;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.utils.Array;
 
-public class Switcher extends Actor {
+
+public class Switcher extends Container<Actor> {
 
     private final Array<Actor> actorArray;
 
@@ -12,27 +15,28 @@ public class Switcher extends Actor {
 
 
     public Switcher(Actor... actors){
+        super();
         actorArray = new Array<>(actors);
         focused = 0;
-
+        setActor(actorArray.get(focused));
     }
 
     @Override
     public void act(float delta) {
-        super.act(delta);
         actorArray.get(focused).act(delta);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        actorArray.get(focused).draw(batch, parentAlpha);
-        actorArray.get(focused);
+
+
     }
 
     public void switchFocused(int newFocus){
         if(newFocus >=0 && newFocus < actorArray.size){
             focused = newFocus;
+            setActor(actorArray.get(focused));
         }
     }
     public Actor getFocused(){return actorArray.get(focused);}
@@ -45,6 +49,7 @@ public class Switcher extends Actor {
 
     public void updateFocused(Actor actor){
         actorArray.set(focused, actor);
+        setActor(actorArray.get(focused));
     }
 
 }

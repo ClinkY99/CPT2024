@@ -10,14 +10,12 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Menus.widgets.*;
 import com.mygdx.game.Menus.MainMenu;
@@ -47,7 +45,7 @@ public class JoinGame implements Screen {
 
         background = new Texture("Menu/Menu2.png");
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
         selectionBar = new SelectionBar(1080/3,100,"Online", "LAN");
@@ -113,17 +111,23 @@ public class JoinGame implements Screen {
     Actor updateLan(){
         Array< MPInterface.serverDetails> arr = client.getAvailibleServerDetails();
         if(arr.size > 0) {
-            Table table = new Table();
+            VerticalGroup table = new VerticalGroup();
+            ButtonGroup<Button> buttonGroup = new ButtonGroup<>();
             for (MPInterface.serverDetails s : new Array.ArrayIterable<>(arr)) {
                 if (s.serverOpen) {
-                    table.addActor(new serverSelection(s));
-
+                    serverSelection selection = new serverSelection(s);
+                    table.addActor(selection);
+                    buttonGroup.add(selection);
                 }
             }
+//            table.setPosition(0,0);
+//            table.debug();
+
             AutoFocusScrollpane pane = new AutoFocusScrollpane(table);
+            pane.setPosition(0,1080/4f);
             pane.setHeight(1080/2f+25);
             pane.setWidth(1920/5f*3);
-            pane.setPosition(0, 1080/4f);
+            pane.setFadeScrollBars(false);
             pane.debug();
 
             return pane;
@@ -131,7 +135,7 @@ public class JoinGame implements Screen {
             Label serversFound = new Label("No Servers found", new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")));
 
             serversFound.getStyle().fontColor = new Color(0,0,0,1);
-            serversFound.setPosition(0, 1080/2f);
+            serversFound.setPosition(0, 0);
             serversFound.setWidth(1920/5f*3);
             serversFound.setAlignment(Align.center);
             serversFound.setFontScale(.5f);
@@ -150,8 +154,10 @@ public class JoinGame implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
 
-        if(switcher.getFocusedIndex()==1){
+        if(switcher.getFocusedIndex()==1 && client.isNewServerDetailsAvailable()){
             switcher.updateFocused(updateLan());
+            client.setNewServerDetailsAvailable(false);
+            //stage.addActor(updateLan());
         }
 
         stage.act(delta);

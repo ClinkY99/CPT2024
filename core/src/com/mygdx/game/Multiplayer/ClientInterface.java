@@ -19,6 +19,8 @@ public class ClientInterface extends Client {
     public Array<Class> Classes;
 
     public Array<MPInterface.serverDetails> availibleServerDetails;
+    private boolean newServerDetailsAvailable;
+
 
     public ClientInterface(Class... classes){
         timeoutMS = 5000;
@@ -65,11 +67,14 @@ public class ClientInterface extends Client {
 
     public void lanServers() {
 
-        //new Thread(() -> {
+        new Thread(() -> {
 
             List<InetAddress> addresses = discoverHosts(portUDP, timeoutMS);
 
-            bindFunction((connection, object) -> availibleServerDetails.add((MPInterface.serverDetails) object), MPInterface.connectionDetails.class);
+            bindFunction((connection, object) -> {
+                availibleServerDetails.add((MPInterface.serverDetails) object);
+                newServerDetailsAvailable = true;
+            }, MPInterface.serverDetails.class);
 
             for (InetAddress address : addresses) {
                 System.out.println("test");
@@ -90,10 +95,18 @@ public class ClientInterface extends Client {
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);
 //            }
-        //});
+        }).start();
     }
 
     public Array<MPInterface.serverDetails> getAvailibleServerDetails() {
         return availibleServerDetails;
+    }
+
+    public boolean isNewServerDetailsAvailable() {
+        return newServerDetailsAvailable;
+    }
+
+    public void setNewServerDetailsAvailable(boolean newServerDetailsAvailable) {
+        this.newServerDetailsAvailable = newServerDetailsAvailable;
     }
 }
