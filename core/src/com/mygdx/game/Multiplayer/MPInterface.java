@@ -5,10 +5,14 @@ import com.esotericsoftware.kryonet.Connection;
 public interface MPInterface {
     void Reaction(Connection connection, Object object);
     class serverDetails {
-        String name;
-        String hostName;
-        boolean serverOpen;
-        int completion;
+        public String name;
+        public String hostName;
+        public boolean serverOpen;
+        public int completion;
+
+        public serverDetails() {
+
+        }
 
         public serverDetails(String name, String hostName, boolean serverOpen, int completion) {
             this.name = name;
@@ -16,32 +20,18 @@ public interface MPInterface {
             this.serverOpen = serverOpen;
             this.completion = completion;
         }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getHostName() {
-            return hostName;
-        }
-
-        public boolean isServerOpen() {
-            return serverOpen;
-        }
-
-        public int getCompletion() {
-            return completion;
-        }
     }
     class connectionDetails {
-        String clientName;
+        public String clientName;
+
+        public connectionDetails() {
+
+        }
+
         public connectionDetails(String clientName) {
             this.clientName = clientName;
         }
 
-        public String getClientName() {
-            return clientName;
-        }
     }
 
 }

@@ -82,6 +82,14 @@ public class ClientInterface extends Client {
                     throw new RuntimeException(e);
                 }
             }
+
+//            try {
+//                System.out.println("test");
+//                connect(timeoutMS, "172.20.10.2", portTCP, portUDP);
+//                sendTCP(new MPInterface.connectionDetails("Test"));
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
         //});
     }
 
