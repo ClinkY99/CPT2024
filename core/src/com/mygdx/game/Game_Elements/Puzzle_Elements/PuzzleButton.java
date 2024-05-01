@@ -61,7 +61,7 @@ public class PuzzleButton extends TextButton {
             parameter.color = color;
             BitmapFont font = generator.generateFont(parameter);
             setLabel(newLabel(Text, new LabelStyle(font, getStyle().fontColor)));
-            table.add(this).width(100);
+            table.add(this).width(this.getText().length()*50);
         }
 
 

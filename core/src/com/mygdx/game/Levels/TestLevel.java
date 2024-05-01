@@ -42,8 +42,11 @@ public class TestLevel implements Screen {
     World LevelWorld; ArrayList<DragDropObject> dragDropObjectTest;
 
     DragDrop testDragDropPuzzle;
+    boolean solved = false;
 
     PuzzleTable levelTable;
+    PuzzleTable gridTable;
+    ColorGridPuzzle testGridPuzzle;
 
     public TestLevel(CPTGame game, Texture img) {
 
@@ -57,6 +60,8 @@ public class TestLevel implements Screen {
 
         levelTable = new PuzzleTable(640,540,stage);
         buttonTable = new PuzzleTable(1040,840,stage);
+        gridTable = new PuzzleTable(1440,840,stage);
+        testGridPuzzle = new ColorGridPuzzle(gridTable,stage);
 
         PuzzleButton clickMe = new PuzzleButton("Click to Summon Drag and Drop Puzzle",2, buttonTable,globalSkin);
 
@@ -102,7 +107,7 @@ public class TestLevel implements Screen {
         keyPadTable = new PuzzleTable(10000,10000,stage);
         testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
         camera.setToOrtho(false, 1920,1080);
-        LevelBackground = new Texture(Gdx.files.internal("Images/gale.jpeg"));
+        LevelBackground = new Texture(Gdx.files.internal("Images/idle_0.png"));
         FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 
         dragDropObjectTest = new ArrayList<>();
@@ -121,11 +126,13 @@ public class TestLevel implements Screen {
         levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         buttonTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         keyPadButtonHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        gridTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         if (testKeyPad.correctCodeInputted) {
             for (int i = 0; i < testKeyPad.buttons.size(); i++) {
                 testKeyPad.buttons.get(i).setColor(Color.BLUE);
             }
         }
+        testGridPuzzle.updateGrid(LevelWorld,stage);
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -153,6 +160,12 @@ public class TestLevel implements Screen {
             TestBookShelf.text.draw(game.batch);
         } else if (TestBookShelf.textLoaded) {
             TestBookShelf.text.draw(game.batch);
+        }
+
+        if (!(testKeyPad.correctCodeInputted && TestBookShelf.textLoaded && testGridPuzzle.isCompleted()) && !solved) {
+            LevelWorld.objects.get(5).position.x = 100000;
+        } else {
+            solved = true;
         }
         testKeyPad.updateKeyPad(game.batch);
 

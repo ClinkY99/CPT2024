@@ -32,13 +32,19 @@ public class ColorGridPuzzle {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                PuzzleButton buttonToAdd = new PuzzleButton("A", 2, table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
+                PuzzleButton buttonToAdd = new PuzzleButton("+", 2, table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
                 int finalI = i;
                 int finalJ = j;
                     buttonToAdd.addListener(new ClickListener() {
                         public void clicked(InputEvent event, float x, float y) {
                             if (!puzzleWon) {
                                 gridData[finalI][finalJ] = (gridData[finalI][finalJ] == 1) ? 0 : 1;
+                                if (buttonToAdd.data == 0) {
+                                    buttonToAdd.data = 1;
+                                } else {
+                                    buttonToAdd.data = 0;
+                                }
+                                buttonToAdd.setColor(convertToColor(buttonToAdd.data));
                             }
                         }
 
@@ -46,18 +52,18 @@ public class ColorGridPuzzle {
                     buttons.add(buttonToAdd);
                 }
                 table.row();
+
             }
         }
 
 
     public void updateGrid(World LevelWorld,Stage stage){
-        if (ipsumLoaded) {
-            this.ipsumHolder.setPosition(this.ipsumHolder.getX(), this.ipsumHolder.getY());
-            this.ipsumHolder.loadPosition(LevelWorld, LevelWorld.objects.get(0));
+        for (int i = 0;i < buttons.size();i++) {
+            if (buttons.get(i).data == 0) {
+                return;
+            }
         }
-        if (!this.ipsumLoaded) {
-            stage.act();
-        }
+        puzzleWon = true;
     }
     public boolean isCompleted() {
         return puzzleWon;
