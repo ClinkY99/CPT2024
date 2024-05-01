@@ -10,14 +10,16 @@ import java.awt.*;
 public class DragDropObject {
     Sprite spriteThatGoesOverRectangle;
     public com.badlogic.gdx.math.Rectangle actualRectangle;
+    float changeInYPosition;
+    public float lastYPosition;
     Texture image;
     public DragDropObject(Texture img) {
         image = img;
-        actualRectangle= new Rectangle(500,500, img.getWidth(), img.getHeight());
+        actualRectangle= new Rectangle(900,500, img.getWidth(), img.getHeight());
     }
 
 
     public void render(Batch batch) {
-        batch.draw(image,actualRectangle.x,actualRectangle.y,actualRectangle.width,actualRectangle.height);
+        batch.draw(image,actualRectangle.x,actualRectangle.y - (changeInYPosition*2) + actualRectangle.height/2,actualRectangle.width,actualRectangle.height);
     }
 }

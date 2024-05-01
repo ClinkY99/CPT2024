@@ -107,11 +107,11 @@ public class TestLevel implements Screen {
         keyPadTable = new PuzzleTable(10000,10000,stage);
         testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
         camera.setToOrtho(false, 1920,1080);
-        LevelBackground = new Texture(Gdx.files.internal("Images/idle_0.png"));
+        LevelBackground = new Texture(Gdx.files.internal("Images/gale.jpeg"));
         FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 
         dragDropObjectTest = new ArrayList<>();
-        dragDropObjectTest.add(new DragDropObject(new Texture(Gdx.files.internal("Images/gale.jpeg"))));
+        dragDropObjectTest.add(new DragDropObject(new Texture(Gdx.files.internal("Images/key.png"))));
 
         testDragDropPuzzle = new DragDrop(LevelWorld, game.batch);
     }
@@ -162,15 +162,15 @@ public class TestLevel implements Screen {
             TestBookShelf.text.draw(game.batch);
         }
 
-        if (!(testKeyPad.correctCodeInputted && TestBookShelf.textLoaded && testGridPuzzle.isCompleted()) && !solved) {
-            LevelWorld.objects.get(5).position.x = 100000;
+        if (!(testKeyPad.correctCodeInputted && TestBookShelf.textLoaded && testGridPuzzle.isCompleted() && testDragDropPuzzle.isSolved) && !solved) {
+            game.batch.draw(new Texture(Gdx.files.internal("Images/doorSpriteNew.png")),1500,500);
         } else {
             solved = true;
         }
         testKeyPad.updateKeyPad(game.batch);
 
 
-        testDragDropPuzzle.render(dragDropObjectTest);
+        testDragDropPuzzle.render(dragDropObjectTest, game.batch);
 
 
 
