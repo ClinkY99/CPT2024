@@ -23,7 +23,7 @@ public class ClientInterface extends Client {
 
 
     public ClientInterface(Class... classes){
-        timeoutMS = 250;
+        timeoutMS = 5000;
         portTCP = 54555;
         portUDP = 54777;
 
@@ -71,7 +71,7 @@ public class ClientInterface extends Client {
 
         new Thread(() -> {
 
-            List<InetAddress> addresses = discoverHosts(portUDP, timeoutMS);
+            List<InetAddress> addresses = discoverHosts(portUDP, 500);
 
             bindFunction((connection, object) -> {
                 availibleServerDetails.add((MPInterface.serverDetails) object);
@@ -81,10 +81,9 @@ public class ClientInterface extends Client {
             for (InetAddress address : addresses) {
                 System.out.println("test");
                 try {
-                    if (address.isReachable(timeoutMS)) {
-                        connect(timeoutMS, address, portTCP, portUDP);
-                        sendTCP(new MPInterface.connectionDetails("Test"));
-                    }
+                    connect(timeoutMS, address, portTCP, portUDP);
+                    sendTCP(new MPInterface.connectionDetails("Test", InetAddress.getLocalHost().toString()));
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

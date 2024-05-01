@@ -22,6 +22,8 @@ import com.mygdx.game.Multiplayer.ServerInteface;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class connectionMenu implements Screen {
     final CPTGame game;
@@ -74,7 +76,22 @@ public class connectionMenu implements Screen {
 
         server = new ServerInteface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
 
-        server.BindFunction((connection, object) -> connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", true, 0)), MPInterface.connectionDetails.class);
+        server.BindFunction((connection, object) -> {
+            MPInterface.connectionDetails connectionDetails = (MPInterface.connectionDetails) object;
+
+            try {
+                connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", InetAddress.getLocalHost().toString(), true, 0, connectionDetails.confirm));
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(connectionDetails.confirm){
+                server.close();
+                game.setScreen(new transitionToGame(game, saveFile));
+            }
+
+
+        }, MPInterface.connectionDetails.class);
 
 
         try {

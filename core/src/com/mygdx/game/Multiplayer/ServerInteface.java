@@ -30,7 +30,6 @@ public class ServerInteface extends Server {
         for (Class cls : classes) {
             bindClass(cls);
         }
-
     }
 
     public void init() throws IOException {
