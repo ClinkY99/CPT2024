@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -21,6 +23,7 @@ import com.mygdx.game.Game_Elements.World;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class TestLevel implements Screen {
 
@@ -37,13 +40,17 @@ public class TestLevel implements Screen {
     final CPTGame game;
     Skin globalSkin;
     PuzzleTable keyPadButtonHolder;
+    PuzzleTable imageButtonHolder;
     PuzzleTable keyPadTable;
     KeyPad testKeyPad;
     World LevelWorld; ArrayList<DragDropObject> dragDropObjectTest;
 
     DragDrop testDragDropPuzzle;
-
+    boolean solved = false;
+ImagePuzzleButton doorButton;
     PuzzleTable levelTable;
+    PuzzleTable gridTable;
+    ColorGridPuzzle testGridPuzzle;
 
     public TestLevel(CPTGame game, Texture img) {
 
@@ -57,6 +64,8 @@ public class TestLevel implements Screen {
 
         levelTable = new PuzzleTable(640,540,stage);
         buttonTable = new PuzzleTable(1040,840,stage);
+        gridTable = new PuzzleTable(1440,840,stage);
+        testGridPuzzle = new ColorGridPuzzle(gridTable,stage);
 
         PuzzleButton clickMe = new PuzzleButton("Click to Summon Drag and Drop Puzzle",2, buttonTable,globalSkin);
 
@@ -106,9 +115,14 @@ public class TestLevel implements Screen {
         FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 
         dragDropObjectTest = new ArrayList<>();
-        dragDropObjectTest.add(new DragDropObject(new Texture(Gdx.files.internal("Images/gale.jpeg"))));
+        dragDropObjectTest.add(new DragDropObject(new Texture(Gdx.files.internal("Images/key.png"))));
 
         testDragDropPuzzle = new DragDrop(LevelWorld, game.batch);
+
+        imageButtonHolder = new PuzzleTable(1500,0,stage);
+        doorButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/doorSpriteNew.png")),5, this);
+        imageButtonHolder.add(doorButton);
+
     }
     @Override
     public void show() {
@@ -121,11 +135,16 @@ public class TestLevel implements Screen {
         levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         buttonTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         keyPadButtonHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        gridTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+
+            imageButtonHolder.loadPosition(LevelWorld, LevelWorld.objects.get(0));
+
         if (testKeyPad.correctCodeInputted) {
             for (int i = 0; i < testKeyPad.buttons.size(); i++) {
                 testKeyPad.buttons.get(i).setColor(Color.BLUE);
             }
         }
+        testGridPuzzle.updateGrid(LevelWorld,stage);
         ScreenUtils.clear(0,0,0,1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -154,10 +173,16 @@ public class TestLevel implements Screen {
         } else if (TestBookShelf.textLoaded) {
             TestBookShelf.text.draw(game.batch);
         }
-        testKeyPad.updateKeyPad(game.batch);
+
+        if (!(testKeyPad.correctCodeInputted && TestBookShelf.textLoaded && testGridPuzzle.isCompleted() && testDragDropPuzzle.isSolved) && !solved) {
+            doorButton.isLoaded = false;
+        } else {
+            solved = true;
+        }
+        testKeyPad.updateKeyPad(game.batch,LevelWorld);
 
 
-        testDragDropPuzzle.render(dragDropObjectTest);
+        testDragDropPuzzle.render(dragDropObjectTest, game.batch);
 
 
 

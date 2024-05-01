@@ -42,8 +42,7 @@ public class BookShelf {
         for (int i = 0; i < gridData.length; i++) {
             for (int j = 0; j < gridData[0].length; j++) {
 
-                PuzzleButton buttonToAdd = new PuzzleButton("B",2,table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json"))));
-
+                PuzzleButton buttonToAdd = new PuzzleButton("BOOK",2,table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json"))));
                 int finalI = i;
                 int finalJ = j;
                 if (showImage) {

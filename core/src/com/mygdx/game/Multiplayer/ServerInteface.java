@@ -38,6 +38,7 @@ public class ServerInteface extends Server {
         addListener(new Listener(){
             public void received (Connection connection, Object object){
                 Functions.setSize(Functions.size);
+                System.out.println("Sigma");
                 for (int i = 0; i < Classes.size; i++) {
                     if(Classes.get(i).equals(object.getClass())){
                         Functions.get(i).Reaction(connection, object);
