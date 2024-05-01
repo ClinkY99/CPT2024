@@ -101,7 +101,7 @@ public class KeyPad {
             }
             keyPadTable.setPosition(100000,100000);
         }
-        public void updateKeyPad(Batch batch)
+        public void updateKeyPad(Batch batch,World world)
 
          {
              displayCurrentCode = new TextButton("",new FreeTypeSkin(Gdx.files.internal("Menu/Skins/Button.json")));
@@ -128,6 +128,11 @@ public class KeyPad {
             }
                 codeDisplay.setText(textCode);
             //displays current code
+             if (isShown) {
+                 world.shouldAct = false;
+             } else {
+                 world.shouldAct = true;
+             }
 
 
 
