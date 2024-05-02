@@ -20,6 +20,7 @@ import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
 import com.mygdx.game.Game_Elements.World;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TestLevel implements Screen {
@@ -45,7 +46,8 @@ public class TestLevel implements Screen {
 
     PuzzleTable levelTable;
 
-    public TestLevel(CPTGame game, Texture img) {
+    public TestLevel(CPTGame game, Texture img) throws IOException
+    {
 
         this.game = game;
         LevelWorld = new World(img);

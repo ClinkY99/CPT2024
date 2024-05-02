@@ -21,6 +21,8 @@ import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Menus.widgets.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import java.io.IOException;
+
 public class newSave implements Screen {
     final CPTGame game;
 
@@ -53,7 +55,11 @@ public class newSave implements Screen {
         cancelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new HostGame(game, music));
+                try {
+                    game.setScreen(new HostGame(game, music));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

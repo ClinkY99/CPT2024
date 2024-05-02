@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.game.Menus.SplashScreen;
 
+import java.io.File;
+
+import static com.sun.tools.attach.VirtualMachine.list;
+
 public class CPTGame extends Game {
 	public SpriteBatch batch;
 	SplashScreen menuLevel;
@@ -19,6 +23,7 @@ public class CPTGame extends Game {
 	{
 		img = new Texture(Gdx.files.internal("Images/rectangleImg.png"));
 		batch = new SpriteBatch();
+
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 		menuLevel = new SplashScreen(this);
 		setScreen(menuLevel);

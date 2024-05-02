@@ -15,7 +15,10 @@ import com.mygdx.game.Menus.subMenus.HostGame;
 import com.mygdx.game.Menus.subMenus.JoinGame;
 import com.mygdx.game.Menus.subMenus.Settings;
 
-public class MainMenu implements Screen {
+import java.io.IOException;
+
+public class MainMenu implements Screen
+        {
 
     final CPTGame game;
     Music MainMenuMusic;
@@ -38,7 +41,11 @@ public class MainMenu implements Screen {
         hostGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 //game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
-                game.setScreen(new HostGame(game, mainMenuMusic));
+                try {
+                    game.setScreen(new HostGame(game, mainMenuMusic));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         MenuButton joinGameButton = new MenuButton("Join Game", 1.25f);

@@ -79,10 +79,9 @@ public class ClientInterface extends Client {
             for (InetAddress address : addresses) {
                 System.out.println("test");
                 try {
-                    if (address.isReachable(timeoutMS)) {
-                        connect(timeoutMS, address, portTCP, portUDP);
-                        sendTCP(new MPInterface.connectionDetails("Test"));
-                    }
+                    connect(timeoutMS, address, portTCP, portUDP);
+                    sendTCP(new MPInterface.connectionDetails("Test"));
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

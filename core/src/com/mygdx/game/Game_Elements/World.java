@@ -33,10 +33,10 @@ public class World
 
     TextButton newButton;
 
-    public World(Texture img)
+    public World(Texture img) throws IOException
     {
-        Texture[] player_image = {new Texture(Gdx.files.internal("Images/character/idle/Forward.png")), new Texture(Gdx.files.internal("Images/character/idle/Back.png")), new Texture(Gdx.files.internal("Images/character/idle/left.png")), new Texture(Gdx.files.internal("Images/character/idle/right.png"))};
-        player = new Player (player_image);
+
+        player = new Player ("Images/");
         objects = new ArrayList<>();
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(img);

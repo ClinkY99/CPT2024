@@ -21,6 +21,8 @@ import com.mygdx.game.Menus.widgets.MenuButton;
 import com.mygdx.game.Menus.widgets.saveSelection;
 import com.mygdx.game.Menus.MainMenu;
 
+import java.io.IOException;
+
 
 public class HostGame implements Screen {
     final CPTGame game;
@@ -34,7 +36,8 @@ public class HostGame implements Screen {
 
     private final AutoFocusScrollpane scrollPane;
 
-    public HostGame(CPTGame Game, Music menuMusic){
+    public HostGame(CPTGame Game, Music menuMusic) throws IOException
+    {
         this.game = Game;
 
         music = menuMusic;
@@ -83,7 +86,11 @@ public class HostGame implements Screen {
         hostGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
+                try {
+                    game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

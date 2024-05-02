@@ -3,44 +3,59 @@ package com.mygdx.game.Game_Elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Levels.TestLevel;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+
+import static com.badlogic.gdx.Gdx.files;
 
 public class Player
 {
     public Vector2 position, positionChange;
     public Sprite player;
+    public HashMap<String, ArrayList<String>> State;
     public float speed = 2000;
     public float move;
+    String path;
     Rectangle player_rect;
     int[] data;
     public boolean isCollidingX;
     public boolean isCollidingY;
-    Texture[] img;
+    public animation animation;
+    public String state;
 
 
-    public Player(Texture[] img)
+
+    public Player(String path) throws IOException
     {
-        this.img = img;
-        player = new Sprite(img[0]);
-        int mid = Gdx.graphics.getWidth() / 2;
+
+        this.path = path;
+        animation = new animation(path, "player",  0.1f);
+        state = "Idle/Forward";
+        int mid =+ Gdx.graphics.getWidth() / 2;
         int midy = Gdx.graphics.getHeight() / 2;
         position = new Vector2(mid, midy);
-        System.out.println(position);
         positionChange = new Vector2(0, 0);
-
+        player = new Sprite();
         data = new int[]{0, 0, 0, 0};
         // need to subtract the width and height divided by 2 to put player in middle
         player.setPosition(position.x, position.y);
-        player_rect = new Rectangle(position.x , position.y, player.getWidth(), player.getHeight());
+        System.out.println(player.getWidth());
+        player_rect = new Rectangle(position.x , position.y, 150, 150);
 
     }
+
+
 
     public void move(float deltaTime)
     {
@@ -51,33 +66,33 @@ public class Player
         if (Gdx.input.isKeyPressed(Input.Keys.A))
         {
             positionChange.x = -1;
-            player.setTexture(img[2]);
+            state = "Running/left";
             press = true;
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D))
         {
             positionChange.x = 1;
-            player.setTexture(img[3]);
+            state = "Running/right";
             press = true;
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W))
         {
             positionChange.y = 1;
-            player.setTexture(img[1]);
+            state = "Running/Back";
             press = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S))
         {
             positionChange.y = -1;
-            player.setTexture(img[0]);
+            state = "Running/Forward";
             press = true;
         }
 
         if (!press)
         {
-            player.setTexture(img[0]);
+            state = "Idle/Forward";
         }
 
     }
@@ -131,7 +146,7 @@ public class Player
     }
     public void draw(SpriteBatch batch)
     {
-        player.draw(batch);
+        animation.render(state, batch);
     }
     public void update(float deltaTime, ArrayList<Object> tiles, int[] scroll)
     {
