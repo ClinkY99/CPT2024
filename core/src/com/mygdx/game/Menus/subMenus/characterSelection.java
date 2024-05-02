@@ -17,6 +17,7 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
+import com.ray3k.stripe.FreeTypeSkin;
 
 public class characterSelection implements Screen {
     final CPTGame game;
@@ -56,7 +57,7 @@ public class characterSelection implements Screen {
 
         buttonGroup = new ButtonGroup<>();
 
-        Button leftEye = new Button(new Skin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "eye_Left");
+        Button leftEye = new Button(new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "eye_Left");
         leftEye.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -65,7 +66,7 @@ public class characterSelection implements Screen {
         });
         table.add(leftEye);
 
-        Button rightEye = new Button(new Skin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "eye_Right");
+        Button rightEye = new Button(new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")), "eye_Right");
         rightEye.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -79,8 +80,8 @@ public class characterSelection implements Screen {
 
         buttonGroup.add(leftEye);
         buttonGroup.add(rightEye);
-
         buttonGroup.setMaxCheckCount(1);
+        buttonGroup.setUncheckLast(true);
 
         stage.addActor(table);
     }

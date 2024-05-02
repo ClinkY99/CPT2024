@@ -104,6 +104,7 @@ public class JoinGame implements Screen {
                     client.bindFunction((connection, object)-> {
                         MPInterface.serverDetails serverDetails = (MPInterface.serverDetails) object;
                         if(serverDetails.confirmed) {
+
                             game.setScreen(new characterSelection(game, serverDetails.ip));
                         }
                     }, MPInterface.serverDetails.class);
