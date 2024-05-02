@@ -23,6 +23,7 @@ import com.mygdx.game.Multiplayer.ClientInterface;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -39,6 +40,8 @@ public class JoinGame implements Screen {
     private final ButtonGroup<serverSelection> buttonGroup;
 
     private final ClientInterface client;
+
+    private String ip;
 
     public JoinGame(CPTGame Game, Music menuMusic){
         this.game = Game;
@@ -104,8 +107,7 @@ public class JoinGame implements Screen {
                     client.bindFunction((connection, object)-> {
                         MPInterface.serverDetails serverDetails = (MPInterface.serverDetails) object;
                         if(serverDetails.confirmed) {
-
-                            game.setScreen(new characterSelection(game, serverDetails.ip));
+                            ip = serverDetails.ip;
                         }
                     }, MPInterface.serverDetails.class);
                 }
@@ -192,6 +194,10 @@ public class JoinGame implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
 
+        if(ip != null){
+            game.setScreen(new characterSelection(game, ip));
+        }
+
         if(switcher.getFocusedIndex()==1 && client.isNewServerDetailsAvailable()){
             switcher.updateFocused(updateLan());
             client.setNewServerDetailsAvailable(false);
@@ -204,6 +210,7 @@ public class JoinGame implements Screen {
         stage.getBatch().end();
 
         stage.draw();
+
     }
 
     @Override
@@ -228,7 +235,12 @@ public class JoinGame implements Screen {
 
     @Override
     public void dispose() {
-
+        try {
+            client.dispose();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        music.stop();
     }
 
     class serverSelection extends TextButton {

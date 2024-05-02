@@ -39,6 +39,8 @@ public class connectionMenu implements Screen {
 
     private final ServerInteface server;
 
+    private boolean connected = false;
+
     public connectionMenu(CPTGame Game, SaveFile save, Music menuMusic) {
         game = Game;
 
@@ -87,7 +89,7 @@ public class connectionMenu implements Screen {
 
             if(connectionDetails.confirm){
                 server.close();
-                game.setScreen(new characterSelection(game, saveFile));
+                connected = true;
             }
 
 
@@ -110,6 +112,10 @@ public class connectionMenu implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
+
+        if(connected){
+            game.setScreen(new characterSelection(game, saveFile));
+        }
 
         stage.act(delta);
 
@@ -142,6 +148,6 @@ public class connectionMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        music.stop();
     }
 }

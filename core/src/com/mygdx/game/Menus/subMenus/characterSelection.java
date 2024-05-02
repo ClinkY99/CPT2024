@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Multiplayer.MPHandle;
-import com.mygdx.game.Multiplayer.MPInterface;
 import com.ray3k.stripe.FreeTypeSkin;
 
 public class characterSelection implements Screen {
@@ -48,11 +46,6 @@ public class characterSelection implements Screen {
     public characterSelection(CPTGame game) {
         this.game = game;
 
-
-
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-
         table = new Table();
 
         buttonGroup = new ButtonGroup<>();
@@ -83,6 +76,9 @@ public class characterSelection implements Screen {
         buttonGroup.setMaxCheckCount(1);
         buttonGroup.setUncheckLast(true);
 
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
         stage.addActor(table);
     }
 
