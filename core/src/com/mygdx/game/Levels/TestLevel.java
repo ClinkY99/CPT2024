@@ -64,7 +64,7 @@ ImagePuzzleButton doorButton;
 
         levelTable = new PuzzleTable(640,540,stage);
         buttonTable = new PuzzleTable(1040,840,stage);
-        gridTable = new PuzzleTable(1440,840,stage);
+        gridTable = new PuzzleTable(1740,840,stage);
         testGridPuzzle = new ColorGridPuzzle(gridTable,stage);
 
         PuzzleButton clickMe = new PuzzleButton("Click to Summon Drag and Drop Puzzle",2, buttonTable,globalSkin);
@@ -107,7 +107,7 @@ ImagePuzzleButton doorButton;
             }
         });
 */
-        TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/bucketPicture.jpeg")), 3,3);
+        TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/noteForBookShelfTest.png")), 3,3,this);
         keyPadTable = new PuzzleTable(10000,10000,stage);
         testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
         camera.setToOrtho(false, 1920,1080);
@@ -119,9 +119,11 @@ ImagePuzzleButton doorButton;
 
         testDragDropPuzzle = new DragDrop(LevelWorld, game.batch);
 
-        imageButtonHolder = new PuzzleTable(1500,0,stage);
+        imageButtonHolder = new PuzzleTable(1800,200,stage);
         doorButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/doorSpriteNew.png")),5, this);
-        imageButtonHolder.add(doorButton);
+        doorButton.isLoaded = true;
+        imageButtonHolder.add(doorButton).size(doorButton.ButtonTexture.getWidth() * doorButton.scale,doorButton.ButtonTexture.getHeight()*doorButton.scale);
+
 
     }
     @Override
@@ -174,9 +176,10 @@ ImagePuzzleButton doorButton;
             TestBookShelf.text.draw(game.batch);
         }
 
-        if (!(testKeyPad.correctCodeInputted && TestBookShelf.textLoaded && testGridPuzzle.isCompleted() && testDragDropPuzzle.isSolved) && !solved) {
-            doorButton.isLoaded = false;
+        if (!(testKeyPad.correctCodeInputted && testGridPuzzle.isCompleted() && testDragDropPuzzle.isSolved) && !solved) {
+            doorButton.isLoaded = true;
         } else {
+            doorButton.isLoaded = false;
             solved = true;
         }
         testKeyPad.updateKeyPad(game.batch,LevelWorld);

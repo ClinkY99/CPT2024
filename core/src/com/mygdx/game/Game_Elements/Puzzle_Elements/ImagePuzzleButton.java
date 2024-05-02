@@ -14,16 +14,19 @@ import com.ray3k.stripe.FreeTypeSkin;
 
 public class ImagePuzzleButton extends ImageButton {
     //to make this work, add it to a table and then a stage
-    Texture ButtonTexture;
+    public Texture ButtonTexture;
     Boolean isClicked;
     World world;
     PuzzleTable puzzleTable;
     public boolean isLoaded;
+    public int scale;
     public ImagePuzzleButton(Texture texture, int scale, TestLevel level)
     {
         super(new FreeTypeSkin(Gdx.files.internal("Menu/Skins/RedPixelSkin.json")), "default");
         ButtonTexture = texture;
-        this.scaleBy(scale);
+        this.scale = scale;
+
+
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageChecked = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageDisabled = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
