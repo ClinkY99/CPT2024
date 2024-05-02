@@ -87,7 +87,7 @@ public class connectionMenu implements Screen {
 
             if(connectionDetails.confirm){
                 server.close();
-                game.setScreen(new transitionToGame(game, saveFile));
+                game.setScreen(new characterSelection(game, saveFile));
             }
 
 

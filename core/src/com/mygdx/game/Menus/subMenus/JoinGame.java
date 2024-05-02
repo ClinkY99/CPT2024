@@ -23,6 +23,9 @@ import com.mygdx.game.Multiplayer.ClientInterface;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.ray3k.stripe.FreeTypeSkin;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class JoinGame implements Screen {
     final CPTGame game;
 
@@ -33,6 +36,7 @@ public class JoinGame implements Screen {
 
     private final Array<Button> otherButtons;
     private final Switcher switcher;
+    private final ButtonGroup<serverSelection> buttonGroup;
 
     private final ClientInterface client;
 
@@ -76,10 +80,39 @@ public class JoinGame implements Screen {
             }
         });
 
+        Button refreshButton = new MenuButton("refresh", .8f);
+        refreshButton.setPosition(1920/9f*4+150, 1080/4f*3-25);
+        refreshButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                client.lanServers();
+            }
+        });
+        otherButtons.add(refreshButton);
+
         Button joinButton = new MenuButton("Join Game", .8f);
+        joinButton.setPosition(1920/4.5f*3.1f, 30);
+        joinButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(switcher.getFocusedIndex()==1&&buttonGroup.getButtons().size >0){
+                    try {
+                        client.sendTCP(new MPInterface.connectionDetails("test", InetAddress.getLocalHost().toString(), true));
+                    } catch (UnknownHostException e) {
+                        throw new RuntimeException(e);
+                    }
+                    client.bindFunction((connection, object)-> {
+                        MPInterface.serverDetails serverDetails = (MPInterface.serverDetails) object;
+                        if(serverDetails.confirmed) {
+                            game.setScreen(new characterSelection(game, serverDetails.ip));
+                        }
+                    }, MPInterface.serverDetails.class);
+                }
+            }
+        });
+
         otherButtons.add(joinButton);
 
-        joinButton.setPosition(1920/4.5f*3.1f, 30);
 
         client = new ClientInterface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
         client.init();
@@ -92,6 +125,9 @@ public class JoinGame implements Screen {
         onlineLabel.setAlignment(Align.center);
         onlineLabel.setFontScale(.5f);
 
+        buttonGroup = new ButtonGroup<>();
+        buttonGroup.setMaxCheckCount(1);
+        buttonGroup.setMinCheckCount(1);
 
         switcher = new Switcher(onlineLabel, updateLan());
 
@@ -99,6 +135,8 @@ public class JoinGame implements Screen {
         switcher.setWidth(1920/5f*3);
         switcher.setHeight(1080/2f+25);
         switcher.debug();
+
+
 
         stage.addActor(selectionBar.getTable());
         stage.addActor(switcher);
@@ -112,7 +150,7 @@ public class JoinGame implements Screen {
         Array< MPInterface.serverDetails> arr = client.getAvailibleServerDetails();
         if(arr.size > 0) {
             VerticalGroup table = new VerticalGroup();
-            ButtonGroup<Button> buttonGroup = new ButtonGroup<>();
+            buttonGroup.clear();
             for (MPInterface.serverDetails s : new Array.ArrayIterable<>(arr)) {
                 if (s.serverOpen) {
                     serverSelection selection = new serverSelection(s);
@@ -120,8 +158,7 @@ public class JoinGame implements Screen {
                     buttonGroup.add(selection);
                 }
             }
-//            table.setPosition(0,0);
-//            table.debug();
+            table.align(Align.top);
 
             AutoFocusScrollpane pane = new AutoFocusScrollpane(table);
             pane.setPosition(0,1080/4f);
@@ -157,7 +194,6 @@ public class JoinGame implements Screen {
         if(switcher.getFocusedIndex()==1 && client.isNewServerDetailsAvailable()){
             switcher.updateFocused(updateLan());
             client.setNewServerDetailsAvailable(false);
-            //stage.addActor(updateLan());
         }
 
         stage.act(delta);

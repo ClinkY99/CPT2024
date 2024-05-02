@@ -1,5 +1,7 @@
 package com.mygdx.game.Multiplayer;
 
+import com.badlogic.gdx.utils.Null;
+
 public class MPHandle {
 
     ServerInteface server;
@@ -16,12 +18,13 @@ public class MPHandle {
         }
     }
 
-    public void init(){
+    public void init(@Null String ip){
         try {
             if (isHost) {
                 server.init();
             } else {
                 client.init();
+                client.connect(ip);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

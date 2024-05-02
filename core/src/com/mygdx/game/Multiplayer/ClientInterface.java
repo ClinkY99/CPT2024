@@ -50,6 +50,9 @@ public class ClientInterface extends Client {
             }
         });
     }
+    public void connect(String host) throws IOException {
+        connect(timeoutMS, host, portTCP, portUDP);
+    }
 
     public void bindClass(Class cls){
         Kryo kryo = getKryo();
