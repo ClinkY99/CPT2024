@@ -69,6 +69,7 @@ public class SplashScreen implements Screen {
                 game.setScreen(new MainMenu(game, music));
             }
         });
+
     }
 
     @Override

@@ -67,9 +67,11 @@ public class ClientInterface extends Client {
 
     public void lanServers() {
 
+        availibleServerDetails.clear();
+
         new Thread(() -> {
 
-            List<InetAddress> addresses = discoverHosts(portUDP, timeoutMS);
+            List<InetAddress> addresses = discoverHosts(portUDP, 500);
 
             bindFunction((connection, object) -> {
                 availibleServerDetails.add((MPInterface.serverDetails) object);
@@ -80,7 +82,7 @@ public class ClientInterface extends Client {
                 System.out.println("test");
                 try {
                     connect(timeoutMS, address, portTCP, portUDP);
-                    sendTCP(new MPInterface.connectionDetails("Test"));
+                    sendTCP(new MPInterface.connectionDetails("Test", InetAddress.getLocalHost().toString()));
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
