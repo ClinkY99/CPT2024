@@ -203,6 +203,8 @@ public class characterSelection implements Screen {
     }
 
     private void cancelSelection(boolean local){
+        confirmed = false;
+
         confirmButton.setText("Confirm");
         confirmButton.getListeners().pop();
         confirmButton.addListener(new ClickListener(){
