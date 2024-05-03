@@ -17,6 +17,7 @@ public class ImagePuzzleButton extends ImageButton {
     public Texture ButtonTexture;
     Boolean isClicked;
     World world;
+    public int data;
     PuzzleTable puzzleTable;
     public boolean isLoaded;
     public int scale;
@@ -26,7 +27,7 @@ public class ImagePuzzleButton extends ImageButton {
         ButtonTexture = texture;
         this.scale = scale;
 
-
+        isLoaded = true;
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageChecked = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageDisabled = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
@@ -41,7 +42,19 @@ public class ImagePuzzleButton extends ImageButton {
                     remove();
                 }
             }
+
         });
+
+    }
+    public void updateTexture(Texture tex) {
+        this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(tex));
+        this.getStyle().imageChecked = new TextureRegionDrawable(new TextureRegion(tex));
+        this.getStyle().imageDisabled = new TextureRegionDrawable(new TextureRegion(tex));
+        this.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(tex));
+        this.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(tex));
+        this.getStyle().imageCheckedDown = new TextureRegionDrawable(new TextureRegion(tex));
+        this.getStyle().imageCheckedOver = new TextureRegionDrawable(new TextureRegion(tex));
+
 
     }
 }

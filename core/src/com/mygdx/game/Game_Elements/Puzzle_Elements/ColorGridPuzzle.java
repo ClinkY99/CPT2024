@@ -2,12 +2,17 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game_Elements.World;
+import com.mygdx.game.Levels.TestLevel;
 import com.ray3k.stripe.FreeTypeSkin;
+import jdk.incubator.vector.VectorOperators;
+
 import java.util.ArrayList;
 
 public class ColorGridPuzzle {
@@ -19,11 +24,11 @@ public class ColorGridPuzzle {
     public float lastY;
     public Sprite ipsum;
     public boolean ipsumDrawn = false;
-    ArrayList<PuzzleButton> buttons = new ArrayList<>();
+    ArrayList<ImagePuzzleButton> buttons = new ArrayList<>();
     public PuzzleTable ipsumHolder;
 
 
-    public ColorGridPuzzle(PuzzleTable table,Stage stage) {
+    public ColorGridPuzzle(PuzzleTable table,Stage stage, TestLevel level) {
         gridData = new int[][]{
                 {0, 0, 0},
                 {0, 0, 0},
@@ -32,7 +37,8 @@ public class ColorGridPuzzle {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                PuzzleButton buttonToAdd = new PuzzleButton("+", 2, table, Color.RED, (new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"))));
+                ImagePuzzleButton buttonToAdd = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/idle_0_red.png")), 2, level);
+                buttonToAdd.isLoaded = true;
                 int finalI = i;
                 int finalJ = j;
                     buttonToAdd.addListener(new ClickListener() {
@@ -44,11 +50,14 @@ public class ColorGridPuzzle {
                                 } else {
                                     buttonToAdd.data = 0;
                                 }
-                                buttonToAdd.setColor(convertToColor(buttonToAdd.data));
+
+                                buttonToAdd.updateTexture( (buttonToAdd.data == 1) ? new Texture(Gdx.files.internal("Images/idle_0_green.png")): new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+                                System.out.println(convertToColor(buttonToAdd.data));
                             }
                         }
 
                     });
+                    table.add(buttonToAdd);
                     buttons.add(buttonToAdd);
                 }
                 table.row();
@@ -57,7 +66,7 @@ public class ColorGridPuzzle {
         }
 
 
-    public void updateGrid(World LevelWorld,Stage stage){
+    public void updateGrid(){
         for (int i = 0;i < buttons.size();i++) {
             if (buttons.get(i).data == 0) {
                 return;

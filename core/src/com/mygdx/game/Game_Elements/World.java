@@ -45,20 +45,27 @@ public class World
     public void map(Texture img)
     {
         int[] loc = {0, 0};
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 30; i++)
         {
             loc[0] = i;
             Object tile = new Object(img, loc);
             objects.add(tile);
         }
+        for (int i = 0; i < 30; i++)
+        {
+            loc[0] = i;
+            loc[1] = 8;
+            Object tile = new Object(img, loc);
+            objects.add(tile);
+        }
         loc = new int[]{0, 1};
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < 20; i++)
         {
             loc[1] = i;
             Object tile = new Object(img, loc);
             objects.add(tile);
         }
-        loc = new int[]{20,0};
+        loc = new int[]{0,10};
         for (int i = 1; i < 50; i++) {
             loc[1] = i;
             Object tile = new Object(img,loc);

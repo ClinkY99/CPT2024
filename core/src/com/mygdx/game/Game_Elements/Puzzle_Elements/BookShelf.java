@@ -26,7 +26,7 @@ public class BookShelf {
     public Sprite text = new Sprite(new Texture(Gdx.files.internal("Images/among us.png")));
 
 
-    public BookShelf(PuzzleTable table, Stage stage, boolean showImage, Texture image, int rows, int columns, TestLevel level) {
+    public BookShelf(PuzzleTable table, Stage stage, boolean showImage, Texture image, int rows, int columns, TestLevel level, World world) {
         textLoaded = false;
         text = new Sprite(image);
         textHolder = new PuzzleTable(table.X,table.Y,stage);
@@ -55,11 +55,13 @@ public class BookShelf {
                                 gridData[finalI][finalJ] = (gridData[finalI][finalJ] == 1) ? 0 : 1;
 
                                 if (textLoaded) {
+
                                 } else {
 
                                     textHolder.setPosition(Gdx.graphics.getWidth()/2 - 350,Gdx.graphics.getHeight()/2 - 200);
                                     text.setPosition(textHolder.getX(),textHolder.getY());
                                     textLoaded = true;
+                                    world.allowMovement = false;
                                 }
 
                             }
@@ -74,20 +76,7 @@ public class BookShelf {
             table.row();
         }
     }
-    /*
-    public void updateShelf(CPTGame game) {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            this.unloadText();
-        }
-        if (TestBookShelf.textLoaded) {
-            LevelWorld.allowMovement = false;
-        } else {
-            LevelWorld.allowMovement = true;
-        }
-        TestBookShelf.text.draw(game.batch);
 
-
-    }*/
     public void unloadText() {
         textLoaded = false;
         text.setPosition(10000,10000);

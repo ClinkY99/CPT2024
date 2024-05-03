@@ -20,24 +20,17 @@ import java.util.ArrayList;
 public class KeyPad {
 
         public PuzzleTable keyPadTable;
-        int gridData[][];
         public boolean isShown;
         Sprite whiteRectangleKeyPad;
-        public boolean textLoaded;
-        public float lastX;
-        public float lastY;
+
         public boolean correctCodeInputted = false;
         public ArrayList<PuzzleButton> buttons = new ArrayList<>();
-        int length;
         int[] correctCode;
         int currentNumForKeyPadConstruction = 1;
         int[] currentCode;
         TextButton displayCurrentCode;
     PuzzleButton codeDisplay;
     int codeIterator = 0;
-    OrthographicCamera camera;
-    Stage stage;
-    FreeTypeSkin globalSkin;
 
         public KeyPad(PuzzleTable table, int[] correctCodeNew) {
             keyPadTable = table;
@@ -128,12 +121,6 @@ public class KeyPad {
             }
                 codeDisplay.setText(textCode);
             //displays current code
-             if (isShown) {
-                 world.shouldAct = false;
-             } else {
-                 world.shouldAct = true;
-             }
-
 
 
         }

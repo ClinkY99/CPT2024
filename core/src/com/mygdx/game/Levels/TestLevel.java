@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
@@ -24,7 +24,6 @@ import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class TestLevel implements Screen {
 
@@ -44,15 +43,15 @@ public class TestLevel implements Screen {
     PuzzleTable imageButtonHolder;
     PuzzleTable keyPadTable;
     KeyPad testKeyPad;
-    World LevelWorld; ArrayList<DragDropObject> dragDropObjectTest;
+    World LevelWorld; Array<DragDropObject> dragDropObjectTest;
 
-    DragDrop testDragDropPuzzle;
+    DragDropPuzzle testDragDropPuzzle;
     boolean solved = false;
 ImagePuzzleButton doorButton;
     PuzzleTable levelTable;
     PuzzleTable gridTable;
     ColorGridPuzzle testGridPuzzle;
-
+Array<PuzzleTable> puzzleTables;
     public TestLevel(CPTGame game, Texture img) throws IOException
     {
 
@@ -66,8 +65,17 @@ ImagePuzzleButton doorButton;
 
         levelTable = new PuzzleTable(640,540,stage);
         buttonTable = new PuzzleTable(1040,840,stage);
-        gridTable = new PuzzleTable(1740,840,stage);
-        testGridPuzzle = new ColorGridPuzzle(gridTable,stage);
+        gridTable = new PuzzleTable(3300,840,stage);
+        keyPadButtonHolder = new PuzzleTable(2500,540,stage);
+        imageButtonHolder = new PuzzleTable(4000,600,stage);
+        keyPadTable = new PuzzleTable(1000,600,stage);
+
+
+        puzzleTables = new Array<>();
+        puzzleTables.add(levelTable,buttonTable,gridTable,keyPadButtonHolder);
+        puzzleTables.add(imageButtonHolder);
+
+        testGridPuzzle = new ColorGridPuzzle(gridTable,stage,this);
 
         PuzzleButton clickMe = new PuzzleButton("Click to Summon Drag and Drop Puzzle",2, buttonTable,globalSkin);
 
@@ -77,54 +85,31 @@ ImagePuzzleButton doorButton;
             }
         });
 
-        keyPadButtonHolder = new PuzzleTable(1500,540,stage);
-        PuzzleButton summonKeypadButton = new PuzzleButton("Summon KeyPad",2,keyPadButtonHolder,globalSkin);
+        ImagePuzzleButton summonKeypadButton = new ImagePuzzleButton(new Texture("Images/keyPadSprite.png"),2,this);
+        testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
 
         summonKeypadButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 keyPadTable.setPosition(1000,600);
-                testKeyPad.isShown = true;
                 LevelWorld.allowMovement = false;
             }
         });
+
+        keyPadButtonHolder.add(summonKeypadButton);
         buttonTable.row();
-        /*
-        PuzzleButton dontClickMe = new PuzzleButton("Not well",1,buttonTable,globalSkin);
-        dontClickMe.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                System.exit(0);
-            }
-        });
 
-        PuzzleButton doClickMe = new PuzzleButton("Well",1,buttonTable,globalSkin);
-        doClickMe.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                buttonTable.row();
-                PuzzleButton goodToHearThat = new PuzzleButton("Good to hear that!",2,buttonTable,globalSkin);
-                goodToHearThat.addListener(new ClickListener() {
-                   public void clicked(InputEvent event,float x, float y) {
-                       goodToHearThat.setPosition(x,y);
-                   }
-                });
-            }
-        });
-*/
-        TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/noteForBookShelfTest.png")), 3,3,this);
-        keyPadTable = new PuzzleTable(10000,10000,stage);
-        testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
+        TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/noteForBookShelfTest.png")), 3,3,this,LevelWorld);
         camera.setToOrtho(false, 1920,1080);
-        LevelBackground = new Texture(Gdx.files.internal("Images/gale.jpeg"));
-        FreeTypeFontGenerator LevelFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
+        LevelBackground = new Texture(Gdx.files.internal("Images/undertaleBackground.png"));
 
-        dragDropObjectTest = new ArrayList<>();
+        dragDropObjectTest = new Array<>();
         dragDropObjectTest.add(new DragDropObject(new Texture(Gdx.files.internal("Images/key.png"))));
 
-        testDragDropPuzzle = new DragDrop(LevelWorld, game.batch);
+        testDragDropPuzzle = new DragDropPuzzle(LevelWorld, game.batch);
 
-        imageButtonHolder = new PuzzleTable(1800,200,stage);
-        doorButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/doorSpriteNew.png")),5, this);
-        doorButton.isLoaded = true;
-        imageButtonHolder.add(doorButton).size(doorButton.ButtonTexture.getWidth() * doorButton.scale,doorButton.ButtonTexture.getHeight()*doorButton.scale);
+        doorButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/newDoorSprite.png")),5, this);
+        imageButtonHolder.add(doorButton);
+
 
 
     }
@@ -135,21 +120,18 @@ ImagePuzzleButton doorButton;
     @Override
     public void render(float delta) {
         game.batch.begin();
+        ScreenUtils.clear(0,0,0,1);
 
-        levelTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
-        buttonTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
-        keyPadButtonHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
-        gridTable.loadPosition(LevelWorld,LevelWorld.objects.get(0));
-
-            imageButtonHolder.loadPosition(LevelWorld, LevelWorld.objects.get(0));
-
+        for(int i = 0; i < puzzleTables.size;i++) {
+            puzzleTables.get(i).loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        }
         if (testKeyPad.correctCodeInputted) {
             for (int i = 0; i < testKeyPad.buttons.size(); i++) {
                 testKeyPad.buttons.get(i).setColor(Color.BLUE);
             }
         }
-        testGridPuzzle.updateGrid(LevelWorld,stage);
-        ScreenUtils.clear(0,0,0,1);
+
+        testGridPuzzle.updateGrid();
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.draw(LevelBackground, 0,0,1920,1080);
@@ -158,36 +140,16 @@ ImagePuzzleButton doorButton;
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             TestBookShelf.unloadText();
             LevelWorld.allowMovement = true;
-            keyPadTable.setPosition(101010,10010101);
-            testKeyPad.isShown = false;
             testDragDropPuzzle.isLoaded = false;
+            testKeyPad.isShown = false;
+            keyPadTable.setPosition(10000,10000);
         }
 
-        if (TestBookShelf.textLoaded) {
-            LevelWorld.allowMovement = false;
-        }
-        if (TestBookShelf.textLoaded || testKeyPad.isShown || testDragDropPuzzle.isLoaded) {
-            LevelWorld.shouldAct = false;
-        } else {
-            LevelWorld.shouldAct = true;
-        }
-        if (LevelWorld.shouldAct) {
-            stage.act();
-            TestBookShelf.text.draw(game.batch);
-        } else if (TestBookShelf.textLoaded) {
-            TestBookShelf.text.draw(game.batch);
-        }
 
-        if (!(testKeyPad.correctCodeInputted && testGridPuzzle.isCompleted() && testDragDropPuzzle.isSolved) && !solved) {
-            doorButton.isLoaded = true;
-        } else {
-            doorButton.isLoaded = false;
-            solved = true;
-        }
+        stage.act();
+
         testKeyPad.updateKeyPad(game.batch,LevelWorld);
-
-
-        testDragDropPuzzle.render(dragDropObjectTest, game.batch);
+        testDragDropPuzzle.render(dragDropObjectTest, game.batch, stage);
 
 
 
