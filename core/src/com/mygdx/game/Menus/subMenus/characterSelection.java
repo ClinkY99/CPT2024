@@ -180,7 +180,10 @@ public class characterSelection implements Screen {
     private void confirmEye(int character, boolean local){
         if(local) {
             confirmed = true;
-            table.getCells().removeIndex(Math.abs(character - 1));
+            if(table.getCells().size > 1) {
+                table.getCells().removeIndex(Math.abs(character - 1));
+            }
+
             table.invalidate();
             buttonGroup.getButtons().get(Math.abs(character - 1)).setVisible(false);
             buttonGroup.getButtons().get(character).setDisabled(true);
@@ -196,7 +199,9 @@ public class characterSelection implements Screen {
             labels.get(1).setText("(Your Idol is Chosen)");
         }
         else {
-            table.getCells().removeIndex(character);
+            if(table.getCells().size > 1) {
+                table.getCells().removeIndex(character);
+            }
             table.invalidate();
             buttonGroup.getButtons().get(character).setVisible(false);
         }
@@ -204,7 +209,6 @@ public class characterSelection implements Screen {
 
     private void cancelSelection(boolean local){
         confirmed = false;
-
         confirmButton.setText("Confirm");
         confirmButton.getListeners().pop();
         confirmButton.addListener(new ClickListener(){
@@ -257,7 +261,7 @@ public class characterSelection implements Screen {
     public void render(float delta) {
         if(otherReady && confirmed){
             try {
-                game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
+                game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png")), connection));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

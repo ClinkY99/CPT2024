@@ -20,6 +20,7 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.*;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PuzzleButton;
 import com.mygdx.game.Game_Elements.World;
+import com.mygdx.game.Multiplayer.MPHandle;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
@@ -52,6 +53,14 @@ ImagePuzzleButton doorButton;
     PuzzleTable gridTable;
     ColorGridPuzzle testGridPuzzle;
 Array<PuzzleTable> puzzleTables;
+MPHandle connection;
+
+public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOException {
+    this(game,img);
+    this.connection = connection;
+}
+
+
     public TestLevel(CPTGame game, Texture img) throws IOException
     {
 

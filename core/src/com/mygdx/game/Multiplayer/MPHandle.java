@@ -69,6 +69,9 @@ public class MPHandle {
     public void sendTCP(Object object){
         if(isHost){
             server.sendToAllTCP(object);
+            if(server.getConnections().length == 0){
+                throw new RuntimeException();
+            }
         } else {
             client.sendTCP(object);
         }
