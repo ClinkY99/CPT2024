@@ -17,13 +17,16 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Menus.widgets.MenuButton;
 import com.mygdx.game.Menus.MainMenu;
+import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.mygdx.game.Multiplayer.ServerInteface;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class connectionMenu implements Screen {
     final CPTGame game;
@@ -81,11 +84,8 @@ public class connectionMenu implements Screen {
         server.BindFunction((connection, object) -> {
             MPInterface.connectionDetails connectionDetails = (MPInterface.connectionDetails) object;
 
-            try {
-                connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", InetAddress.getLocalHost().getHostAddress(), true, 0, connectionDetails.confirm));
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
-            }
+            connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", MPHandle.getLocalIP(), true, 0, connectionDetails.confirm));
+            System.out.println(MPHandle.getLocalIP());
 
             if(connectionDetails.confirm){
                 server.close();
@@ -102,6 +102,7 @@ public class connectionMenu implements Screen {
             throw new RuntimeException(e);
         }
     }
+
 
 
     @Override

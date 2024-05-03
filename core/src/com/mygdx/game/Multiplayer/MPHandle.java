@@ -2,6 +2,15 @@ package com.mygdx.game.Multiplayer;
 
 import com.badlogic.gdx.utils.Null;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+
 public class MPHandle {
 
     ServerInteface server;
@@ -34,6 +43,27 @@ public class MPHandle {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    static public String getLocalIP() {
+        List<InetAddress> addresses = new ArrayList<>();
+
+        Enumeration<NetworkInterface> net = null;
+        try {
+            net = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+
+        for(NetworkInterface netInt: Collections.list(net)) {
+            Enumeration<InetAddress> address = netInt.getInetAddresses();
+            for(InetAddress addr: Collections.list(address)) {
+                if(!addr.isLoopbackAddress()&& addr instanceof Inet4Address) {
+                    return addr.getHostAddress();
+                }
+            }
+        }
+        return null;
     }
 
     public void sendTCP(Object object){

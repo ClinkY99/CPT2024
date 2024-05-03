@@ -20,6 +20,7 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Menus.widgets.*;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.Multiplayer.ClientInterface;
+import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.ray3k.stripe.FreeTypeSkin;
 
@@ -99,11 +100,7 @@ public class JoinGame implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(switcher.getFocusedIndex()==1&&buttonGroup.getButtons().size >0){
-                    try {
-                        client.sendTCP(new MPInterface.connectionDetails("test", InetAddress.getLocalHost().getHostAddress(), true));
-                    } catch (UnknownHostException e) {
-                        throw new RuntimeException(e);
-                    }
+                    client.sendTCP(new MPInterface.connectionDetails("test", MPHandle.getLocalIP(), true));
                     client.bindFunction((connection, object)-> {
                         MPInterface.serverDetails serverDetails = (MPInterface.serverDetails) object;
                         if(serverDetails.confirmed) {
