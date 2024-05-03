@@ -100,7 +100,7 @@ public class JoinGame implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(switcher.getFocusedIndex()==1&&buttonGroup.getButtons().size >0){
                     try {
-                        client.sendTCP(new MPInterface.connectionDetails("test", InetAddress.getLocalHost().toString(), true));
+                        client.sendTCP(new MPInterface.connectionDetails("test", InetAddress.getLocalHost().getHostAddress(), true));
                     } catch (UnknownHostException e) {
                         throw new RuntimeException(e);
                     }

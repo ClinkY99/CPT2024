@@ -82,7 +82,7 @@ public class connectionMenu implements Screen {
             MPInterface.connectionDetails connectionDetails = (MPInterface.connectionDetails) object;
 
             try {
-                connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", InetAddress.getLocalHost().toString(), true, 0, connectionDetails.confirm));
+                connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", InetAddress.getLocalHost().getHostAddress(), true, 0, connectionDetails.confirm));
             } catch (UnknownHostException e) {
                 throw new RuntimeException(e);
             }

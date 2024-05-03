@@ -24,7 +24,12 @@ public class MPHandle {
                 server.init();
             } else {
                 client.init();
-                client.connect(ip);
+                while(true) {
+                    try {
+                        client.connect(ip);
+                        break;
+                    } catch (Exception ignored){}
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

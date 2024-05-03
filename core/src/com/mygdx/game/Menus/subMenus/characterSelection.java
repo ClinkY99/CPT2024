@@ -44,16 +44,20 @@ public class characterSelection implements Screen {
     private boolean otherReady = false;
 
     public characterSelection(CPTGame game, SaveFile saveFile) {
-        this(game,true);
+        this(game);
         this.saveFile = saveFile;
+        this.isHost = true;
+        initMP();
     }
 
     public characterSelection(CPTGame game, String serverIP){
-        this(game,false);
+        this(game);
         this.serverIP = serverIP;
+        this.isHost = false;
+        initMP();
     }
 
-    public characterSelection(CPTGame game, boolean isHost) {
+    public characterSelection(CPTGame game) {
         this.game = game;
 
         table = new Table();
@@ -109,38 +113,6 @@ public class characterSelection implements Screen {
 
         refreshTable();
 
-
-        //table.debug();
-
-        this.isHost = isHost;
-        initMP();
-        connection.bindFunction((connection, object) -> {
-            MPInterface.characterSelection selection = (MPInterface.characterSelection) object;
-            if(selection.confirmed) {
-                if (isHost && !confirmed || isHost && confirmed && selection.character != characterSelected) {
-                    connection.sendTCP(new MPInterface.confirm(true));
-                    confirmEye(selection.character,false);
-                } else if (isHost) {
-                    connection.sendTCP(new MPInterface.confirm());
-                    return;
-
-                } else {
-                    confirmEye(selection.character,false);
-                }
-                otherReady = true;
-
-            } else {
-                cancelSelection(false);
-                otherReady = false;
-            }
-        }, MPInterface.characterSelection.class);
-        connection.bindFunction((connection, object)-> {
-            MPInterface.confirm confirm = (MPInterface.confirm) object;
-            if(!isHost&&confirm.confirmed){
-                confirmEye(characterSelected,true);
-            }
-        }, MPInterface.confirm.class);
-
         Label label = new Label("Your Adventure is Just Beggining, Remember: \n Ignorance is Bliss", new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")),"characterSelectionLabel");
         label.setFontScale(.9f);
         label.setPosition(1920/2f-label.getWidth()/2, 1080/3f*2);
@@ -175,6 +147,33 @@ public class characterSelection implements Screen {
     private void initMP(){
         connection = new MPHandle(isHost);
         connection.init(serverIP);
+
+        connection.bindFunction((connection, object) -> {
+            MPInterface.characterSelection selection = (MPInterface.characterSelection) object;
+            if(selection.confirmed) {
+                if (isHost && !confirmed || isHost && confirmed && selection.character != characterSelected) {
+                    connection.sendTCP(new MPInterface.confirm(true));
+                    confirmEye(selection.character,false);
+                } else if (isHost) {
+                    connection.sendTCP(new MPInterface.confirm());
+                    return;
+
+                } else {
+                    confirmEye(selection.character,false);
+                }
+                otherReady = true;
+
+            } else {
+                cancelSelection(false);
+                otherReady = false;
+            }
+        }, MPInterface.characterSelection.class);
+        connection.bindFunction((connection, object)-> {
+            MPInterface.confirm confirm = (MPInterface.confirm) object;
+            if(!isHost&&confirm.confirmed){
+                confirmEye(characterSelected,true);
+            }
+        }, MPInterface.confirm.class);
     }
 
     private void confirmEye(int character, boolean local){
