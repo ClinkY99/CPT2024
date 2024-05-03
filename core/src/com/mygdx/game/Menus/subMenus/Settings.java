@@ -13,10 +13,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
-import com.mygdx.game.Menus.widgets.MenuButton;
-import com.mygdx.game.Menus.widgets.SelectionBar;
+import com.mygdx.game.ui.widgets.menus.MenuButton;
+import com.mygdx.game.ui.widgets.menus.SelectionBar;
 import com.mygdx.game.Menus.MainMenu;
-import com.mygdx.game.Menus.widgets.SelectionButton;
+import com.mygdx.game.ui.widgets.menus.SelectionButton;
 
 
 public class Settings implements Screen {

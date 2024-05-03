@@ -17,16 +17,16 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
-import com.mygdx.game.Menus.widgets.*;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.Multiplayer.ClientInterface;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
+import com.mygdx.game.ui.widgets.AutoFocusScrollpane;
+import com.mygdx.game.ui.widgets.Switcher;
+import com.mygdx.game.ui.widgets.menus.*;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class JoinGame implements Screen {
     final CPTGame game;

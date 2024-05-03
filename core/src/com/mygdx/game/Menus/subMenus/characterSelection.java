@@ -12,10 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.TestLevel;
-import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.ray3k.stripe.FreeTypeSkin;
@@ -62,7 +63,7 @@ public class characterSelection implements Screen {
 
         table = new Table();
 
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
         buttonGroup = new ButtonGroup<>();
@@ -178,6 +179,7 @@ public class characterSelection implements Screen {
 
     private void confirmEye(int character, boolean local){
         if(local) {
+            confirmed = true;
             table.getCells().removeIndex(Math.abs(character - 1));
             table.invalidate();
             buttonGroup.getButtons().get(Math.abs(character - 1)).setVisible(false);
@@ -224,7 +226,6 @@ public class characterSelection implements Screen {
     }
 
     private void confirmCheck(){
-        confirmed = true;
         MPInterface.characterSelection selection = new MPInterface.characterSelection("test", characterSelected,true);
         connection.sendTCP(selection);
         if(isHost){

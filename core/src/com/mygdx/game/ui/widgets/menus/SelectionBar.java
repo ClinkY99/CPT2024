@@ -1,4 +1,4 @@
-package com.mygdx.game.Menus.widgets;
+package com.mygdx.game.ui.widgets.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;

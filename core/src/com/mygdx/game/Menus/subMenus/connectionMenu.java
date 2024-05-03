@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
-import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
@@ -23,10 +23,6 @@ import com.mygdx.game.Multiplayer.ServerInteface;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
 
 public class connectionMenu implements Screen {
     final CPTGame game;

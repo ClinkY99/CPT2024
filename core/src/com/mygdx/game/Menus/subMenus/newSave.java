@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
-import com.mygdx.game.Menus.widgets.MenuButton;
+import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;

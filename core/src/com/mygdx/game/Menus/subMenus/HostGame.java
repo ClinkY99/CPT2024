@@ -16,9 +16,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.TestLevel;
-import com.mygdx.game.Menus.widgets.AutoFocusScrollpane;
-import com.mygdx.game.Menus.widgets.MenuButton;
-import com.mygdx.game.Menus.widgets.saveSelection;
+import com.mygdx.game.ui.widgets.AutoFocusScrollpane;
+import com.mygdx.game.ui.widgets.menus.MenuButton;
+import com.mygdx.game.ui.widgets.menus.saveSelection;
 import com.mygdx.game.Menus.MainMenu;
 
 import java.io.IOException;

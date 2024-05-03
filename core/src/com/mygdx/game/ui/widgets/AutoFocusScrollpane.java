@@ -1,4 +1,4 @@
-package com.mygdx.game.Menus.widgets;
+package com.mygdx.game.ui.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
