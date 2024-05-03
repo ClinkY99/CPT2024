@@ -241,6 +241,11 @@ public class JoinGame implements Screen {
             throw new RuntimeException(e);
         }
         music.stop();
+        music.dispose();
+        stage.dispose();
+        background.dispose();
+        otherButtons.clear();
+
     }
 
     class serverSelection extends TextButton {

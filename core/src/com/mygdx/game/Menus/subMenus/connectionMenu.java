@@ -149,5 +149,10 @@ public class connectionMenu implements Screen {
     @Override
     public void dispose() {
         music.stop();
+        stage.dispose();
+        music.dispose();
+        SettingsBackground.dispose();
+        otherButtons.clear();
+        server.close();
     }
 }

@@ -154,6 +154,8 @@ public class newSave implements Screen {
 
     @Override
     public void dispose() {
-
+        SettingsBackground.dispose();
+        stage.dispose();
+        otherButtons.clear();
     }
 }

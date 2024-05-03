@@ -12,9 +12,9 @@ public class MPHandle {
     public MPHandle(boolean isHost) {
         this.isHost = isHost;
         if(isHost){
-            server = new ServerInteface(MPInterface.ready.class, MPInterface.levelCompletion.class,MPInterface.characterSelection.class);
+            server = new ServerInteface(MPInterface.confirm.class,MPInterface.ready.class, MPInterface.levelCompletion.class,MPInterface.characterSelection.class);
         } else {
-            client = new ClientInterface(MPInterface.ready.class, MPInterface.levelCompletion.class,MPInterface.characterSelection.class);
+            client = new ClientInterface(MPInterface.confirm.class, MPInterface.ready.class, MPInterface.levelCompletion.class,MPInterface.characterSelection.class);
         }
     }
 
@@ -47,5 +47,7 @@ public class MPHandle {
         }
     }
 
-
+    public boolean isHost() {
+        return isHost;
+    }
 }

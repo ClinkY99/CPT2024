@@ -116,6 +116,8 @@ public class Settings implements Screen {
 
     @Override
     public void dispose() {
+        stage.clear();
+        SettingsBackground.dispose();
 
     }
 }

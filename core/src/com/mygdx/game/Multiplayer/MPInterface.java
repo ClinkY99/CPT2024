@@ -2,7 +2,6 @@ package com.mygdx.game.Multiplayer;
 
 import com.esotericsoftware.kryonet.Connection;
 
-import java.net.UnknownHostException;
 
 public interface MPInterface {
     void Reaction(Connection connection, Object object);
@@ -52,8 +51,8 @@ public interface MPInterface {
 
     }
     class ready {
-        String playerID;
-        boolean loaded;
+        public String playerID;
+        public boolean loaded;
 
         public ready() {}
 
@@ -64,9 +63,9 @@ public interface MPInterface {
 
     }
     class characterSelection {
-        String playerID;
-        int character;
-        boolean confirmed;
+        public String playerID;
+        public int character;
+        public boolean confirmed;
 
         public characterSelection() {
 
@@ -83,9 +82,9 @@ public interface MPInterface {
 
     }
     class levelCompletion {
-        String playerID;
-        int level;
-        boolean confirmed;
+        public String playerID;
+        public int level;
+        public boolean confirmed;
 
         public levelCompletion(){}
 
@@ -99,6 +98,15 @@ public interface MPInterface {
             this.confirmed = confirmed;
         }
 
+    }
+    class confirm{
+        public boolean confirmed;
+        public confirm() {
+            this.confirmed = false;
+        }
+        public confirm(boolean confirmed) {
+            this.confirmed = confirmed;
+        }
     }
 
 }
