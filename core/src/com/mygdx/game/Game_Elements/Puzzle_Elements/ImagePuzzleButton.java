@@ -21,7 +21,9 @@ public class ImagePuzzleButton extends ImageButton {
     PuzzleTable puzzleTable;
     public boolean isLoaded;
     public int scale;
-    public ImagePuzzleButton(Texture texture, int scale, TestLevel level)
+    public boolean isEmpty;
+
+    public ImagePuzzleButton(Texture texture, int scale)
     {
         super(new FreeTypeSkin(Gdx.files.internal("Menu/Skins/RedPixelSkin.json")), "default");
         ButtonTexture = texture;

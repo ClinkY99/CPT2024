@@ -17,12 +17,13 @@ public class PuzzleTable extends Table {
         baseX = startingX;
         baseY = startingY;
 
-        //this.setDebug(false);
+        this.setDebug(true);
     }
     public PuzzleTable (float startingX, float startingY, Stage stage) {
         baseX = startingX;
         baseY = startingY;
         stage.addActor(this);
+        this.setDebug(true);
 
     }
 

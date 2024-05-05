@@ -47,6 +47,7 @@ public class TestLevel implements Screen {
     World LevelWorld; Array<DragDropObject> dragDropObjectTest;
 
     DragDropPuzzle testDragDropPuzzle;
+    SlidingTilePuzzle slidingTilePuzzleTest;
     boolean solved = false;
 ImagePuzzleButton doorButton;
     PuzzleTable levelTable;
@@ -84,7 +85,7 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         puzzleTables.add(levelTable,buttonTable,gridTable,keyPadButtonHolder);
         puzzleTables.add(imageButtonHolder);
 
-        testGridPuzzle = new ColorGridPuzzle(gridTable,stage,this);
+        testGridPuzzle = new ColorGridPuzzle(gridTable);
 
         PuzzleButton clickMe = new PuzzleButton("Click to Summon Drag and Drop Puzzle",2, buttonTable,globalSkin);
 
@@ -94,7 +95,7 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
             }
         });
 
-        ImagePuzzleButton summonKeypadButton = new ImagePuzzleButton(new Texture("Images/keyPadSprite.png"),2,this);
+        ImagePuzzleButton summonKeypadButton = new ImagePuzzleButton(new Texture("Images/keyPadSprite.png"),2);
         testKeyPad = new KeyPad(keyPadTable,new int[]{1,2,3,4});
 
         summonKeypadButton.addListener(new ClickListener() {
@@ -108,7 +109,7 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         buttonTable.row();
 
         TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/noteForBookShelfTest.png")), 3,3,this,LevelWorld);
-        camera.setToOrtho(false, 1920,1080);
+        puzzleTables.add(TestBookShelf.textHolder);
         LevelBackground = new Texture(Gdx.files.internal("Images/undertaleBackground.png"));
 
         dragDropObjectTest = new Array<>();
@@ -116,11 +117,11 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
 
         testDragDropPuzzle = new DragDropPuzzle(LevelWorld, game.batch);
 
-        doorButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/newDoorSprite.png")),5, this);
+        doorButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/newDoorSprite.png")),5);
         imageButtonHolder.add(doorButton);
 
-
-
+        camera.setToOrtho(false, 1920,1080);
+        slidingTilePuzzleTest = new SlidingTilePuzzle(4,4, new int[][]{{0,1},{0,2},{0,3}},new Texture(Gdx.files.internal("Images/idle_0_green.png")),new Texture(Gdx.files.internal("Images/idle_0_red.png")),stage,700,700);
     }
     @Override
     public void show() {
@@ -134,6 +135,8 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         for(int i = 0; i < puzzleTables.size;i++) {
             puzzleTables.get(i).loadPosition(LevelWorld,LevelWorld.objects.get(0));
         }
+        slidingTilePuzzleTest.render();
+        slidingTilePuzzleTest.puzzleHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
         if (testKeyPad.correctCodeInputted) {
             for (int i = 0; i < testKeyPad.buttons.size(); i++) {
                 testKeyPad.buttons.get(i).setColor(Color.BLUE);
