@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.TestLevel;
 
+import java.awt.*;
+import java.awt.image.ImagingOpException;
 import java.util.ArrayList;
 
 public class BookShelf {
@@ -18,15 +20,16 @@ public class BookShelf {
     public float lastX;
     public float lastY;
     ArrayList<ImagePuzzleButton> buttons = new ArrayList<>();
-    public Sprite text = new Sprite(new Texture(Gdx.files.internal("Images/among us.png")));
+    ImagePuzzleButton text;
 
 
     public BookShelf(PuzzleTable table, Stage stage, boolean showImage, Texture image, int rows, int columns, TestLevel level, World world) {
         textLoaded = false;
-        text = new Sprite(image);
-        textHolder = new PuzzleTable(table.X,table.Y,stage);
-        textHolder.setDebug(true);
-        unloadText();
+
+        textHolder = new PuzzleTable(500,500,stage);
+        text = new ImagePuzzleButton(image,2);
+        textHolder.setPosition(1000,10000);
+        textHolder.add(text);
 
         gridData = new int[rows][columns];
 
@@ -39,24 +42,20 @@ public class BookShelf {
         for (int i = 0; i < gridData.length; i++) {
             for (int j = 0; j < gridData[0].length; j++) {
 
-                ImagePuzzleButton buttonToAdd = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/bookSpriteTest.png")),3,level);
+                ImagePuzzleButton buttonToAdd = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/bookSpriteTest.png")),3);
                 table.add(buttonToAdd);
                 buttonToAdd.isLoaded = true;
-                int finalI = i;
-                int finalJ = j;
                 if (showImage) {
                     buttonToAdd.addListener(new ClickListener() {
                         public void clicked(InputEvent event, float x, float y) {
-                                gridData[finalI][finalJ] = (gridData[finalI][finalJ] == 1) ? 0 : 1;
 
                                 if (textLoaded) {
 
                                 } else {
-
-                                    textHolder.setPosition(Gdx.graphics.getWidth()/2f - 350,Gdx.graphics.getHeight()/2f - 200);
-                                    text.setPosition(textHolder.getX(),textHolder.getY());
                                     textLoaded = true;
                                     world.allowMovement = false;
+                                    textHolder.setPosition(500,500);
+
                                 }
 
                             }
@@ -74,6 +73,6 @@ public class BookShelf {
 
     public void unloadText() {
         textLoaded = false;
-        text.setPosition(10000,10000);
+        textHolder.setPosition(10000,10000);
     }
 }

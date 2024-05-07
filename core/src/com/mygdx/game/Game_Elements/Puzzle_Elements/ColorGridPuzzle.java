@@ -14,17 +14,12 @@ import java.util.ArrayList;
 public class ColorGridPuzzle {
     //0 = red, 1 = green
     int[][] gridData;
-    public boolean ipsumLoaded;
     boolean puzzleWon;
-    public float lastX;
-    public float lastY;
-    public Sprite ipsum;
-    public boolean ipsumDrawn = false;
     ArrayList<ImagePuzzleButton> buttons = new ArrayList<>();
-    public PuzzleTable ipsumHolder;
 
 
-    public ColorGridPuzzle(PuzzleTable table,Stage stage, TestLevel level) {
+
+    public ColorGridPuzzle(PuzzleTable table) {
         gridData = new int[][]{
                 {0, 0, 0},
                 {0, 0, 0},
@@ -33,7 +28,7 @@ public class ColorGridPuzzle {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                ImagePuzzleButton buttonToAdd = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/idle_0_red.png")), 2, level);
+                ImagePuzzleButton buttonToAdd = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/idle_0_red.png")), 2);
                 buttonToAdd.isLoaded = true;
                 int finalI = i;
                 int finalJ = j;
