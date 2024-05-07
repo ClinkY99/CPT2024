@@ -1,20 +1,14 @@
 package com.mygdx.game.Game_Elements;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.BookShelf;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class World
 {
@@ -23,12 +17,8 @@ public class World
     public static float[] TableScroll = new float[2];
     public Player player;
     public Boolean allowMovement = true;
-    int oneInFour = 0;//this is incremented, so my color change only runs once every four game ticks (it is reset to zero when it hits four)
     public ArrayList<Object> objects;
-    public boolean shouldAct;
-    int colorListIncrementer = 0;
     Color[] colorList;
-    public boolean colorSpasm;
     public static int[] scroll;
 
     TextButton newButton;
@@ -83,7 +73,7 @@ public class World
         TableScroll[1] = true_scroll[1];
         scroll[0] = (int) true_scroll[0]; scroll[1] = (int) true_scroll[1];
     }
-    public void loadMap(String path) throws IOException
+    public void loadMap(String path)
     {
         FileHandle file = Gdx.files.local(path + "level");
         String objects = file.readString();
@@ -98,6 +88,11 @@ public class World
 
     public void run(SpriteBatch batch)
     {
+        run(batch,true);
+    }
+
+    public void run(SpriteBatch batch, boolean top){
+        allowMovement = top;
         scrolling();
         if (allowMovement) {
             player.update(Gdx.graphics.getDeltaTime(), objects, scroll);
@@ -123,21 +118,6 @@ public class World
         player.isCollidingY = false;
         player.collision_detectiony(objects, scroll);
         // color change loop is here
-        if (colorSpasm) {
-            for (int i = 0; i < objects.size(); i++) {
-                if (oneInFour == 1) {
-                    oneInFour = 0;
-                    objects.get(i).setColor(colorList[colorListIncrementer]);
-                    if (colorListIncrementer == colorList.length - 1) {
-                        colorListIncrementer = 0;
-                    }
-                    colorListIncrementer++;
-                } else {
-                    oneInFour++;
-                }
-            }
-        }
-
     }
 
 }

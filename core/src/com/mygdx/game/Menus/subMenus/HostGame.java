@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.TestLevel;
+import com.mygdx.game.ui.transitions.transitionScreen;
+import com.mygdx.game.ui.transitions.transitions;
 import com.mygdx.game.ui.widgets.AutoFocusScrollpane;
 import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.mygdx.game.ui.widgets.menus.saveSelection;
@@ -23,19 +25,27 @@ import com.mygdx.game.Menus.MainMenu;
 
 import java.io.IOException;
 
-
+/**
+ * controls logic and drawing of the host game screen
+ */
 public class HostGame implements Screen {
     final CPTGame game;
 
     private final Music music;
     private final Stage stage;
-    private final Texture background;
+    private final Image background;
     private final Array<Button> otherButtons;
     private ButtonGroup<saveSelection> buttonGroup;
 
 
     private final AutoFocusScrollpane scrollPane;
 
+    /**
+     * controls drawing and initialzing of the host game class
+     * @param Game game data
+     * @param menuMusic music
+     * @throws IOException
+     */
     public HostGame(CPTGame Game, Music menuMusic) throws IOException
     {
         this.game = Game;
@@ -44,10 +54,13 @@ public class HostGame implements Screen {
 
         otherButtons = new Array<>();
 
-        background = new Texture("Menu/Menu2.png");
-
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
+
+        background = new Image(new Texture("Menu/Menu2.png"));
+        background.setPosition(0, 0);
+        background.setSize(1920, 1080);
+        stage.addActor(background);
 
         Table table = new Table();
         MenuButton newGameButton = new MenuButton("New Game");
@@ -82,15 +95,22 @@ public class HostGame implements Screen {
             }
         });
 
+        Screen current = this;
+
         MenuButton hostGameButton = new MenuButton("Host Game", .8f);
         hostGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                try {
-                    game.setScreen(new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png"))));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                game.setScreen(new transitionScreen(current, new transitions() {
+                    @Override
+                    public Screen load() {
+                        try {
+                            return new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png")));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, game));
             }
         });
 
@@ -119,6 +139,10 @@ public class HostGame implements Screen {
 
     }
 
+    /**
+     * this method returns all saves files that are found within the save directory, returns a vertical group
+     * @return Table of all save files found
+     */
     private VerticalGroup initSaves() {
         VerticalGroup table = new VerticalGroup();
 
@@ -156,6 +180,12 @@ public class HostGame implements Screen {
         return table;
     }
 
+    /**
+     * runs quick sort on array of saves to organize them
+     * @param low
+     * @param high
+     * @param array
+     */
     void sortSaves(int low, int high, Array<saveSelection> array){
         if(low < high){
 
@@ -203,9 +233,8 @@ public class HostGame implements Screen {
 
 
         stage.getViewport().getCamera().update();
-        stage.getBatch().begin();
-        stage.getBatch().draw(background ,0,0);
-        stage.getBatch().end();
+
+
 
         stage.draw();
 
@@ -235,7 +264,6 @@ public class HostGame implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        background.dispose();
         otherButtons.clear();
     }
 }

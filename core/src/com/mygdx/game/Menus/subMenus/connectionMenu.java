@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -15,31 +16,41 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
+import com.mygdx.game.ui.transitions.transitionScreen;
 import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
-import com.mygdx.game.Multiplayer.ServerInteface;
+import com.mygdx.game.Multiplayer.ServerInterface;
 import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
 
+/**
+ * controls drawing of the awaiting connection screen, this screen is shown when a player is hosting game and there is no client connection
+ */
 public class connectionMenu implements Screen {
     final CPTGame game;
 
     Music music;
 
-    Texture SettingsBackground;
+    Image SettingsBackground;
     Stage stage;
     Label label;
     private final Array<Button> otherButtons;
 
     private final SaveFile saveFile;
 
-    private final ServerInteface server;
+    private final ServerInterface server;
 
     private boolean connected = false;
 
+    /**
+     * initializes the connection menu screen which handles drawing of the awaiting connection menu as well as the server that is waiting for the MP connection.
+     * @param Game game data
+     * @param save save file
+     * @param menuMusic music
+     */
     public connectionMenu(CPTGame Game, SaveFile save, Music menuMusic) {
         game = Game;
 
@@ -49,14 +60,17 @@ public class connectionMenu implements Screen {
 
         otherButtons = new Array<>();
 
-        SettingsBackground = new Texture(Gdx.files.internal("Menu/Menu1.png"));
-
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
+        SettingsBackground = new Image(new Texture(Gdx.files.internal("Menu/Menu1.png")));
+        SettingsBackground.setPosition(0,0);
+        SettingsBackground.setSize(1920,1080);
+        stage.addActor(SettingsBackground);
+
         label = new Label("Awaiting Connection...", new FreeTypeSkin(Gdx.files.internal("Menu/Skins/MenuInteractables.json")));
         label.setWidth(1920/3f);
-        label.setPosition(1920/2f-1920/3f, 1080/2f);
+        label.setPosition(1920/2f - label.getWidth()/2, 1080/2f-label.getHeight()/2);
 
         Button backButton = new MenuButton("cancel", .8f);
         otherButtons.add(backButton);
@@ -75,8 +89,9 @@ public class connectionMenu implements Screen {
             stage.addActor(button);
         }
 
-        server = new ServerInteface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
+        server = new ServerInterface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
 
+        //binds function to send server data to the client
         server.BindFunction((connection, object) -> {
             MPInterface.connectionDetails connectionDetails = (MPInterface.connectionDetails) object;
 
@@ -110,15 +125,12 @@ public class connectionMenu implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
 
+        //if a client connects send to the character selection screen
         if(connected){
-            game.setScreen(new characterSelection(game, saveFile));
+            game.setScreen(new transitionScreen(this, () -> new characterSelection(game,saveFile), game));
         }
 
         stage.act(delta);
-
-        stage.getBatch().begin();
-        stage.getBatch().draw(SettingsBackground, 0,0,1920,1080);
-        stage.getBatch().end();
 
         stage.draw();
     }
@@ -148,7 +160,6 @@ public class connectionMenu implements Screen {
         music.stop();
         stage.dispose();
         music.dispose();
-        SettingsBackground.dispose();
         otherButtons.clear();
         server.close();
     }

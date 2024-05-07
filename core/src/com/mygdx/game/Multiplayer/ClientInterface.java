@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
 
+/**
+ * This is the class that is used to be interfaced with the kryo client, it has multiple functions to make connections easy within our game functionality
+ */
 public class ClientInterface extends Client {
     public int portTCP;
     public int portUDP;
@@ -21,7 +24,10 @@ public class ClientInterface extends Client {
     public Array<MPInterface.serverDetails> availibleServerDetails;
     private boolean newServerDetailsAvailable;
 
-
+    /**
+     * sets up the client class, but does not yet open the client to connections
+     * @param classes All classes you want to bind to the client in initialization, ensure this list is in the same order on client and server
+     */
     public ClientInterface(Class... classes){
         timeoutMS = 5000;
         portTCP = 54555;
@@ -35,9 +41,12 @@ public class ClientInterface extends Client {
             bindClass(c);
         }
     }
+
+    /**
+     * opens the client for connections and adds a connection listener, to automatically run the correct function when an object is sent from the server
+     */
     public void init(){
         start();
-        System.out.println("test");
         addListener(new Listener(){
             @Override
             public void received(Connection connection, Object object) {
@@ -50,16 +59,31 @@ public class ClientInterface extends Client {
             }
         });
     }
+
+    /**
+     * allows the client to try and connect to a host ip
+     * @param host host IP
+     * @throws IOException if unable to connect to server will crash
+     */
     public void connect(String host) throws IOException {
         connect(timeoutMS, host, portTCP, portUDP);
     }
 
+    /**
+     * Binds an additional class to the client, ensure this is in the same order as the server
+     * @param cls class to be bound
+     */
     public void bindClass(Class cls){
         Kryo kryo = getKryo();
         kryo.register(cls);
         Classes.add(cls);
     }
 
+    /**
+     * binds a function to a specific class, this function will be called when the client receives this object
+     * @param function function to be bound
+     * @param classBound the class that this function is bound to
+     */
     public void bindFunction(MPInterface function, Class classBound){
         Functions.setSize(Classes.size);
         if(Classes.contains(classBound,true)){
@@ -67,7 +91,9 @@ public class ClientInterface extends Client {
         }
     }
 
-
+    /**
+     * this function searches for all servers that are open on the lan in a thread so not to hang the main thread. It sets the available server details array to be equal to the returned server data
+     */
     public void lanServers() {
 
         availibleServerDetails.clear();
@@ -102,10 +128,16 @@ public class ClientInterface extends Client {
         }).start();
     }
 
+    /**
+     * @return the available server details found by the client
+     */
     public Array<MPInterface.serverDetails> getAvailibleServerDetails() {
         return availibleServerDetails;
     }
 
+    /**
+     * @return have new servers been found since the last check
+     */
     public boolean isNewServerDetailsAvailable() {
         return newServerDetailsAvailable;
     }

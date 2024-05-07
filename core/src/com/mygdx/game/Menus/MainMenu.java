@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,16 +18,23 @@ import com.mygdx.game.Menus.subMenus.Settings;
 
 import java.io.IOException;
 
-public class MainMenu implements Screen
-        {
+/**
+ * Main menu class, handles background drawing and logic
+ */
+public class MainMenu implements Screen {
 
     final CPTGame game;
     Music MainMenuMusic;
 
-    Texture MenuBackground;
+    Image MenuBackground;
     Stage stage;
     Table Menulayout;
 
+    /**
+     * Handles initializing the buttons, as well as any background logic for the main class
+     * @param game game data
+     * @param mainMenuMusic music
+     */
     public MainMenu(CPTGame game, Music mainMenuMusic) {
         this.game = game;
 
@@ -80,7 +88,10 @@ public class MainMenu implements Screen
         MainMenuMusic = mainMenuMusic;
 
 
-        MenuBackground = new Texture(Gdx.files.internal("Menu/MainMenu.png"));
+        MenuBackground = new Image(new Texture(Gdx.files.internal("Menu/MainMenu.png")));
+        MenuBackground.setSize(1920,1080);
+        MenuBackground.setPosition(0,0);
+        stage.addActor(MenuBackground);
 
         Menulayout.setPosition(250, 1080/2f -50);
         stage.addActor(Menulayout);
@@ -99,9 +110,7 @@ public class MainMenu implements Screen
         stage.act(delta);
 
         stage.getViewport().getCamera().update();
-        stage.getBatch().begin();
-        stage.getBatch().draw(MenuBackground, 0,0,1920,1080);
-        stage.getBatch().end();
+
         stage.draw();
 
 
@@ -131,7 +140,6 @@ public class MainMenu implements Screen
 
     @Override
     public void dispose(){
-        MenuBackground.dispose();
         stage.dispose();
     }
 }

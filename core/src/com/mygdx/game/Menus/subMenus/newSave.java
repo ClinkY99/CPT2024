@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -23,19 +24,27 @@ import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
 
+/**
+ * controls functionality for creating a new save.
+ */
+
 public class newSave implements Screen {
     final CPTGame game;
 
     Music music;
 
-    Texture SettingsBackground;
+    Image background;
     Stage stage;
     MenuButton hostGameButton;
     private final Array<Button> otherButtons;
 
     TextField nameInput;
 
-
+    /**
+     * Initializes screen drawing as well as all background logic
+     * @param Game game data
+     * @param menuMusic music
+     */
     public newSave(CPTGame Game, Music menuMusic){
         game = Game;
 
@@ -43,10 +52,13 @@ public class newSave implements Screen {
 
         otherButtons = new Array<>();
 
-        SettingsBackground = new Texture(Gdx.files.internal("Menu/Menu1.png"));
-
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
+
+        background = new Image(new Texture(Gdx.files.internal("Menu/Menu1.png")));
+        background.setPosition(0, 0);
+        background.setSize(1920, 1080);
+        stage.addActor(background);
 
         Button cancelButton = new MenuButton("cancel", .8f);
         otherButtons.add(cancelButton);
@@ -97,6 +109,10 @@ public class newSave implements Screen {
 
     }
 
+    /**
+     * Creates and saves a new save file, writing is currently disabled
+     * @return save file that was created
+     */
     SaveFile NewSave(){
         String savename = nameInput.getText();
 
@@ -125,10 +141,6 @@ public class newSave implements Screen {
 
         stage.act(delta);
 
-        stage.getBatch().begin();
-        stage.getBatch().draw(SettingsBackground, 0,0,1920,1080);
-        stage.getBatch().end();
-
         stage.draw();
         }
 
@@ -154,7 +166,6 @@ public class newSave implements Screen {
 
     @Override
     public void dispose() {
-        SettingsBackground.dispose();
         stage.dispose();
         otherButtons.clear();
     }

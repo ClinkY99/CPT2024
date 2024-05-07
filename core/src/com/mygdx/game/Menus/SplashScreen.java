@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -23,16 +24,23 @@ public class SplashScreen implements Screen {
 
     private final Music music;
     private final Stage stage;
-    private final Texture background;
+    private final Image background;
     private final Array<Label> labels;
 
+    /**
+     * handles initializing of the splashscreen when the game is first started as well as taking user input or a click to send to the main menu
+     * @param game game data
+     */
     public SplashScreen(CPTGame game) {
         this.game = game;
 
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
-        background = new Texture(Gdx.files.internal("Menu/SplashScreen.png"));
+        background = new Image(new Texture("Menu/SplashScreen.png"));
+        background.setPosition(0, 0);
+        background.setSize(1920, 1080);
+        stage.addActor(background);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"));
         music.setLooping(true);
@@ -83,10 +91,6 @@ public class SplashScreen implements Screen {
 
         stage.act(v);
 
-        stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, 1920, 1080);
-        stage.getBatch().end();
-
         stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)){
@@ -117,7 +121,6 @@ public class SplashScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        background.dispose();
         labels.clear();
     }
 }

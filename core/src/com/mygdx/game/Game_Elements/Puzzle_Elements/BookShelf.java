@@ -1,19 +1,14 @@
 package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.TestLevel;
-import com.ray3k.stripe.FreeTypeSkin;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class BookShelf {
@@ -58,7 +53,7 @@ public class BookShelf {
 
                                 } else {
 
-                                    textHolder.setPosition(Gdx.graphics.getWidth()/2 - 350,Gdx.graphics.getHeight()/2 - 200);
+                                    textHolder.setPosition(Gdx.graphics.getWidth()/2f - 350,Gdx.graphics.getHeight()/2f - 200);
                                     text.setPosition(textHolder.getX(),textHolder.getY());
                                     textLoaded = true;
                                     world.allowMovement = false;

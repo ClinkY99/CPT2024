@@ -2,9 +2,20 @@ package com.mygdx.game.Multiplayer;
 
 import com.esotericsoftware.kryonet.Connection;
 
-
+/**
+ * Interface contains the classes that are able to be sent by the server and the client, it also contains the reaction function to be overridden.
+ */
 public interface MPInterface {
+    /**
+     * Function called when respective class is received by the connection
+     * @param connection connection data between client and server
+     * @param object object received
+     */
     void Reaction(Connection connection, Object object);
+
+    /**
+     * this class stores and sends the servers details, this contains IP address and all other important information for the client
+     */
     class serverDetails {
         public String name;
         public String hostName;
@@ -30,6 +41,11 @@ public interface MPInterface {
             this.confirmed = confirmed;
         }
     }
+
+
+    /**
+     * This class stores and sends all information about the client to the server.
+     */
     class connectionDetails {
         public String clientName;
         public String ip;
@@ -50,6 +66,10 @@ public interface MPInterface {
         }
 
     }
+
+    /**
+     * This class is sent to confirm that both client and server are ready to continue
+     */
     class ready {
         public String playerID;
         public boolean loaded;
@@ -62,6 +82,10 @@ public interface MPInterface {
         }
 
     }
+
+    /**
+     * Holds all information required to be passed between server and client during character selection
+     */
     class characterSelection {
         public String playerID;
         public int character;
@@ -81,6 +105,10 @@ public interface MPInterface {
         }
 
     }
+
+    /**
+     * Holds all information to be passed on the completion of a level, this allows server and client to confirm that they are ready for continuing on to the next level
+     */
     class levelCompletion {
         public String playerID;
         public int level;
@@ -99,6 +127,10 @@ public interface MPInterface {
         }
 
     }
+
+    /**
+     * Allows the client to confirm selection with the server
+     */
     class confirm{
         public boolean confirmed;
         public confirm() {

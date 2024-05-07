@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -18,18 +19,24 @@ import com.mygdx.game.ui.widgets.menus.SelectionBar;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.ui.widgets.menus.SelectionButton;
 
-
+/**
+ * uncompleted settings menu class
+ */
 public class Settings implements Screen {
     final CPTGame game;
 
     Music music;
 
-    Texture SettingsBackground;
+    Image background;
     Stage stage;
     SelectionBar selectionMenu;
     private final Array<Button> otherButtons;
 
-
+    /**
+     * Handles setup of the settings menu class
+     * @param Game game
+     * @param menuMusic music
+     */
     public Settings(CPTGame Game, Music menuMusic){
         game = Game;
 
@@ -37,10 +44,13 @@ public class Settings implements Screen {
 
         otherButtons = new Array<>();
 
-        SettingsBackground = new Texture(Gdx.files.internal("Menu/Menu1.png"));
-
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
+
+        background = new Image(new Texture(Gdx.files.internal("Menu/Menu1.png")));
+        background.setPosition(0, 0);
+        background.setSize(1920, 1080);
+        stage.addActor(background);
 
         selectionMenu = new SelectionBar(1080/3, 100,"Graphics", "Audio", "Controls", "Multiplayer");
 
@@ -86,11 +96,6 @@ public class Settings implements Screen {
         ScreenUtils.clear(Color.WHITE);
 
         stage.act(delta);
-
-        stage.getBatch().begin();
-        stage.getBatch().draw(SettingsBackground, 0,0,1920,1080);
-        stage.getBatch().end();
-
         stage.draw();
     }
 
@@ -117,7 +122,5 @@ public class Settings implements Screen {
     @Override
     public void dispose() {
         stage.clear();
-        SettingsBackground.dispose();
-
     }
 }

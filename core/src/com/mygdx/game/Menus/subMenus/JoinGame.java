@@ -28,12 +28,15 @@ import com.ray3k.stripe.FreeTypeSkin;
 
 import java.io.IOException;
 
+/**
+ * controls logic and drawing of the join game screen
+ */
 public class JoinGame implements Screen {
     final CPTGame game;
 
     private final Music music;
     private final Stage stage;
-    private final Texture background;
+    private final Image background;
     private final SelectionBar selectionBar;
 
     private final Array<Button> otherButtons;
@@ -44,6 +47,11 @@ public class JoinGame implements Screen {
 
     private String ip;
 
+    /**
+     * Initializes the Join game class and sets up all labels and buttons to be drawn to screen.
+     * @param Game game data
+     * @param menuMusic music
+     */
     public JoinGame(CPTGame Game, Music menuMusic){
         this.game = Game;
 
@@ -51,11 +59,15 @@ public class JoinGame implements Screen {
 
         otherButtons = new Array<>();
 
-        background = new Texture("Menu/Menu2.png");
-
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         Gdx.input.setInputProcessor(stage);
 
+        background = new Image(new Texture("Menu/Menu2.png"));
+        background.setPosition(0, 0);
+        background.setSize(1920, 1080);
+        stage.addActor(background);
+
+        //sets up a switcher widget and selection bar
         selectionBar = new SelectionBar(1080/3,100,"Online", "LAN");
         selectionBar.getTable().setPosition(1920/3.3f,1080/8f*7);
 
@@ -113,7 +125,7 @@ public class JoinGame implements Screen {
 
         otherButtons.add(joinButton);
 
-
+        //initializes the client function and searches for all open servers on the LAN
         client = new ClientInterface(MPInterface.serverDetails.class, MPInterface.connectionDetails.class);
         client.init();
         client.lanServers();
@@ -146,6 +158,10 @@ public class JoinGame implements Screen {
 
     }
 
+    /**
+     * creates a table of all found servers with data sent over from the client
+     * @return A table containing all discovered servers, or a label saying no servers found
+     */
     Actor updateLan(){
         Array< MPInterface.serverDetails> arr = client.getAvailibleServerDetails();
         if(arr.size > 0) {
@@ -202,10 +218,6 @@ public class JoinGame implements Screen {
 
         stage.act(delta);
 
-        stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0);
-        stage.getBatch().end();
-
         stage.draw();
 
     }
@@ -240,7 +252,6 @@ public class JoinGame implements Screen {
         music.stop();
         music.dispose();
         stage.dispose();
-        background.dispose();
         otherButtons.clear();
 
     }

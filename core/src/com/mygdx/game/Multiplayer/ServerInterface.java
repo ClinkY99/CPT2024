@@ -9,18 +9,28 @@ import com.esotericsoftware.kryo.Kryo;
 
 import java.io.IOException;
 
-public class ServerInteface extends Server {
+/**
+ * Handles server control as well as easy interfacing with the kryo server interface for easy integration into our game
+ */
+public class ServerInterface extends Server {
     public int portTCP;
     public int portUDP;
 
     public Array<MPInterface> Functions;
     public Array<Class> Classes;
 
-    public ServerInteface(){
+    /**
+     * Default constructor with no classes being bound
+     */
+    public ServerInterface(){
         this((Class) null);
 
     }
-    public ServerInteface(Class... classes){
+    /**
+     * sets up the server class, but does not yet open the sever to connections
+     * @param classes All classes you want to bind to the sever in initialization, ensure this list is in the same order on client and server
+     */
+    public ServerInterface(Class... classes){
         portTCP = 54555;
         portUDP = 54777;
 
@@ -31,7 +41,9 @@ public class ServerInteface extends Server {
             bindClass(cls);
         }
     }
-
+    /**
+     * opens the server for connections and adds a connection listener, to automatically run the correct function when an object is sent from the server
+     */
     public void init() throws IOException {
         start();
         bind(portTCP,portUDP);
@@ -48,12 +60,21 @@ public class ServerInteface extends Server {
 
     }
 
+    /**
+     * Binds an additional class to the client, ensure this is in the same order as the server
+     * @param classToBind class to be bound
+     */
     public void bindClass(Class classToBind){
         Kryo kryo = getKryo();
         kryo.register(classToBind);
         Classes.add(classToBind);
     }
 
+    /**
+     * binds a function to a specific class, this function will be called when the client receives this object
+     * @param function function to be bound
+     * @param classBound the class that this function is bound to
+     */
     public void BindFunction(MPInterface function, Class classBound){
         Functions.setSize(Classes.size);
         if (Classes.contains(classBound, true)){
