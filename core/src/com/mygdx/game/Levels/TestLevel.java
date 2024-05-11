@@ -53,6 +53,7 @@ ImagePuzzleButton doorButton;
     ColorGridPuzzle testGridPuzzle;
 Array<PuzzleTable> puzzleTables;
 MPHandle connection;
+TileDragPuzzle testTileDragPuzzle;
 
 public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOException {
     this(game,img);
@@ -106,8 +107,6 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         keyPadButtonHolder.add(summonKeypadButton);
         buttonTable.row();
 
-        TestBookShelf = new BookShelf(levelTable,stage, true, new Texture(Gdx.files.internal("Images/noteForBookShelfTest.png")), 3,3,this,LevelWorld);
-        puzzleTables.add(TestBookShelf.textHolder);
         LevelBackground = new Texture(Gdx.files.internal("Images/undertaleBackground.png"));
 
         dragDropObjectTest = new Array<>();
@@ -120,6 +119,20 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
 
         camera.setToOrtho(false, 1920,1080);
         slidingTilePuzzleTest = new SlidingTilePuzzle(4,4, new int[][]{{0,1},{0,2},{0,3}},new Texture(Gdx.files.internal("Images/idle_0_green.png")),new Texture(Gdx.files.internal("Images/idle_0_red.png")),stage,700,700);
+
+        Array<Texture> realTiles = new Array<>();
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_green.png")));
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_green.png")));
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_green.png")));
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_green.png")));
+
+        Array<Texture> fakeTiles = new Array<>();
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+        realTiles.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+
+        testTileDragPuzzle = new TileDragPuzzle(fakeTiles,realTiles,new Texture(Gdx.files.internal("Images/idle_0.png")),4,stage);
     }
     @Override
     public void show() {
@@ -156,13 +169,13 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            TestBookShelf.unloadText();
+
             LevelWorld.allowMovement = true;
             testDragDropPuzzle.isLoaded = false;
             testKeyPad.isShown = false;
             keyPadTable.setPosition(10000,10000);
         }
-
+        testTileDragPuzzle.render(LevelWorld.objects.get(0));
 
         stage.act();
 

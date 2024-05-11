@@ -38,15 +38,6 @@ public class ImagePuzzleButton extends ImageButton {
         this.getStyle().imageCheckedDown = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageCheckedOver = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
 
-        this.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                if (!isLoaded) {
-                    remove();
-                }
-            }
-
-        });
-
     }
     public void updateTexture(Texture tex) {
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(tex));
