@@ -64,7 +64,7 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
     {
 
         this.game = game;
-        LevelWorld = new World(img);
+        LevelWorld = new World("Levels/Level_1", "Level_1");
         camera = new OrthographicCamera();
         stage = new Stage(new FitViewport(1920,1080), game.batch);
         globalSkin = new FreeTypeSkin(Gdx.files.internal("skin/vhs-ui.json"));
@@ -130,11 +130,20 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         game.batch.begin();
         ScreenUtils.clear(0,0,0,1);
 
+        game.batch.draw(LevelBackground, 0,0,1920,1080);
+
+        game.batch.end();
+
+
+        LevelWorld.run();
+
+        game.batch.begin();
+
         for(int i = 0; i < puzzleTables.size;i++) {
-            puzzleTables.get(i).loadPosition(LevelWorld,LevelWorld.objects.get(0));
+            puzzleTables.get(i).loadPosition(LevelWorld.scroll);
         }
         slidingTilePuzzleTest.render();
-        slidingTilePuzzleTest.puzzleHolder.loadPosition(LevelWorld,LevelWorld.objects.get(0));
+        slidingTilePuzzleTest.puzzleHolder.loadPosition(LevelWorld.scroll);
         if (testKeyPad.correctCodeInputted) {
             for (int i = 0; i < testKeyPad.buttons.size(); i++) {
                 testKeyPad.buttons.get(i).setColor(Color.BLUE);
@@ -144,8 +153,7 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         testGridPuzzle.updateGrid();
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        game.batch.draw(LevelBackground, 0,0,1920,1080);
-        LevelWorld.run(game.batch);
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             TestBookShelf.unloadText();
@@ -161,12 +169,9 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         testKeyPad.updateKeyPad(game.batch,LevelWorld);
         testDragDropPuzzle.render(dragDropObjectTest, game.batch, stage);
 
-
-
         game.batch.end();
 
         stage.draw();
-
 
 
     }

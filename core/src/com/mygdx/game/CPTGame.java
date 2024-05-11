@@ -20,7 +20,6 @@ public class CPTGame extends Game {
 	@Override
 	public void create ()
 	{
-		img = new Texture(Gdx.files.internal("Images/rectangleImg.png"));
 		batch = new SpriteBatch();
 		pause = new pauseMenu();
 

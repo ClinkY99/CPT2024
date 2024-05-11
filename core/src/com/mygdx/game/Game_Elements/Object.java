@@ -5,58 +5,40 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
-public class Object {
-    public Vector2 position;
-    public Sprite object;
+public class Object extends Image {
     Rectangle object_rect;
 
     public Object(Texture img, int[] location) {
-        object = new Sprite(img);
+        super(img);
+        setSize(150 ,150);
 
-        position = new Vector2(location[0] * object.getWidth(), location[1] * object.getHeight());
-        object.setPosition(position.x, position.y);
+        setPosition(location[0] * getWidth(), location[1] * getHeight());
 
-        object_rect = new Rectangle(position.x, position.y, object.getWidth(), object.getHeight());
-    }
 
-    public float getWidth() {
-        return object.getWidth();
-    }
 
-    public float getHeight() {
-        return object.getHeight();
-    }
-
-    public void setColor(Color color) {
-        object.setColor(color);
+        object_rect = new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     public Rectangle getObject_rect() {
         return object_rect;
     }
 
-    public void draw(SpriteBatch batch) {
-        object.setPosition(object_rect.x, object_rect.y);
-        object.draw(batch);
-    }
-
     public void updatex(int scroll) {
         object_rect.x -= scroll;
-        object.setPosition(object_rect.x, object_rect.y);
+        setX(object_rect.x);
     }
 
     public void updatey(int scroll) {
         object_rect.y -= scroll;
-        object.setPosition(object_rect.x, object_rect.y);
+        setY(object_rect.y);
 
-    }
-    public float[] getPosition() {
-        return new float[]{object_rect.x,object_rect.y};
     }
 }
