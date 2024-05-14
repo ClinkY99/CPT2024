@@ -173,9 +173,8 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
             LevelWorld.allowMovement = true;
             testDragDropPuzzle.isLoaded = false;
             testKeyPad.isShown = false;
-            keyPadTable.setPosition(10000,10000);
+            keyPadTable.setPosition(10000, 10000);
         }
-        testTileDragPuzzle.render(LevelWorld.objects.get(0));
 
         stage.act();
 

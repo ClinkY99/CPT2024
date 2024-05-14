@@ -39,6 +39,10 @@ public class ImagePuzzleButton extends ImageButton {
         this.getStyle().imageCheckedOver = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
 
     }
+    public ImagePuzzleButton(FreeTypeSkin skin, String styleName){
+        super(skin, styleName);
+    }
+
     public void updateTexture(Texture tex) {
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(tex));
         this.getStyle().imageChecked = new TextureRegionDrawable(new TextureRegion(tex));
@@ -47,7 +51,5 @@ public class ImagePuzzleButton extends ImageButton {
         this.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(tex));
         this.getStyle().imageCheckedDown = new TextureRegionDrawable(new TextureRegion(tex));
         this.getStyle().imageCheckedOver = new TextureRegionDrawable(new TextureRegion(tex));
-
-
     }
 }

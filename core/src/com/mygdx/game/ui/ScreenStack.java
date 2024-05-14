@@ -1,6 +1,7 @@
 package com.mygdx.game.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
 import org.jetbrains.annotations.NotNull;
@@ -22,12 +23,14 @@ public class ScreenStack implements Disposable{
     public void push(@NotNull final stackableScreen screen) {
         screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stack.push(screen);
+        Gdx.input.setInputProcessor(screen.getStage());
     }
     public void push(@NotNull stackableScreen... screens) {
         for (stackableScreen screen : screens) {
             screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             stack.push(screen);
         }
+        Gdx.input.setInputProcessor(screens[screens.length - 1].getStage());
     }
 
     public stackableScreen peek(){
@@ -76,6 +79,7 @@ public class ScreenStack implements Disposable{
 
     public void remove(@NotNull final stackableScreen screen){
         stack.remove(screen);
+        Gdx.input.setInputProcessor(stack.get(stack.size()-1).getStage());
     }
 
     @Override
