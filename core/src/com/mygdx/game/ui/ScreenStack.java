@@ -30,7 +30,7 @@ public class ScreenStack implements Disposable{
             screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             stack.push(screen);
         }
-        Gdx.input.setInputProcessor(screens[screens.length - 1].getStage());
+        if (screens.length > 0) Gdx.input.setInputProcessor(screens[screens.length - 1].getStage());
     }
 
     public stackableScreen peek(){
