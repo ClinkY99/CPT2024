@@ -119,6 +119,7 @@ public TestLevel(CPTGame game, Texture img, MPHandle connection) throws IOExcept
         imageButtonHolder.add(doorButton);
 
         camera.setToOrtho(false, 1920,1080);
+
         slidingTilePuzzleTest = new SlidingTilePuzzle(4,4, new int[][]{{0,1},{0,2},{0,3}},new Texture(Gdx.files.internal("Images/idle_0_green.png")),new Texture(Gdx.files.internal("Images/idle_0_red.png")),stage,700,700);
     }
     @Override

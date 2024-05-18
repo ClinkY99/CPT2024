@@ -21,32 +21,33 @@ public class Player
     public float move;
     String path;
     Rectangle player_rect;
-    int[] data;
+
     public boolean isCollidingX;
     public boolean isCollidingY;
     public boolean loop;
     public animation animation;
     public String state;
     public String type;
+    public int[] size;
 
 
 
     public Player(String path, String type) throws IOException
     {
         this.type = type;
+        this.size = new int[]{150, 150};
         this.path = path;
         this.loop = true;
         animation = new animation(path, type);
         state = "Idle/Forward";
-        int mid =+ Gdx.graphics.getWidth() / 2;
-        int midy = Gdx.graphics.getHeight() / 2;
+        int mid = 885;
+        int midy = 465;
         position = new Vector2(mid, midy);
         positionChange = new Vector2(0, 0);
         player = new Sprite();
-        data = new int[]{0, 0, 0, 0};
         // need to subtract the width and height divided by 2 to put player in middle
         player.setPosition(position.x, position.y);
-        player_rect = new Rectangle(0 , 0, 150, 150);
+        player_rect = new Rectangle(mid , midy, size[0], size[1]);
 
     }
 
@@ -117,22 +118,20 @@ public class Player
         for (Actor tileActor: tiles)
         {
             Object tile = (Object) tileActor;
-            if (player_rect.overlaps(tile.getObject_rect()))
-            {
-                isCollidingX = true;
-                float left = tile.getObject_rect().getX();
-                float right = left + tile.getWidth();
+            if (tile.get_collide()) {
+                if (player_rect.overlaps(tile.getObject_rect())) {
+                    isCollidingX = true;
+                    float left = tile.getObject_rect().getX();
+                    float right = left + tile.getWidth();
 
 
-                if (positionChange.x < 0)
-                {
-                    position.x = right;
-                    player_rect.setX(position.x);
-                }
-                else if (positionChange.x > 0)
-                {
-                    position.x = left - player_rect.getWidth();
-                    player_rect.setX(position.x);
+                    if (positionChange.x < 0) {
+                        position.x = right;
+                        player_rect.setX(position.x);
+                    } else if (positionChange.x > 0) {
+                        position.x = left - player_rect.getWidth();
+                        player_rect.setX(position.x);
+                    }
                 }
             }
         }
@@ -143,19 +142,21 @@ public class Player
         player_rect.setY((int) position.y);
         for (Actor tileActor: tiles) {
             Object tile = (Object) tileActor;
-            if (tile.getObject_rect().overlaps(player_rect)) {
-                float bottom = tile.getObject_rect().getY();
-                float top = bottom + tile.getHeight();
+            if (tile.get_collide()) {
+                if (tile.getObject_rect().overlaps(player_rect)) {
+                    float bottom = tile.getObject_rect().getY();
+                    float top = bottom + tile.getHeight();
 
-                isCollidingY = true;
-                if (positionChange.y > 0) {
-                    position.y = bottom - player_rect.getHeight();
-                    player_rect.setY(position.y);
+                    isCollidingY = true;
+                    if (positionChange.y > 0) {
+                        position.y = bottom - player_rect.getHeight();
+                        player_rect.setY(position.y);
 
-                } else if (positionChange.y < 0) {
-                    position.y = top;
-                    player_rect.setY(position.y);
+                    } else if (positionChange.y < 0) {
+                        position.y = top;
+                        player_rect.setY(position.y);
 
+                    }
                 }
             }
         }
@@ -167,6 +168,7 @@ public class Player
     public void update(float deltaTime, int[] scroll)
     {
         move(deltaTime);
+
         position.x -= scroll[0];
         position.y -= scroll[1];
 

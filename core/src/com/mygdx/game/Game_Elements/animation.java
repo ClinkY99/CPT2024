@@ -1,18 +1,13 @@
 package com.mygdx.game.Game_Elements;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -30,7 +25,7 @@ public class animation {
 
     public HashMap<String, float[]> set_up_states(String path, String type) throws IOException {
         HashMap<String, float[]> anim_info = new HashMap<>();
-        Scanner reader = new Scanner(new File(path + type + "/animation"));
+        Scanner reader = new Scanner(new File(String.format("%s%s/animation", path, type)));
         while (reader.hasNext()) {
             String state = reader.next();
             float duration = reader.nextInt();
@@ -46,13 +41,11 @@ public class animation {
         HashMap<String, Animation<TextureRegion>> animations = new HashMap<>();
         for (String state: anim_info.keySet())
         {
-            animSheet = new Texture(Gdx.files.internal(path + "/" + type + "/" + state + ".png"));
+            animSheet = new Texture(Gdx.files.internal(String.format("%s/%s/%s.png", path, type, state)));
             TextureRegion[][] tmp = TextureRegion.split(animSheet, (int) (animSheet.getWidth() / anim_info.get(state)[0]), animSheet.getHeight());
             TextureRegion[] anim_frames = new TextureRegion[(int) anim_info.get(state)[0]];
-            for (int i = 0; i < (int) anim_info.get(state)[0]; i++)
-            {
-                anim_frames[i] = tmp[0][i];
-            }
+            if ((int) anim_info.get(state)[0] >= 0)
+                System.arraycopy(tmp[0], 0, anim_frames, 0, (int) anim_info.get(state)[0]);
             Animation<TextureRegion> animation = new Animation<>(anim_info.get(state)[1], anim_frames);
             animations.put(state, animation);
         }
@@ -73,12 +66,13 @@ public class animation {
             return;
         }
         stateTime += Gdx.graphics.getDeltaTime();
-        int mid = Gdx.graphics.getWidth() / 2;
-        int midy = Gdx.graphics.getHeight() / 2;
+        int mid = 885;
+        int midy = 465;
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, loop);
         spriteBatch.draw(currentFrame, mid, midy);
+
     }
-    public void dispose(String state) { // SpriteBatches and Textures must always be disposed
+    public void dispose() { // SpriteBatches and Textures must always be disposed
         spriteBatch.dispose();
         animSheet.dispose();
     }

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class World extends Stage
 {
     public String printOut;
-    ArrayList<String> map;
     public static float[] TableScroll = new float[2];
     public Player player1;
     public Boolean allowMovement = true;
@@ -34,7 +33,9 @@ public class World extends Stage
     public World(String path, String level) throws IOException
     {
         super(new FitViewport(1920,1080));
+
         player1 = new Player ("Images/Players/", "Player1");
+
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(path, level);
         scroll = new int[]{0, 0};
@@ -53,9 +54,9 @@ public class World extends Stage
     }
     public void scrolling()
     {
-        true_scroll[0] += (player1.position.x - true_scroll[0] - (float) Gdx.graphics.getWidth() / 2);
+        true_scroll[0] += (player1.position.x - true_scroll[0] - 885);
         TableScroll[0] = true_scroll[0];
-        true_scroll[1] += (player1.position.y - true_scroll[1] - (float) Gdx.graphics.getHeight() / 2);
+        true_scroll[1] += (player1.position.y- true_scroll[1] - 465);
         TableScroll[1] = true_scroll[1];
         scroll[0] = (int) true_scroll[0]; scroll[1] = (int) true_scroll[1];
     }

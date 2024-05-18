@@ -15,7 +15,6 @@ public class CPTGame extends Game {
 	public pauseMenu pause;
 
 	public FreeTypeFontGenerator DefaultFont;
-	Texture img;
 
 	@Override
 	public void create ()
