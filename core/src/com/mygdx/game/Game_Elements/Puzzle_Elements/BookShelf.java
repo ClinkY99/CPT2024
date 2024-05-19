@@ -25,18 +25,14 @@ import com.mygdx.game.ui.stackableScreen;
 import java.awt.*;
 
 public class BookShelf extends ImagePuzzleButton {
-    public boolean isTextLoaded;
-    Texture text;
-    Texture shelf;
     TextureRegion region;
     Library library;
-
     ScreenStack stack;
 
     public BookShelf(Texture shelfTexture, int scale, Texture textTexture, ScreenStack stack) {
         super(shelfTexture, scale);
 
-        library = new Library(textTexture,stack);
+        library = new Library(textTexture);
         region = new TextureRegion(shelfTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
         this.addListener(new ClickListener() {
@@ -76,13 +72,6 @@ public class BookShelf extends ImagePuzzleButton {
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-            try {
-                stack.remove(library);
-            } catch (Exception e) {
-
-            }
-        }
 
     }
     class Library implements stackableScreen {
@@ -90,7 +79,7 @@ public class BookShelf extends ImagePuzzleButton {
         Stage stage;
         ImagePuzzleButton screenBlocker;
         ImagePuzzleButton text;
-        public Library(Texture textTexture, ScreenStack stack) {
+        public Library(Texture textTexture) {
 
             stage = new Stage(new FitViewport(1920,1080));
             Texture screenBlockerTexture = new Texture(Gdx.files.internal("Images/screenBlocker.png"));
@@ -114,9 +103,13 @@ public class BookShelf extends ImagePuzzleButton {
         }
         @Override
         public void render(float delta, boolean top) {
-            ScreenUtils.clear(Color.RED);
             stage.act(delta);
             stage.draw();
+
+            if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                stack.remove(this);
+
+            }
         }
 
         @Override

@@ -31,13 +31,13 @@ public class TileDragPuzzle extends ImagePuzzleButton{
     TextureRegion region;
     ScreenStack stack;
 
-    public TileDragPuzzle(Texture buttonTexture, Array<Texture> fakeTilesToDrag, Array<Texture> realTiles, Texture goalTexture, int numberOfGoals, ScreenStack stack){
+    public TileDragPuzzle(Texture buttonTexture, Array<Texture> fakeTilesToDrag, Array<Texture> realTiles, Texture goalTexture, int numberOfGoals, int[][] orderedGoalCoordinates, ScreenStack stack){
         //this class makes a button that then pushes a screen onto the screen stack.
         //the screen that is pushed contains a drag drop puzzle, where you
         //drag objects onto other objects
         super(buttonTexture,2);
         this.stack = stack;
-        dragDropPuzzle = new DragDropScreen(fakeTilesToDrag,realTiles,goalTexture,numberOfGoals);
+        dragDropPuzzle = new DragDropScreen(fakeTilesToDrag,realTiles,goalTexture,numberOfGoals,orderedGoalCoordinates);
 
         region = new TextureRegion(buttonTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
@@ -55,14 +55,6 @@ public class TileDragPuzzle extends ImagePuzzleButton{
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-            try {
-                stack.remove(dragDropPuzzle);
-            } catch (Exception e) {
-
-            }
-
-        }
     }
 
     public boolean areAllSolved() {
@@ -77,7 +69,7 @@ public class TileDragPuzzle extends ImagePuzzleButton{
     class DragDropScreen implements stackableScreen {
         Stage stage;
         ImagePuzzleButton screenBlocker;
-        public DragDropScreen(Array<Texture> fakeTilesToDrag, Array<Texture> realTiles, Texture goalTexture, int numberOfGoals) {
+        public DragDropScreen(Array<Texture> fakeTilesToDrag, Array<Texture> realTiles, Texture goalTexture, int numberOfGoals, int[][] goalCoordinates) {
             stage = new Stage(new FitViewport(1920,1080));
             Texture screenBlockerTexture = new Texture(Gdx.files.internal("Images/screenBlocker.png"));
 
@@ -118,8 +110,13 @@ public class TileDragPuzzle extends ImagePuzzleButton{
             }
             for (int i = 0; i <goals.size;i++) {
                 stage.addActor(goals.get(i));
-                goals.get(i).setPosition(displaceNum,800);
-                displaceNum+= 50;
+                // determines where goals are placed
+                if (goalCoordinates.length == goals.size) {
+                    goals.get(i).setPosition(goalCoordinates[i][0],goalCoordinates[i][1]);
+                } else {
+                    goals.get(i).setPosition(displaceNum, 800);
+                    displaceNum += 50;
+                }
             }
         }
         public void show() {
@@ -128,12 +125,14 @@ public class TileDragPuzzle extends ImagePuzzleButton{
 
         @Override
         public void render(float delta, boolean top) {
-            ScreenUtils.clear(Color.RED);
             stage.act(delta);
             stage.draw();
             for (int i = 0; i < goals.size;i++) {
                 for (int j = 0; j < tilesToDrag.size;j++) {
                     if (goals.get(i).bounds.overlaps(tilesToDrag.get(j).bounds)) {
+                        if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                            tilesToDrag.get(j).setPosition(goals.get(i).getX() + goals.get(i).getWidth() / 2 - tilesToDrag.get(i).getWidth() / 2, goals.get(i).getY() + goals.get(i).getHeight() / 2 - tilesToDrag.get(i).getHeight() / 2);
+                        }
                         System.out.println(goals.get(i).data + " " + tilesToDrag.get(j).data);
                         if (tilesToDrag.get(j).data == goals.get(i).data) {
                             goals.get(i).touchingCorrectTile = true;
@@ -141,6 +140,11 @@ public class TileDragPuzzle extends ImagePuzzleButton{
 
                     }
                 }
+            }
+
+            if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                stack.remove(this);
+
             }
 
         }

@@ -1,0 +1,41 @@
+package com.mygdx.game.Levels.LevelOne;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.CPTGame;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.BookShelf;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.KeyPad;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.TileDragPuzzle;
+import com.mygdx.game.Game_Elements.SaveFile;
+import com.mygdx.game.Multiplayer.MPHandle;
+
+public class levelOneStackManager extends baseLevel {
+
+
+    /**
+     * Default constructor for the base level
+     *
+     * @param game      Passes game controller to the class
+     * @param c         Passes MP connection to the class allowing for MP support
+     * @param s         Passes save file to the class
+     * @param Character Passes character number the class, allowing the class to confirm that the right player is on the right level
+     * @param levelNum  tells the level how far along it is
+     */
+
+    public levelOneStackManager(CPTGame game, MPHandle c, SaveFile s, int Character, int levelNum) {
+        super(game, c, s, Character, levelNum);
+        screenStack.push(new levelOneBottomScreen(screenStack));
+    }
+
+
+    public void render(float delta) {
+        super.render(delta);
+    }
+
+    @Override
+    public void completed() {
+
+    }
+
+}

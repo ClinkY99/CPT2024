@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
-import com.mygdx.game.Levels.LevelOne.TestLevelOnStack;
+import com.mygdx.game.Levels.LevelOne.levelOneStackManager;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.ui.transitions.transitionScreen;
 import com.mygdx.game.ui.transitions.transitions;
@@ -105,7 +105,7 @@ public class HostGame implements Screen {
                 game.setScreen(new transitionScreen(current, new transitions() {
                     @Override
                     public Screen load() {
-                            return new TestLevelOnStack(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
+                            return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
 
                     }
                 }, game));

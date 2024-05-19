@@ -315,6 +315,7 @@ public class characterSelection implements Screen {
     @Override
     public void render(float delta) {
         //if both client and server are ready load the level
+        /*
         if(otherReady && confirmed){
             game.setScreen(new transitionScreen(this, () -> {
                 try {
@@ -324,7 +325,7 @@ public class characterSelection implements Screen {
                 }
             }, game));
 
-        }
+        }*/
 
         //draws to screen
         ScreenUtils.clear(0,0,0,1);
