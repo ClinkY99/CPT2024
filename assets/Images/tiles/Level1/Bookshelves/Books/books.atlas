@@ -1,0 +1,62 @@
+
+books.png
+size: 256, 256
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+Book1
+  rotate: false
+  xy: 88, 143
+  size: 31, 109
+  orig: 31, 109
+  offset: 0, 0
+  index: -1
+Book2
+  rotate: false
+  xy: 175, 142
+  size: 22, 110
+  orig: 22, 110
+  offset: 0, 0
+  index: -1
+Book3
+  rotate: false
+  xy: 1, 168
+  size: 46, 84
+  orig: 46, 84
+  offset: 0, 0
+  index: -1
+Book4
+  rotate: false
+  xy: 1, 71
+  size: 43, 95
+  orig: 43, 95
+  offset: 0, 0
+  index: -1
+Book5
+  rotate: false
+  xy: 149, 151
+  size: 24, 101
+  orig: 24, 101
+  offset: 0, 0
+  index: -1
+Book6
+  rotate: false
+  xy: 1, 1
+  size: 29, 68
+  orig: 29, 68
+  offset: 0, 0
+  index: -1
+BookBroken
+  rotate: false
+  xy: 121, 146
+  size: 26, 106
+  orig: 26, 106
+  offset: 0, 0
+  index: -1
+scroll
+  rotate: false
+  xy: 49, 136
+  size: 37, 116
+  orig: 37, 116
+  offset: 0, 0
+  index: -1

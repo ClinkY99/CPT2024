@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.Screens.pauseMenu;
+import com.mygdx.game.Levels.Test;
 import com.mygdx.game.Menus.SplashScreen;
 
 public class CPTGame extends Game {
@@ -26,7 +28,7 @@ public class CPTGame extends Game {
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 		menuLevel = new SplashScreen(this);
 		setScreen(menuLevel);
-		//setScreen(new characterSelection(this, new SaveFile("Test")));
+		//setScreen(new characterSelection(this, );
 		// declares images
 //		stage = new Stage(new ScreenViewport());
 //		Gdx.input.setInputProcessor(stage);
