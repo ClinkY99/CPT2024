@@ -1,14 +1,9 @@
 package com.mygdx.game.Game_Elements;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -40,7 +35,7 @@ public class Tiled
         {
             String type = reader.nextLine();
             tile_info.put(type, import_csv_files(path + "/" + level, type));
-            this.image.put(type, nocuttingtoday(("Images/tiles" + "/" + type), type));
+            this.image.put(type, woodcutting(("Images/tiles" + "/" + type), type));
         }
         return tile_info;
     }
@@ -55,9 +50,9 @@ public class Tiled
         return game_map;
     }
 
-    public HashMap<String, Texture> nocuttingtoday(String path, String type) throws FileNotFoundException {
+    public HashMap<String, Texture> woodcutting(String path, String type) throws FileNotFoundException {
         Scanner reader = new Scanner (new File (path + "/tile"));
-        HashMap<String, Texture> tile = new HashMap<String, Texture>();
+        HashMap<String, Texture> tile = new HashMap<>();
         int i = 0;
         while (reader.hasNext())
         {
@@ -69,7 +64,7 @@ public class Tiled
         return tile;
     }
 
-    public Array<Object> import_map(String path, String level) throws IOException {
+    public void import_map(String path, String level) throws IOException {
         HashMap<String, Array<String[]>> info = read_tile_info(path, level);
         this.map = new Array<>();
 
@@ -84,29 +79,25 @@ public class Tiled
                 {
                     String num = info.get(type).get(i)[j];
                     if (!num.equals("-1")) {
+                        Object obj;
                         if (type.equals("Floors"))
                         {
-                            Object obj = getTile(Integer.parseInt(num), type, false);
-                            obj.setPosition(j,(size-1)-i);
-
-                            map.add(obj);
+                            obj = getTile(Integer.parseInt(num), type, false);
                         }
                         else
                         {
-                            Object obj = getTile(Integer.parseInt(num), type, true);
-                            obj.setPosition(j,(size-1)-i);
-                            map.add(obj);
+                            obj = getTile(Integer.parseInt(num), type, true);
                         }
+                        obj.setPosition(j,(size-1)-i);
+                        map.add(obj);
 
                     }
                 }
             }
         }
-
-        return map;
     }
 
-    public Object getTile(int tileId, String type, boolean collide) throws IOException
+    public Object getTile(int tileId, String type, boolean collide)
     {
 
         int Flipped180 = 0x60000000;

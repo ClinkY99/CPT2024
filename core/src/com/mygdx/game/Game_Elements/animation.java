@@ -16,6 +16,7 @@ public class animation {
     HashMap<String, Animation<TextureRegion>> animation;
     SpriteBatch spriteBatch;
     Texture animSheet;
+    HashMap<String, int[]> anim_size;
     float stateTime;
     public animation(String path, String type) throws IOException
     {
@@ -25,12 +26,15 @@ public class animation {
 
     public HashMap<String, float[]> set_up_states(String path, String type) throws IOException {
         HashMap<String, float[]> anim_info = new HashMap<>();
+        this.anim_size = new HashMap<>();
         Scanner reader = new Scanner(new File(String.format("%s%s/animation", path, type)));
         while (reader.hasNext()) {
             String state = reader.next();
             float duration = reader.nextInt();
             float length = reader.nextFloat();
+            int[] size = new int[]{reader.nextInt(), reader.nextInt()};
             float[] info = {duration, length};
+            anim_size.put(state, size);
             anim_info.put(state, info);
         }
         return anim_info;

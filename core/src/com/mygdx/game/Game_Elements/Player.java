@@ -10,14 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class Player
 {
     public Vector2 position, positionChange;
     public Sprite player;
-    public float speed = 2000;
+    public int i = 0;
+    public int speed = 2000;
     public float move;
     String path;
     Rectangle player_rect;
@@ -29,17 +29,20 @@ public class Player
     public String state;
     public String type;
     public int[] size;
+    public int data;
+
 
 
 
     public Player(String path, String type) throws IOException
     {
         this.type = type;
-        this.size = new int[]{150, 150};
         this.path = path;
         this.loop = true;
-        animation = new animation(path, type);
+        this.animation = new animation(path, type);
+
         state = "Idle/Forward";
+        this.size = animation.anim_size.get(state);
         int mid = 885;
         int midy = 465;
         position = new Vector2(mid, midy);
@@ -48,6 +51,7 @@ public class Player
         // need to subtract the width and height divided by 2 to put player in middle
         player.setPosition(position.x, position.y);
         player_rect = new Rectangle(mid , midy, size[0], size[1]);
+        data = 0;
 
     }
 
@@ -55,8 +59,7 @@ public class Player
 
     public void move(float deltaTime)
     {
-
-        move = speed * deltaTime;
+        speed = 2000;
         boolean press = false;
         boolean diagonal = false;
         positionChange.x = positionChange.y = 0;
@@ -68,7 +71,8 @@ public class Player
             this.loop = true;
             diagonal = true;
             press = true;
-
+            data = -1;
+            i = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D))
         {
@@ -77,7 +81,8 @@ public class Player
             this.loop = true;
             diagonal = true;
             press = true;
-
+            data = 1;
+            i = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W))
         {
@@ -90,6 +95,7 @@ public class Player
                 positionChange.x = 0.71f * positionChange.x;
                 positionChange.y = 0.71f;
             }
+            i = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S))
         {
@@ -102,12 +108,23 @@ public class Player
                 positionChange.x = 0.71f * positionChange.x;
                 positionChange.y = -0.71f;
             }
+            i = 0;
         }
 
         if (!press)
         {
             state = "Idle/Forward";
+            if (i == 0)
+            {
+                positionChange.x = data;
+                data = 0;
+                speed = 0;
+            }
+            i = 1;
         }
+        this.size = this.animation.anim_size.get(state);
+        player_rect.setSize(size[0], size[1]);
+        move = speed * deltaTime;
 
     }
 

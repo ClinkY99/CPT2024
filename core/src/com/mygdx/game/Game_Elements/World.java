@@ -1,22 +1,15 @@
 package com.mygdx.game.Game_Elements;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.CPTGame;
-import com.mygdx.game.Game_Elements.Tiled.*;
+
 
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class World extends Stage
 {
@@ -28,13 +21,13 @@ public class World extends Stage
     public int[] scroll;
     public float[] true_scroll;
 
-    TextButton newButton;
+
 
     public World(String path, String level) throws IOException
     {
         super(new FitViewport(1920,1080));
-
-        player1 = new Player ("Images/Players/", "Player1");
+        String playerPath = "Images/Players/";
+        player1 = new Player (playerPath, "Player2");
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(path, level);
@@ -97,7 +90,6 @@ public class World extends Stage
         player1.collision_detectionx(getActors());
         player1.isCollidingY = false;
         player1.collision_detectiony(getActors());
-        // color change loop is here
-    }
 
+    }
 }
