@@ -5,11 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mygdx.game.Levels.TestLevel;
 import com.ray3k.stripe.FreeTypeSkin;
 
 public class ImagePuzzleButton extends ImageButton {
@@ -38,16 +35,11 @@ public class ImagePuzzleButton extends ImageButton {
         this.getStyle().imageCheckedDown = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageCheckedOver = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
 
-        this.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                if (!isLoaded) {
-                    remove();
-                }
-            }
-
-        });
-
     }
+    public ImagePuzzleButton(FreeTypeSkin skin, String styleName){
+        super(skin, styleName);
+    }
+
     public void updateTexture(Texture tex) {
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(tex));
         this.getStyle().imageChecked = new TextureRegionDrawable(new TextureRegion(tex));
@@ -56,7 +48,8 @@ public class ImagePuzzleButton extends ImageButton {
         this.getStyle().imageOver = new TextureRegionDrawable(new TextureRegion(tex));
         this.getStyle().imageCheckedDown = new TextureRegionDrawable(new TextureRegion(tex));
         this.getStyle().imageCheckedOver = new TextureRegionDrawable(new TextureRegion(tex));
-
-
+    }
+    public Texture getTexture() {
+        return ButtonTexture;
     }
 }

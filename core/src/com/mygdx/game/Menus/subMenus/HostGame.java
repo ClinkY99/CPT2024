@@ -15,7 +15,8 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
-import com.mygdx.game.Levels.TestLevel;
+import com.mygdx.game.Levels.LevelOne.levelOneStackManager;
+import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.ui.transitions.transitionScreen;
 import com.mygdx.game.ui.transitions.transitions;
 import com.mygdx.game.ui.widgets.AutoFocusScrollpane;
@@ -104,11 +105,8 @@ public class HostGame implements Screen {
                 game.setScreen(new transitionScreen(current, new transitions() {
                     @Override
                     public Screen load() {
-                        try {
-                            return new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png")));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                            return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
+
                     }
                 }, game));
             }

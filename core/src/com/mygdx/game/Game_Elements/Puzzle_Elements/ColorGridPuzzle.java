@@ -3,11 +3,8 @@ package com.mygdx.game.Game_Elements.Puzzle_Elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.Levels.TestLevel;
 
 import java.util.ArrayList;
 
@@ -77,28 +74,5 @@ public class ColorGridPuzzle {
         }
         return null;
     }
-    public int[] convertToCoordinates(int num) {
-        switch (num) {
-            case 0:
-                return new int[]{0,0};
-            case 1:
-                return new int[]{0,1};
-            case 2:
-                return new int[]{0,2};
-            case 3:
-                return new int[]{1,0};
-            case 4:
-                return new int[]{1,1};
-            case 5:
-                return new int[]{1,2};
-            case 6:
-                return new int[]{2,0};
-            case 7:
-                return new int[]{2,1};
-            case 8:
-                return new int[]{2,2};
-            default:
-                return null;
-        }
-    }
+
 }

@@ -18,10 +18,10 @@ public class DragDropObject extends Actor {
     Sprite spriteThatGoesOverRectangle;
     public com.badlogic.gdx.math.Rectangle actualRectangle;
     float changeInYPosition;
-    public float lastYPosition;
+    public int data;
     Texture image;
     Rectangle bounds;
-    public DragDropObject(Texture img/*, Stage stage*/) {
+    public DragDropObject(Texture img) {
         setWidth(img.getWidth());
         setHeight(img.getHeight());
         image = img;
@@ -53,9 +53,9 @@ public class DragDropObject extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         batch.draw(image,getX(),getY(),getWidth(),getHeight());
-        bounds.setX((getX()));
-        bounds.setY((getX()));
+        this.bounds.set(getX(), getY(), getWidth(), getHeight());
+
     }
+
 }

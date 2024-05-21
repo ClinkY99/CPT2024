@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
-import com.mygdx.game.Levels.TestLevel;
 import com.mygdx.game.ui.transitions.transitionScreen;
 import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.mygdx.game.Multiplayer.MPHandle;
@@ -316,6 +315,7 @@ public class characterSelection implements Screen {
     @Override
     public void render(float delta) {
         //if both client and server are ready load the level
+        /*
         if(otherReady && confirmed){
             game.setScreen(new transitionScreen(this, () -> {
                 try {
@@ -325,7 +325,7 @@ public class characterSelection implements Screen {
                 }
             }, game));
 
-        }
+        }*/
 
         //draws to screen
         ScreenUtils.clear(0,0,0,1);

@@ -1,0 +1,48 @@
+
+MenuInteractables.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+LeftEye
+  rotate: false
+  xy: 1, 752
+  size: 443, 135
+  orig: 443, 135
+  offset: 0, 0
+  index: -1
+LeftEye_Hovered
+  rotate: false
+  xy: 1, 615
+  size: 443, 135
+  orig: 443, 135
+  offset: 0, 0
+  index: -1
+LeftEye_Selected
+  rotate: false
+  xy: 446, 752
+  size: 443, 135
+  orig: 443, 135
+  offset: 0, 0
+  index: -1
+RightEye
+  rotate: false
+  xy: 1, 478
+  size: 443, 135
+  orig: 443, 135
+  offset: 0, 0
+  index: -1
+RightEye_Hovered
+  rotate: false
+  xy: 446, 615
+  size: 443, 135
+  orig: 443, 135
+  offset: 0, 0
+  index: -1
+RightEye_Selected
+  rotate: false
+  xy: 1, 341
+  size: 443, 135
+  orig: 443, 135
+  offset: 0, 0
+  index: -1

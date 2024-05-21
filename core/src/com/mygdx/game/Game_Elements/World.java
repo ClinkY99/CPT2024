@@ -61,6 +61,7 @@ public class World extends Stage
     }
 
     public void run(boolean top){
+        //only allows player to move if on top
 
         allowMovement = top;
         scrolling();

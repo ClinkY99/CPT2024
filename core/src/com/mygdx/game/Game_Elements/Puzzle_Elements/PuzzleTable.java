@@ -1,6 +1,5 @@
 package com.mygdx.game.Game_Elements.Puzzle_Elements;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.Game_Elements.Object;
@@ -34,7 +33,6 @@ public class PuzzleTable extends Table {
         /*if (!LevelWorld.player.isCollidingY) {
             Y -= (float) ((float) LevelWorld.player.positionChange.y * LevelWorld.player.move);
         }*/
-
         this.setPosition(X,Y);
     }
 }
