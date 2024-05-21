@@ -28,7 +28,7 @@ Stage stage;
         super(new FitViewport(1920,1080));
         this.stage = stage;
         String playerPath = "Images/Players/";
-        player1 = new Player (playerPath, "Player2");
+        player1 = new Player (playerPath, "Player1");
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
         map(path, level);

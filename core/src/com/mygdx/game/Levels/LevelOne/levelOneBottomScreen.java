@@ -38,7 +38,6 @@ public class levelOneBottomScreen implements stackableScreen {
 
             levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
 
-
             Array<Texture> fakeTileArray = new Array<>();
             fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
             fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
@@ -53,7 +52,6 @@ public class levelOneBottomScreen implements stackableScreen {
 
             Texture goalTexture = new Texture(Gdx.files.internal("Images/gale.jpeg"));
 
-
             testDrag = new TileDragPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),fakeTileArray,realTileArray,goalTexture,2,new int[][]{{300,700},{600,700}},stack);
             testDrag.setPosition(700,200);
             testDrag.setSize(400,400);
@@ -62,8 +60,6 @@ public class levelOneBottomScreen implements stackableScreen {
             puzzleKeyPad.setPosition(800,200);
             stage.addActor(testDrag);
             stage.addActor(puzzleKeyPad);
-
-
 
             Array<Texture> combinationLockPictures = new Array<>();
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/OuterButton.png")));
