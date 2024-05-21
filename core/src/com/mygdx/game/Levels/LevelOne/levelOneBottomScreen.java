@@ -19,18 +19,25 @@ import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
+import java.io.IOException;
 
-    public class levelOneBottomScreen implements stackableScreen {
+
+public class levelOneBottomScreen implements stackableScreen {
         Stage stage;
         BookShelf testShelf;
         TileDragPuzzle testDrag;
 
-        public levelOneBottomScreen(ScreenStack stack) {
+    World levelWorld;
+
+        public levelOneBottomScreen(ScreenStack stack) throws IOException {
             stage = new Stage(new FitViewport(1920,1080));
             testShelf = new BookShelf(new Texture(Gdx.files.internal("Images/idle_0.png")),2,new Texture(Gdx.files.internal("Images/key.png")),stack);
             testShelf.setPosition(300,300);
             testShelf.setSize(30,30);
             stage.addActor(testShelf);
+
+            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
+
 
             Array<Texture> fakeTileArray = new Array<>();
             fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
@@ -64,7 +71,7 @@ import com.mygdx.game.ui.stackableScreen;
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/InnerOuterButton.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/rotationPuzzleWheelExample.png")));
 
-            RotationPuzzle lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,4});
+            RotationPuzzle lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,1});
             stage.addActor(lockPuzzle);
             lockPuzzle.setPosition(800,800);
         }
@@ -77,7 +84,7 @@ import com.mygdx.game.ui.stackableScreen;
         @Override
         public void render(float delta, boolean top) {
 
-            //levelWorld.run(top);
+            levelWorld.run(top);
             if(top) {
                 stage.act(delta);
             }

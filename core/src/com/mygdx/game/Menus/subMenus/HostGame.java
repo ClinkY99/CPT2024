@@ -104,7 +104,7 @@ public class HostGame implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new transitionScreen(current, new transitions() {
                     @Override
-                    public Screen load() {
+                    public Screen load() throws IOException {
                             return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
 
                     }

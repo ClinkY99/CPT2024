@@ -35,7 +35,7 @@ public class Tiled
         {
             String type = reader.nextLine();
             tile_info.put(type, import_csv_files(path + "/" + level, type));
-            this.image.put(type, woodcutting(("Images/tiles" + "/" + type), type));
+            this.image.put(type, woodcutting(("assets/Images/tiles" + "/" + type), type));
         }
         return tile_info;
     }

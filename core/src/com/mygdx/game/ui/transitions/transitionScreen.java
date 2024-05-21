@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 
+import java.io.IOException;
+
 /**
  * transition screen, used to fade between 2 screens as well as to wait for screen to load
  */
@@ -65,7 +67,11 @@ public class transitionScreen implements Screen {
                 game.setScreen(next);
             }
         } else {
-            next = load.load();
+            try {
+                next = load.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             fadeIn.current = next;
         }
         stage.act(delta);

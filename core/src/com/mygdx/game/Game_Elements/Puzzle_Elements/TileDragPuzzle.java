@@ -125,12 +125,14 @@ public class TileDragPuzzle extends ImagePuzzleButton{
 
         @Override
         public void render(float delta, boolean top) {
+            boolean isTouchingTile = false;
             stage.act(delta);
             stage.draw();
             for (int i = 0; i < goals.size;i++) {
                 for (int j = 0; j < tilesToDrag.size;j++) {
                     if (goals.get(i).bounds.overlaps(tilesToDrag.get(j).bounds)) {
-                        if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                        if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !isTouchingTile) {
+                            isTouchingTile = true;
                             tilesToDrag.get(j).setPosition(goals.get(i).getX() + goals.get(i).getWidth() / 2 - tilesToDrag.get(i).getWidth() / 2, goals.get(i).getY() + goals.get(i).getHeight() / 2 - tilesToDrag.get(i).getHeight() / 2);
                         }
                         System.out.println(goals.get(i).data + " " + tilesToDrag.get(j).data);
@@ -138,6 +140,8 @@ public class TileDragPuzzle extends ImagePuzzleButton{
                             goals.get(i).touchingCorrectTile = true;
                         }
 
+                    } else {
+                        isTouchingTile = false;
                     }
                 }
             }

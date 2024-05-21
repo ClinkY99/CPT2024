@@ -4,6 +4,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import java.io.IOException;
+
 /**
  * Contains all transition classes as well as the function to be called on load
  */
@@ -13,7 +15,7 @@ public interface transitions {
      * Function to be called on completion of fade out
      * @return loads screen class.
      */
-    Screen load();
+    Screen load() throws IOException;
 
     /**
      * default time transition class, returns time remaining out of 1

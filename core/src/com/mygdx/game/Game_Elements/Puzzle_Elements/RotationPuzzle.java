@@ -67,20 +67,22 @@ public class RotationPuzzle extends ImagePuzzleButton {
                 tempButton.data = 0;
                 int stateNum = numberOfStates[i];
                 tempButton.setSize(diskPictures.get(i).getWidth(),diskPictures.get(i).getHeight());
-                tempButton.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        if (tempButton.data < stateNum-1) {
-                            tempButton.data++;
-                        } else {
-                            tempButton.data = 0;
+
+                    tempButton.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            if (tempButton.data < stateNum - 1) {
+                                tempButton.data++;
+                            } else {
+                                tempButton.data = 0;
+                            }
+                            tempButton.setTransform(true);
+                            tempButton.rotateBy(-(360F / stateNum));
+
+
                         }
-                        tempButton.setTransform(true);
-                        tempButton.rotateBy(-(360F/stateNum));
+                    });
 
-
-                    }
-                });
                 diskButtons.add(tempButton);
             }
 
@@ -139,6 +141,7 @@ public class RotationPuzzle extends ImagePuzzleButton {
             }
             return -1;
         }
+        //i used recursion to solve a problem, bow before me
         public boolean didDone(int[] array,int iterator) {
             if (iterator >= diskButtons.size ) {
                 return true;

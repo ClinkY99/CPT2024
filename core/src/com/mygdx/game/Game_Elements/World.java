@@ -22,10 +22,11 @@ public class World extends Stage
     public float[] true_scroll;
 
 
-
-    public World(String path, String level) throws IOException
+Stage stage;
+    public World(String path, String level, Stage stage) throws IOException
     {
         super(new FitViewport(1920,1080));
+        this.stage = stage;
         String playerPath = "Images/Players/";
         player1 = new Player (playerPath, "Player2");
 
@@ -78,9 +79,8 @@ public class World extends Stage
 
             tileCast.updatex(scroll[0]);
             tileCast.updatey(scroll[1]);
-
         }
-
+        stage.getRoot().moveBy(-scroll[0],-scroll[1]);
         draw();
 
         getBatch().begin();

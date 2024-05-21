@@ -10,6 +10,9 @@ import com.mygdx.game.Game_Elements.Puzzle_Elements.TileDragPuzzle;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Multiplayer.MPHandle;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
+
 public class levelOneStackManager extends baseLevel {
 
 
@@ -23,7 +26,7 @@ public class levelOneStackManager extends baseLevel {
      * @param levelNum  tells the level how far along it is
      */
 
-    public levelOneStackManager(CPTGame game, MPHandle c, SaveFile s, int Character, int levelNum) {
+    public levelOneStackManager(CPTGame game, MPHandle c, SaveFile s, int Character, int levelNum) throws IOException {
         super(game, c, s, Character, levelNum);
         screenStack.push(new levelOneBottomScreen(screenStack));
     }
