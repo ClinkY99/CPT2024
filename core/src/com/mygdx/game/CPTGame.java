@@ -27,6 +27,7 @@ public class CPTGame extends Game {
 
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 		menuLevel = new SplashScreen(this);
+		//setScreen(new Test());
 		setScreen(menuLevel);
 		//setScreen(new characterSelection(this, );
 		// declares images
