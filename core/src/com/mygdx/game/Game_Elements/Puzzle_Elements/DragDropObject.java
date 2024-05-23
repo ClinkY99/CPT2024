@@ -32,16 +32,24 @@ public class DragDropObject extends Actor {
             }
         });
         DragDropObject object = this;
-        addListener(new ClickListener() {
+
+        addListener(new InputListener() {
+            boolean Clicked = false;
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (getStage() != null) {
-                    Stage stage= getStage();
-                    remove();
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (object.getStage() != null && !Clicked) {
+                    Stage stage = object.getStage();
+                    object.remove();
                     stage.addActor(object);
+                    Clicked = true;
 
                 }
+                return super.touchDown(event, x, y, pointer, button);
+            }
 
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Clicked = false;
             }
         });
         setPosition(500,500);
@@ -53,8 +61,11 @@ public class DragDropObject extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch,parentAlpha);
+
         batch.draw(image,getX(),getY(),getWidth(),getHeight());
         this.bounds.set(getX(), getY(), getWidth(), getHeight());
+
 
     }
 

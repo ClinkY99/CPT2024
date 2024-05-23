@@ -22,7 +22,7 @@ public class Object extends Image {
     boolean collide;
 
     public Object(Texture img, int[] location, boolean collide) {
-        super(img);
+            super(img);
         setSize(getWidth() ,getHeight());
 
         setOrigin(getWidth()/2,getHeight()/2);

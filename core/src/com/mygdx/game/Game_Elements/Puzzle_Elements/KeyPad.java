@@ -107,7 +107,6 @@ public class KeyPad extends ImagePuzzleButton {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     currentInputtedCode.add(5);
-                    System.out.println(5);
                 }
             });
             ImagePuzzleButton button6 = new ImagePuzzleButton(new Texture(Gdx.files.internal("Numbers/Numbers 1-9/Number6.png")),2);
