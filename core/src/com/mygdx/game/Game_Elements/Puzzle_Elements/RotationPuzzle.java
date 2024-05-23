@@ -23,7 +23,7 @@ public class RotationPuzzle extends ImagePuzzleButton {
     // position, one being it having been rotated/clicked once, etc.
     // the int[] numberOfStates variable is associated according to index to a texture, it tells the class
     // how many states that specific circle has
-    Boolean isCompleted;
+    public Boolean isCompleted;
     int[] numberOfStates;
     TextureRegion region;
     public RotationPuzzle(Texture buttonTexture, Array<Texture> diskPictures, int[][] code, ScreenStack stack, int[] numberOfStates) {

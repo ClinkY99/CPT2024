@@ -22,6 +22,9 @@ import java.io.IOException;
 public class levelOneBottomScreen implements stackableScreen {
         Stage stage;
         BookShelf testShelf;
+    KeyPad puzzleKeyPad;
+    RotationPuzzle lockPuzzle;
+    InvisibleMazePuzzle mazePuzzle;
         TileDragPuzzle testDrag;
         World levelWorld;
 
@@ -31,27 +34,33 @@ public class levelOneBottomScreen implements stackableScreen {
             testShelf.setPosition(300,300);
             stage.addActor(testShelf);
 
-            //levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
+            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
             Array<Texture> realTileArray = new Array<>();
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
-            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+            for (int i = 0; i < 8; i++) {
+                realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
+            }
 
-            Texture goalTexture = new Texture(Gdx.files.internal("Images/idle_0_green.png"));
+            Texture goalTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Goal.png"));
+            Texture statueTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Statue.png"));
+            ImagePuzzleButton statue1 = new ImagePuzzleButton(statueTexture,2);
 
-            testDrag = new TileDragPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Pedastle.png")),realTileArray,goalTexture,2,new int[][]{{700,970},{900,970}},stack);
-            testDrag.setPosition(700,200);
-            testDrag.setSize(400,400);
+            statue1.setSize(statueTexture.getWidth(),statueTexture.getHeight());
+            statue1.setPosition(300,3100);
+            stage.addActor(statue1);
+            ImagePuzzleButton statue2 = new ImagePuzzleButton(statueTexture,2);
+            statue2.setSize(statueTexture.getWidth(),statueTexture.getHeight());
+            statue2.setPosition(700,3100);
+            stage.addActor(statue2);
+            Texture dragTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Pedastle.png"));
+            testDrag = new TileDragPuzzle(dragTexture,realTileArray,goalTexture,8,new int[][]{},stack);
+            testDrag.setPosition(500,3100);
+            testDrag.setSize(dragTexture.getWidth(),dragTexture.getHeight());
 
-            KeyPad puzzleKeyPad = new KeyPad(new int[]{1,2,3,4},new Texture(Gdx.files.internal("Images/keyPadSprite.png")),stack);
+            puzzleKeyPad = new KeyPad(new int[]{1,2,3,4},new Texture(Gdx.files.internal("Images/keyPadSprite.png")),stack);
             puzzleKeyPad.setPosition(800,200);
             stage.addActor(testDrag);
             stage.addActor(puzzleKeyPad);
+
 
             Array<Texture> combinationLockPictures = new Array<>();
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/OuterButton.png")));
@@ -59,15 +68,23 @@ public class levelOneBottomScreen implements stackableScreen {
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/InnerOuterButton.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/rotationPuzzleWheelExample.png")));
 
-            RotationPuzzle lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,1});
+            lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,1});
             stage.addActor(lockPuzzle);
             lockPuzzle.setPosition(800,800);
 
-            Texture mazeButtonTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Statue.png"));
-            InvisibleMazePuzzle mazePuzzle = new InvisibleMazePuzzle(mazeButtonTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}});
+            Texture mazeButtonTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Statue.png"));
+            mazePuzzle = new InvisibleMazePuzzle(mazeButtonTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
             mazePuzzle.setSize(300,300);
             stage.addActor(mazePuzzle);
             mazePuzzle.setPosition(0,800);
+
+
+            Array<Texture> tiles = new Array<>();
+            tiles.add(new Texture("assets/Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
+            Desk deskPuzzle = new Desk(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png")),stack,tiles);
+            deskPuzzle.setSize(300,300);
+            deskPuzzle.setPosition(300,300);
+            stage.addActor(deskPuzzle);
         }
 
         @Override
@@ -78,11 +95,14 @@ public class levelOneBottomScreen implements stackableScreen {
         @Override
         public void render(float delta, boolean top) {
 
-            //levelWorld.run(top);
+            levelWorld.run(top);
             if(top) {
                 stage.act(delta);
             }
             stage.draw();
+            if (mazePuzzle.isWon && puzzleKeyPad.isSolved && lockPuzzle.isCompleted) {
+
+            }
 
         }
 

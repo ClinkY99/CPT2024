@@ -78,7 +78,7 @@ public class TileDragPuzzle extends ImagePuzzleButton{
             screenBlocker.setSize(1928,1080);
             stage.addActor(screenBlocker);
 
-            Texture backgroundThingTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/PedastlePuzzleScreen.png"));
+            Texture backgroundThingTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/PedastlePuzzleScreen.png"));
             ImagePuzzleButton backgroundThing = new ImagePuzzleButton(backgroundThingTexture,0);
             backgroundThing.setPosition(0,0);
             backgroundThing.setSize(1920,1080);
@@ -86,8 +86,6 @@ public class TileDragPuzzle extends ImagePuzzleButton{
 
             tilesToDrag = new Array<>();
             goals = new Array<>();
-            tileTable = new PuzzleTable(500, 500, stage);
-            goalTable = new PuzzleTable(500, 800, stage);
             for (int j = 0; j < realTiles.size; j++) {
                 DragDropObject realTile = new DragDropObject(realTiles.get(j));
                 realTile.data = j;
@@ -100,12 +98,11 @@ public class TileDragPuzzle extends ImagePuzzleButton{
                 DragDropGoal goalObject = new DragDropGoal(goalTexture);
                 goalObject.data = i;
                 goals.add(goalObject);
-                //goals array shuffled
             }
 
             for (int i = 0; i <tilesToDrag.size;i++) {
                 stage.addActor(tilesToDrag.get(i));
-                tilesToDrag.get(i).setPosition(i<4 ? 150:1700, i==0||i==4? 800: tilesToDrag.get(i-1).getY()-150);
+                tilesToDrag.get(i).setPosition(i<4 ? 150:1700, i==0||i==4? 600: tilesToDrag.get(i-1).getY()-150);
             }
             for (int i = 0; i <goals.size;i++) {
                 stage.addActor(goals.get(i));
@@ -113,8 +110,8 @@ public class TileDragPuzzle extends ImagePuzzleButton{
                 if (goalCoordinates.length == goals.size) {
                     goals.get(i).setPosition(goalCoordinates[i][0],goalCoordinates[i][1]);
                 } else {
-                    goals.get(i).setPosition(displaceNum, 1000);
-                    displaceNum += 50;
+                    goals.get(i).setPosition(250 +(i*(goals.get(i).getWidth() +30)), 890);
+
                 }
             }
         }
@@ -124,7 +121,6 @@ public class TileDragPuzzle extends ImagePuzzleButton{
 
         @Override
         public void render(float delta, boolean top) {
-            boolean isTouchingTile = false;
             stage.act(delta);
             stage.draw();
             for (int i = 0; i < goals.size;i++) {
@@ -134,7 +130,6 @@ public class TileDragPuzzle extends ImagePuzzleButton{
                         if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                             tilesToDrag.get(j).setPosition(goals.get(i).getX() + goals.get(i).getWidth() / 2 - tilesToDrag.get(i).getWidth() / 2, goals.get(i).getY() + goals.get(i).getHeight() / 2 - tilesToDrag.get(i).getHeight() / 2);
                         }
-                        System.out.println(goals.get(i).data + " " + tilesToDrag.get(j).data);
                         if (tilesToDrag.get(j).data == goals.get(i).data) {
                             goals.get(i).touchingCorrectTile = true;
                         }
@@ -149,7 +144,21 @@ public class TileDragPuzzle extends ImagePuzzleButton{
                 stack.remove(this);
 
             }
+            if (areDone()) {
+                for (int i = 0; i < tilesToDrag.size;i++) {
+                    tilesToDrag.get(i).image = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00" + (tilesToDrag.get(i).data+1) + "_Active.png"));
+                    tilesToDrag.get(i).inPlace = true;
+                }
+            }
 
+        }
+        boolean areDone() {
+            for (int i = 0; i < goals.size;i++) {
+               if  (!goals.get(i).touchingCorrectTile) {
+                   return false;
+               }
+            }
+            return true;
         }
 
         @Override

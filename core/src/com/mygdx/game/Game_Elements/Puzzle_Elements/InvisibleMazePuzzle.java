@@ -15,9 +15,12 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
     int[][] badCoordinates;
     int[][] mazeStorage;
     int[] currentLocation;
+    public boolean isWon;
     int[][] allowedCoordinates;
-    public InvisibleMazePuzzle(Texture buttonTexture, Texture playerTexture, Texture arrowTexture, ScreenStack stack, int[][] badCoordinates,int[][]allowedCoordinates) {
+    int[] goalLocation;
+    public InvisibleMazePuzzle(Texture buttonTexture, Texture playerTexture, Texture arrowTexture, ScreenStack stack, int[][] badCoordinates,int[][]allowedCoordinates, int[] goalLocation) {
         super(buttonTexture,2);
+        this.goalLocation = goalLocation;
         this.badCoordinates = badCoordinates;
         this.allowedCoordinates=allowedCoordinates;
         mazeStorage = new int[6][6];
@@ -158,6 +161,9 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
             }
             player.setPosition(400+currentLocation[0]*50,400+currentLocation[1]*50);
 
+            if (currentLocation[0] == goalLocation[0] && currentLocation[1] == goalLocation[1]) {
+                isWon = true;
+            }
             if (top) {
                 stage.act(delta);
             }

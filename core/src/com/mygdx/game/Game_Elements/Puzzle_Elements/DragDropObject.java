@@ -19,7 +19,8 @@ public class DragDropObject extends Actor {
     public com.badlogic.gdx.math.Rectangle actualRectangle;
     float changeInYPosition;
     public int data;
-    Texture image;
+    boolean inPlace;
+    public Texture image;
     Rectangle bounds;
     public DragDropObject(Texture img) {
         setWidth(img.getWidth());
@@ -28,7 +29,9 @@ public class DragDropObject extends Actor {
         addListener(new DragListener() {
             @Override
             public void drag(InputEvent event, float x, float y, int pointer) {
-                moveBy(x,y);
+                if (!inPlace) {
+                    moveBy(x - getWidth() / 2, y - getHeight() / 2);
+                }
             }
         });
         DragDropObject object = this;
@@ -39,7 +42,6 @@ public class DragDropObject extends Actor {
                 object.toFront();
                 return super.touchDown(event, x, y, pointer, button);
             }
-
         });
         setPosition(500,500);
 

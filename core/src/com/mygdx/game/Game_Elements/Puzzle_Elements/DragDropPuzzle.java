@@ -40,11 +40,7 @@ public class DragDropPuzzle {
         Goal.setPosition(600,600);
     }
     public void render(Array<DragDropObject> dragdropObjectList, Stage stage) {
-
-
-
             stage.addActor(Goal);
-
             for (int i = 0; i < dragdropObjectList.size; i++) {
                 stage.addActor(dragdropObjectList.get(i));
             }
