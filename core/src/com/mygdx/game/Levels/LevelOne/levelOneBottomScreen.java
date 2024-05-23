@@ -11,10 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.BookShelf;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.KeyPad;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.RotationPuzzle;
-import com.mygdx.game.Game_Elements.Puzzle_Elements.TileDragPuzzle;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.*;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
@@ -26,33 +23,28 @@ public class levelOneBottomScreen implements stackableScreen {
         Stage stage;
         BookShelf testShelf;
         TileDragPuzzle testDrag;
-
-    World levelWorld;
+        World levelWorld;
 
         public levelOneBottomScreen(ScreenStack stack) throws IOException {
             stage = new Stage(new FitViewport(1920,1080));
-            testShelf = new BookShelf(new Texture(Gdx.files.internal("Images/idle_0.png")),2,new Texture(Gdx.files.internal("Images/key.png")),stack);
+            testShelf = new BookShelf(10,"",stack);
             testShelf.setPosition(300,300);
-            testShelf.setSize(30,30);
             stage.addActor(testShelf);
 
-            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
-
-            Array<Texture> fakeTileArray = new Array<>();
-            fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
-            fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
-            fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
-            fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));
-
+            //levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
             Array<Texture> realTileArray = new Array<>();
             realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
             realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
             realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
             realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
+            realTileArray.add(new Texture(Gdx.files.internal("Images/idle_0_red.png")));
 
-            Texture goalTexture = new Texture(Gdx.files.internal("Images/gale.jpeg"));
+            Texture goalTexture = new Texture(Gdx.files.internal("Images/idle_0_green.png"));
 
-            testDrag = new TileDragPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),fakeTileArray,realTileArray,goalTexture,2,new int[][]{{300,700},{600,700}},stack);
+            testDrag = new TileDragPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Pedastle.png")),realTileArray,goalTexture,2,new int[][]{{700,970},{900,970}},stack);
             testDrag.setPosition(700,200);
             testDrag.setSize(400,400);
 
@@ -70,6 +62,12 @@ public class levelOneBottomScreen implements stackableScreen {
             RotationPuzzle lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/idle_0_red.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,1});
             stage.addActor(lockPuzzle);
             lockPuzzle.setPosition(800,800);
+
+            Texture mazeButtonTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Statue.png"));
+            InvisibleMazePuzzle mazePuzzle = new InvisibleMazePuzzle(mazeButtonTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}});
+            mazePuzzle.setSize(300,300);
+            stage.addActor(mazePuzzle);
+            mazePuzzle.setPosition(0,800);
         }
 
         @Override
@@ -80,7 +78,7 @@ public class levelOneBottomScreen implements stackableScreen {
         @Override
         public void render(float delta, boolean top) {
 
-            levelWorld.run(top);
+            //levelWorld.run(top);
             if(top) {
                 stage.act(delta);
             }

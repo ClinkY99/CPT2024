@@ -37,29 +37,14 @@ public class BookShelf extends ImagePuzzleButton {
     Texture shelf;
     TextureRegion region;
     bookFocused library;
-
-    ImagePuzzleButton button;
-
     ScreenStack stack;
 
     public BookShelf(Texture shelfTexture, int scale,Texture textTexture, ScreenStack stack) {
        super(shelfTexture, scale);
         text = textTexture;
         shelf = shelfTexture;
-        library = new bookFocused(textTexture,stack);
         region = new TextureRegion(shelfTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
-
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("SUS");
-                stack.push(library);
-
-            }
-        });
-
-        this.stack = stack;
     }
 
     public BookShelf() {
@@ -68,6 +53,17 @@ public class BookShelf extends ImagePuzzleButton {
 
     public BookShelf(int type, String imgPath, ScreenStack stack){
         super(new FreeTypeSkin(Gdx.files.internal("Levels/PuzzleElements.json")), "BookshelfInteractable");
+        library = new bookFocused(new Texture(Gdx.files.internal("Images/ftb.png")),stack);
+
+        this.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("SUS");
+                stack.push(library);
+
+            }
+        });
+        this.stack = stack;
 
     }
 
@@ -100,13 +96,13 @@ public class BookShelf extends ImagePuzzleButton {
 //        Color color = getColor();
 //        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 //        batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-//        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-//            try {
-//                stack.remove(library);
-//            } catch (Exception e) {
-//
-//            }
-//        }
+    if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+              try {
+                  stack.remove(library);
+             } catch (Exception e) {
+
+            }
+        }
 
     }
 
