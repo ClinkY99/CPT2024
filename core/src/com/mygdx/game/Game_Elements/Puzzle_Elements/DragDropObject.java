@@ -34,23 +34,12 @@ public class DragDropObject extends Actor {
         DragDropObject object = this;
 
         addListener(new InputListener() {
-            boolean Clicked = false;
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (object.getStage() != null && !Clicked) {
-                    Stage stage = object.getStage();
-                    object.remove();
-                    stage.addActor(object);
-                    Clicked = true;
-
-                }
+                object.toFront();
                 return super.touchDown(event, x, y, pointer, button);
             }
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Clicked = false;
-            }
         });
         setPosition(500,500);
 
