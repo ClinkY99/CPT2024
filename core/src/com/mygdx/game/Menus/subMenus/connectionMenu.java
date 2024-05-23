@@ -128,6 +128,7 @@ public class connectionMenu implements Screen {
         //if a client connects send to the character selection screen
         if(connected){
             game.setScreen(new transitionScreen(this, () -> new characterSelection(game,saveFile), game));
+            connected = false;
         }
 
         stage.act(delta);

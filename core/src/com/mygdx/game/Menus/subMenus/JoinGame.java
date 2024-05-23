@@ -146,7 +146,7 @@ public class JoinGame implements Screen {
         switcher.setPosition(0, 1080/4f);
         switcher.setWidth(1920/5f*3);
         switcher.setHeight(1080/2f+25);
-        switcher.debug();
+        //switcher.debug();
 
 
 
@@ -181,7 +181,7 @@ public class JoinGame implements Screen {
             pane.setHeight(1080/2f+25);
             pane.setWidth(1920/5f*3);
             pane.setFadeScrollBars(false);
-            pane.debug();
+            //pane.debug();
 
             return pane;
         } else {
@@ -192,7 +192,7 @@ public class JoinGame implements Screen {
             serversFound.setWidth(1920/5f*3);
             serversFound.setAlignment(Align.center);
             serversFound.setFontScale(.5f);
-            serversFound.debug();
+            //serversFound.debug();
 
             return serversFound;
         }

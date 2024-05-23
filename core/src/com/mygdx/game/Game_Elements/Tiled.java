@@ -112,7 +112,7 @@ public class Tiled
         }
         else if(tileId <= Flipped90 + num.get(type)){
             tileId-= Flipped90;
-            Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide  );
+            Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
             image.setRotation(270);
             return image;
         }
