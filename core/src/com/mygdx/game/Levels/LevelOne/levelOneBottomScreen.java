@@ -36,7 +36,7 @@ public class levelOneBottomScreen implements stackableScreen {
             testShelf.setSize(30,30);
             stage.addActor(testShelf);
 
-            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
+            levelWorld = new World("Levels/Level_1","Level_1",stage);
 
             Array<Texture> fakeTileArray = new Array<>();
             fakeTileArray.add(new Texture(Gdx.files.internal("Images/idle_0.png")));

@@ -35,7 +35,7 @@ public class Tiled
         {
             String type = reader.nextLine();
             tile_info.put(type, import_csv_files(path + "/" + level, type));
-            this.image.put(type, woodcutting(("assets/Images/tiles" + "/" + type), type));
+            this.image.put(type, woodcutting(("Images/tiles" + "/" + type), type));
         }
         return tile_info;
     }
@@ -56,8 +56,15 @@ public class Tiled
         int i = 0;
         while (reader.hasNext())
         {
-            Texture image = new Texture(path + "/" + reader.nextLine() + ".png");
-            tile.put(String.valueOf(i), image);
+            try
+            {
+                Texture image = new Texture(path + "/" + reader.nextLine() + ".png");
+                tile.put(String.valueOf(i), image);
+            }
+            catch (Exception e)
+            {
+                tile.put(String.valueOf(i), null);
+            }
             i++;
         }
         num.put(type, i);
@@ -104,7 +111,18 @@ public class Tiled
         int Flipped90 = -0x60000000;
         int Flipped270 = -0x40000000;
 
-        if(tileId >= Flipped180){
+        int FlippedVer = -0x80000000;
+        int FlippedHor = 0x40000000;
+
+
+        if (tileId <= FlippedVer + num.get(type))
+        {
+            tileId -= FlippedVer;
+            Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
+            image.setSize(-image.getWidth(), image.getHeight());
+            return image;
+        }
+        else if(tileId >= Flipped180){
             tileId = tileId - Flipped180;
             Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
             image.setRotation(90);
@@ -120,6 +138,13 @@ public class Tiled
             tileId-= Flipped270;
             Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
             image.setRotation(180);
+            return image;
+        }
+        else if (tileId >= FlippedHor)
+        {
+            tileId -= FlippedHor;
+            Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
+            image.setSize(image.getWidth(), -image.getHeight());
             return image;
         }
         return new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);

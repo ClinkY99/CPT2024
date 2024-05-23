@@ -50,14 +50,14 @@ public class BookShelf extends ImagePuzzleButton {
         region = new TextureRegion(shelfTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
 
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("SUS");
-                stack.push(library);
+        //button.addListener(new ClickListener() {
+        //    @Override
+        //    public void clicked(InputEvent event, float x, float y) {
+        //        System.out.println("SUS");
+        //        stack.push(library);
 
-            }
-        });
+         //   }
+        //});
 
         this.stack = stack;
     }
