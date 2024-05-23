@@ -19,12 +19,9 @@ public class transitionScreen implements Screen {
 
     Screen current;
     Screen next;
-
     transitions load;
-
     Stage stage;
     CPTGame game;
-
     transitions.fadeOutTransitionScreen fadeOut;
     transitions.fadeInTransitionScreen fadeIn;
 

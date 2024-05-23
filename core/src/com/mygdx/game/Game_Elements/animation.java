@@ -27,7 +27,7 @@ public class animation {
     public HashMap<String, float[]> set_up_states(String path, String type) throws IOException {
         HashMap<String, float[]> anim_info = new HashMap<>();
         this.anim_size = new HashMap<>();
-        Scanner reader = new Scanner(new File(String.format("assets/%s%s/animation", path, type)));
+        Scanner reader = new Scanner(new File(String.format("%s%s/animation", path, type)));
         while (reader.hasNext()) {
             String state = reader.next();
             float duration = reader.nextInt();
