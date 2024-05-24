@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public class World extends Stage
     public Boolean allowMovement = true;
     Color[] colorList;
     public int[] scroll;
-    HashMap<String, Rectangle> rectangleHashMap;
+    HashMap<String, Array<Rectangle>> rectangleHashMap;
     public float[] true_scroll;
 
 
@@ -35,7 +36,7 @@ Stage stage;
         this.stage = stage;
         map(path, level);
         String playerPath = "Images/Players/";
-        int[] spawn = new int[]{(int) rectangleHashMap.get("Spawn").getX(), (int) rectangleHashMap.get("Spawn").getY()};
+        int[] spawn = new int[]{(int) ((int) rectangleHashMap.get("Spawn").get(0).getX() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2), (int) ((int) rectangleHashMap.get("Spawn").get(0).getY() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2)};
         player1 = new Player (playerPath, "Player1", spawn);
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
@@ -90,8 +91,12 @@ Stage stage;
         }
         for (String key: rectangleHashMap.keySet())
         {
-            rectangleHashMap.get(key).x -= scroll[0];
-            rectangleHashMap.get(key).y -= scroll[1];
+
+            for (Rectangle rect: rectangleHashMap.get(key)) {
+                rect.x -= scroll[0];
+                rect.y -= scroll[1];
+            }
+
         }
         stage.getRoot().moveBy(-scroll[0],-scroll[1]);
         draw();

@@ -44,12 +44,12 @@ public class Player
 
         state = "Idle/Forward";
         this.size = animation.anim_size.get(state);
-        position = new Vector2(loc[0], loc[1]);
+        position = new Vector2(loc[0] - size[0] / 2, loc[1] - size[1]);
         positionChange = new Vector2(0, 0);
         player = new Sprite();
         // need to subtract the width and height divided by 2 to put player in middle
         player.setPosition(position.x, position.y);
-        player_rect = new Rectangle(loc[0] , loc[1], size[0], size[1]);
+        player_rect = new Rectangle(loc[0] - size[0], loc[1] - size[1], size[0], size[1]);
         data = 0;
 
     }
@@ -78,8 +78,8 @@ public class Player
             positionChange.x = 1;
             state = "Running/right";
             this.loop = true;
-            diagonal = true;
             press = true;
+            diagonal = true;
             data = 1;
             i = 0;
         }
@@ -91,9 +91,9 @@ public class Player
             press = true;
             if (diagonal)
             {
-                positionChange.x = 0.71f * positionChange.x;
-                positionChange.y = 0.71f;
+                speed = (int) (speed * 0.71);
             }
+
             i = 0;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S))
@@ -104,8 +104,7 @@ public class Player
             press = true;
             if (diagonal)
             {
-                positionChange.x = 0.71f * positionChange.x;
-                positionChange.y = -0.71f;
+                speed = (int) (speed * 0.71);
             }
             i = 0;
         }
@@ -124,12 +123,11 @@ public class Player
         this.size = this.animation.anim_size.get(state);
         player_rect.setSize(size[0], size[1]);
         move = speed * deltaTime;
-
     }
 
-    public void collision_detectionx(Array<Actor> tiles, Rectangle rect)
+    public void collision_detectionx(Array<Actor> tiles, Array<Rectangle> rectangle)
     {
-        position.x += move * positionChange.x;
+        position.x += (int) move * positionChange.x;
         player_rect.setX((int) position.x);
         for (Actor tileActor: tiles)
         {
@@ -152,26 +150,28 @@ public class Player
                 }
             }
         }
-
-        if (player_rect.overlaps(rect))
+        for (Rectangle rect: rectangle)
         {
-            int left = (int) rect.getX();
-            int right = (int) (left + Math.abs(rect.getWidth()));
+            if (player_rect.overlaps(rect))
+            {
+                int left = (int) rect.getX();
+                int right = (int) (left + Math.abs(rect.getWidth()));
 
-            isCollidingX = true;
-            if (positionChange.x < 0) {
-                position.x = right;
-                player_rect.setX(position.x);
-            } else if (positionChange.x > 0) {
-                position.x = left - player_rect.getWidth();
-                player_rect.setX(position.x);
+                isCollidingX = true;
+                if (positionChange.x < 0) {
+                    position.x = right;
+                    player_rect.setX(position.x);
+                } else if (positionChange.x > 0) {
+                    position.x = left - player_rect.getWidth();
+                    player_rect.setX(position.x);
+                }
             }
         }
 
     }
 
-    public void collision_detectiony(Array<Actor> tiles, Rectangle rect) {
-        position.y += move * positionChange.y;
+    public void collision_detectiony(Array<Actor> tiles, Array<Rectangle> rectangle) {
+        position.y += (int) move * positionChange.y;
         player_rect.setY((int) position.y);
         for (Actor tileActor: tiles) {
             Object tile = (Object) tileActor;
@@ -193,21 +193,21 @@ public class Player
                 }
             }
         }
+        for (Rectangle rect: rectangle) {
+            if (player_rect.overlaps(rect)) {
+                int bottom = (int) rect.getY();
+                int top = (int) (bottom + Math.abs(rect.getHeight()));
+                isCollidingY = true;
+                if (positionChange.y > 0) {
+                    position.y = bottom - player_rect.getHeight();
+                    player_rect.setY(position.y);
 
-        if (player_rect.overlaps(rect)) {
-            int bottom = (int) rect.getY();
-            int top = (int) (bottom + Math.abs(rect.getHeight()));
-            isCollidingY = true;
-            if (positionChange.y > 0) {
-                position.y = bottom - player_rect.getHeight();
-                player_rect.setY(position.y);
-
-            } else if (positionChange.y < 0) {
-                position.y = top;
-                player_rect.setY(position.y);
+                } else if (positionChange.y < 0) {
+                    position.y = top;
+                    player_rect.setY(position.y);
+                }
             }
         }
-
         }
     public void draw(SpriteBatch batch)
     {

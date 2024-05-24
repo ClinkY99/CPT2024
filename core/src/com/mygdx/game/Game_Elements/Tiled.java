@@ -3,11 +3,8 @@ package com.mygdx.game.Game_Elements;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -25,7 +22,7 @@ public class Tiled
     HashMap<String, HashMap<String, Texture>> image;
     Array<Object> map;
 
-    HashMap<String, Rectangle> objectLayers;
+    HashMap<String, Array<Rectangle>> objectLayers;
     HashMap<String, Integer> num;
     TiledMap tiledMap;
     public Tiled(String path, String level)
@@ -120,12 +117,14 @@ public class Tiled
         }
         for (MapLayer layer: tiledMap.getLayers())
         {
+            Array<Rectangle> rect_info = new Array<>();
             for (MapObject object:layer.getObjects())
             {
                  Iterator<java.lang.Object> i = object.getProperties().getValues();
                  float[] properties = new float[4];
-                Rectangle rect = null;
-                while (i.hasNext())
+                 Rectangle rect = null;
+                 objectLayers.put(object.getName(), rect_info);
+                 while (i.hasNext())
                  {
                      properties[0] = (float) i.next();
                      properties[1] = (float) i.next();
@@ -133,9 +132,13 @@ public class Tiled
                      properties[2] = (float) i.next();
                      properties[3] = (float) i.next();
                      rect = new Rectangle(properties[0], properties[2], properties[3], properties[1]);
+                     objectLayers.get(object.getName()).add(rect);
                  }
-                objectLayers.put(object.getName(), rect);
+                 if (object.getName().equals("Spawn")) rect_info = new Array<>();
+
+                System.out.println(objectLayers.get(object.getName()));
             }
+
         }
 
 
