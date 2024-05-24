@@ -34,7 +34,7 @@ public class levelOneBottomScreen implements stackableScreen {
             testShelf.setPosition(300,300);
             stage.addActor(testShelf);
 
-            levelWorld = new World("Levels/Level_1","Level_1",stage);
+            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
@@ -83,7 +83,7 @@ public class levelOneBottomScreen implements stackableScreen {
             tiles.add(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
             Desk deskPuzzle = new Desk(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png")),stack,tiles);
             deskPuzzle.setSize(300,300);
-            deskPuzzle.setPosition(300,300);
+            deskPuzzle.setPosition(10000,3000);
             stage.addActor(deskPuzzle);
         }
 

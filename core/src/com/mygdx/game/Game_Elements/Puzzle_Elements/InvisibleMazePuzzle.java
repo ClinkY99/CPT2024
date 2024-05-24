@@ -17,6 +17,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
     int[] currentLocation;
     public boolean isWon;
     int[][] allowedCoordinates;
+    public InvisibleMazePuzzleScreen mazeScreen;
     int[] goalLocation;
     public InvisibleMazePuzzle(Texture buttonTexture, Texture playerTexture, Texture arrowTexture, ScreenStack stack, int[][] badCoordinates,int[][]allowedCoordinates, int[] goalLocation) {
         super(buttonTexture,2);
@@ -25,7 +26,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
         this.allowedCoordinates=allowedCoordinates;
         mazeStorage = new int[6][6];
 
-        InvisibleMazePuzzleScreen mazeScreen = new InvisibleMazePuzzleScreen(arrowTexture,playerTexture,stack);
+        mazeScreen = new InvisibleMazePuzzleScreen(arrowTexture,playerTexture,stack);
 
         this.addListener(new ClickListener() {
             @Override

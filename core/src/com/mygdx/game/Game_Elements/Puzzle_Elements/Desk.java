@@ -19,11 +19,11 @@ import java.awt.print.Book;
 public class Desk extends ImagePuzzleButton {
     DeskScreen deskScreen;
 
+    boolean switchImage = false;
+
     public Desk(Texture deskTexture, ScreenStack stack, Array<Texture> tiles) {
         super(deskTexture, 2);
-
         deskScreen = new DeskScreen(tiles,stack);
-
         TextureRegion region = new TextureRegion(deskTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
         this.addListener(new ClickListener() {
@@ -31,11 +31,13 @@ public class Desk extends ImagePuzzleButton {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("SUS");
                 stack.push(deskScreen);
+
             }
         });
+
         //should have a
         //when clicked opens screen containing folder which opens tile drag puzzle
-        //when code inputed on eye side have function to change desk to a different image, and add a new screen
+        //when code inputted on eye side have function to change desk to a different image, and add a new screen
 
     }
 
@@ -44,6 +46,7 @@ public class Desk extends ImagePuzzleButton {
         int state = 0;
         ScreenStack stack;
         public DragDropScreen dropScreen;
+        InvisibleMazePuzzle mazePuzzle;
 
         public DeskScreen(Array<Texture> tiles,ScreenStack stack) {
             this.stack = stack;
@@ -56,21 +59,32 @@ public class Desk extends ImagePuzzleButton {
             ImagePuzzleButton folderButton = new ImagePuzzleButton(folderTexture,2);
             folderButton.setSize(folderTexture.getWidth(),folderTexture.getHeight());
             folderButton.setPosition(500,350);
+
+
+
+            mazePuzzle = new InvisibleMazePuzzle(folderTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
+            mazePuzzle.setSize(folderTexture.getWidth(),folderTexture.getHeight());
+            mazePuzzle.setPosition(800,350);
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    stack.push(dropScreen);
+                    if (!switchImage) {
+                        stack.push(dropScreen);
+                    } else {
+                        stack.push(mazePuzzle.mazeScreen);
+                    }
                 }
             });
+            stage.addActor(screenBlocker);
+
+            stage.addActor(mazePuzzle);
 
 
             //folderButton.debug();
 
-            stage.addActor(screenBlocker);
 
             stage.addActor(folderButton);
            dropScreen = new DragDropScreen(tiles,stack);
-
 
             for (int i = 0; i < tiles.size; i++) {
                 DragDropObject tempObject = new DragDropObject(tiles.get(i));
@@ -219,4 +233,5 @@ public class Desk extends ImagePuzzleButton {
             return stage;
         }
     }
+
 }
