@@ -3,13 +3,17 @@ package com.mygdx.game.Game_Elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class World extends Stage
 {
@@ -19,7 +23,9 @@ public class World extends Stage
     public Boolean allowMovement = true;
     Color[] colorList;
     public int[] scroll;
+    HashMap<String, Rectangle> rectangleHashMap;
     public float[] true_scroll;
+
 
 
 Stage stage;
@@ -27,11 +33,13 @@ Stage stage;
     {
         super(new FitViewport(1920,1080));
         this.stage = stage;
-        String playerPath = "assets/Images/Players/";
-        player1 = new Player (playerPath, "Player1");
+        map(path, level);
+        String playerPath = "Images/Players/";
+        int[] spawn = new int[]{(int) rectangleHashMap.get("Spawn").getX(), (int) rectangleHashMap.get("Spawn").getY()};
+        player1 = new Player (playerPath, "Player1", spawn);
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
-        map(path, level);
+
         scroll = new int[]{0, 0};
         true_scroll = new float[]{0, 0};
 
@@ -44,7 +52,7 @@ Stage stage;
         {
             addActor(tile);
         }
-
+        rectangleHashMap = map.objectLayers;
     }
     public void scrolling()
     {
@@ -80,6 +88,11 @@ Stage stage;
             tileCast.updatex(scroll[0]);
             tileCast.updatey(scroll[1]);
         }
+        for (String key: rectangleHashMap.keySet())
+        {
+            rectangleHashMap.get(key).x -= scroll[0];
+            rectangleHashMap.get(key).y -= scroll[1];
+        }
         stage.getRoot().moveBy(-scroll[0],-scroll[1]);
         draw();
 
@@ -88,9 +101,9 @@ Stage stage;
         getBatch().end();
 
         player1.isCollidingX = false;
-        player1.collision_detectionx(getActors());
+        player1.collision_detectionx(getActors(), rectangleHashMap.get("Collide"));
         player1.isCollidingY = false;
-        player1.collision_detectiony(getActors());
+        player1.collision_detectiony(getActors(), rectangleHashMap.get("Collide"));
 
     }
 }

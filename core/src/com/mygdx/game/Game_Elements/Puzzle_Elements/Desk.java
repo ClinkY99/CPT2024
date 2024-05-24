@@ -52,7 +52,7 @@ public class Desk extends ImagePuzzleButton {
             ImagePuzzleButton screenBlocker = new ImagePuzzleButton(screenBlockerTexture, 0);
             screenBlocker.setPosition(-10, 0);
             screenBlocker.setSize(1928, 1080);
-            Texture folderTexture = new Texture("assets/Images/tiles/Level1/Puzzles/Puzzle 2/File.png");
+            Texture folderTexture = new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/File.png");
             ImagePuzzleButton folderButton = new ImagePuzzleButton(folderTexture,2);
             folderButton.setSize(folderTexture.getWidth(),folderTexture.getHeight());
             folderButton.setPosition(500,350);

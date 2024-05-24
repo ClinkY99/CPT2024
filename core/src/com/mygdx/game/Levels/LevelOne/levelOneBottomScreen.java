@@ -34,7 +34,7 @@ public class levelOneBottomScreen implements stackableScreen {
             testShelf.setPosition(300,300);
             stage.addActor(testShelf);
 
-            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
+            levelWorld = new World("Levels/Level_1","Level_1",stage);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
@@ -73,14 +73,14 @@ public class levelOneBottomScreen implements stackableScreen {
             lockPuzzle.setPosition(800,800);
 
             Texture mazeButtonTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Statue.png"));
-            mazePuzzle = new InvisibleMazePuzzle(mazeButtonTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
+            mazePuzzle = new InvisibleMazePuzzle(mazeButtonTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
             mazePuzzle.setSize(300,300);
             stage.addActor(mazePuzzle);
             mazePuzzle.setPosition(0,800);
 
 
             Array<Texture> tiles = new Array<>();
-            tiles.add(new Texture("assets/Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
+            tiles.add(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
             Desk deskPuzzle = new Desk(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png")),stack,tiles);
             deskPuzzle.setSize(300,300);
             deskPuzzle.setPosition(300,300);

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="75" height="20" tilewidth="200" tileheight="200" infinite="0" nextlayerid="7" nextobjectid="8">
+ <objectgroup id="6" name="Object Layer 1">
+  <object id="2" name="Collide" x="8200" y="1800" width="1400" height="400"/>
+  <object id="3" name="Spawn" x="5400" y="2800" width="400" height="200"/>
+ </objectgroup>
+</map>
