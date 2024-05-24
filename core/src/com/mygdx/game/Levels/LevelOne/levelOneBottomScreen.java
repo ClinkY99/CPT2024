@@ -45,15 +45,15 @@ public class levelOneBottomScreen implements stackableScreen {
             ImagePuzzleButton statue1 = new ImagePuzzleButton(statueTexture,2);
 
             statue1.setSize(statueTexture.getWidth(),statueTexture.getHeight());
-            statue1.setPosition(300,3100);
+            statue1.setPosition(400,3200);
             stage.addActor(statue1);
             ImagePuzzleButton statue2 = new ImagePuzzleButton(statueTexture,2);
             statue2.setSize(statueTexture.getWidth(),statueTexture.getHeight());
-            statue2.setPosition(700,3100);
+            statue2.setPosition(800,3200);
             stage.addActor(statue2);
             Texture dragTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Pedastle.png"));
             testDrag = new TileDragPuzzle(dragTexture,realTileArray,goalTexture,8,new int[][]{},stack);
-            testDrag.setPosition(500,3100);
+            testDrag.setPosition(600,3200);
             testDrag.setSize(dragTexture.getWidth(),dragTexture.getHeight());
 
             puzzleKeyPad = new KeyPad(new int[]{1,2,3,4},new Texture(Gdx.files.internal("Images/keyPadSprite.png")),stack);
