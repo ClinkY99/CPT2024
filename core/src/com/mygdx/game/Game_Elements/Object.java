@@ -1,20 +1,14 @@
 package com.mygdx.game.Game_Elements;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-import javax.swing.*;
+import com.badlogic.gdx.math.Rectangle;
+
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
+import java.util.Arrays;
 
 
 public class Object extends Image {
@@ -23,14 +17,14 @@ public class Object extends Image {
 
     public Object(Texture img, int[] location, boolean collide) {
             super(img);
-        setSize(getWidth() ,getHeight());
 
+        setSize(getWidth() ,getHeight());
+        super.setPosition(location[0] * getWidth(), location[1] * getHeight());
+
+        object_rect = new Rectangle(getX(), getY(), Math.abs(getWidth()), Math.abs(getHeight()));
         setOrigin(getWidth()/2,getHeight()/2);
 
-        super.setPosition(location[0] * 200, location[1] * 200);
         this.collide = collide;
-        object_rect = new Rectangle(getX(), getY(), Math.abs(getWidth()), Math.abs(getHeight()));
-
     }
 
     public Rectangle getObject_rect() {
@@ -69,6 +63,6 @@ public class Object extends Image {
     @Override
     public void setPosition(float x, float y) {
         super.setPosition(x*200, y*200);
-        object_rect.setPosition(getX()-Math.abs(getWidth()/2),getY()-Math.abs(getHeight()/2));
+        object_rect.setPosition(getX(),getY());
     }
 }

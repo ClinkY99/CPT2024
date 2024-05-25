@@ -1,6 +1,5 @@
-Idle/Forward 6 0.5
-Running/Forward 8 0.1
-Running/Back 8 0.1
-Running/left 8 0.1
-Running/right 8 0.1
-trans/sans 1 0.5
+Idle/Forward 6 0.5 84 66
+Running/Forward 8 0.1 84 66
+Running/Back 8 0.1 84 66
+Running/left 8 0.1 104 66
+Running/right 8 0.1 104 66

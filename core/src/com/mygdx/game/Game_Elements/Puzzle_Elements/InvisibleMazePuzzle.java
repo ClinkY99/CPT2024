@@ -17,6 +17,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
     int[] currentLocation;
     public boolean isWon;
     int[][] allowedCoordinates;
+    public InvisibleMazePuzzleScreen mazeScreen;
     int[] goalLocation;
     public InvisibleMazePuzzle(Texture buttonTexture, Texture playerTexture, Texture arrowTexture, ScreenStack stack, int[][] badCoordinates,int[][]allowedCoordinates, int[] goalLocation) {
         super(buttonTexture,2);
@@ -25,7 +26,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
         this.allowedCoordinates=allowedCoordinates;
         mazeStorage = new int[6][6];
 
-        InvisibleMazePuzzleScreen mazeScreen = new InvisibleMazePuzzleScreen(arrowTexture,playerTexture,stack);
+        mazeScreen = new InvisibleMazePuzzleScreen(arrowTexture,playerTexture,stack);
 
         this.addListener(new ClickListener() {
             @Override
@@ -64,7 +65,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
             stage.addActor(screenBlocker);
             stage.addActor(player);
             for (int i = 0; i < 4;i++) {
-                ImagePuzzleButton arrow = new ImagePuzzleButton(arrowTexture,2);
+                ImagePuzzleButton arrow = new ImagePuzzleButton((i % 2 == 0) ? arrowTexture : new Texture(Gdx.files.internal("Levels/Level_1/updownarrow.png")),2);
                 arrow.setOrigin(200,300);
                 arrow.setSize(arrowTexture.getWidth(),arrowTexture.getHeight());
                 arrow.setPosition(300,300);

@@ -1,6 +1,7 @@
 package com.mygdx.game.Menus.subMenus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.ImagePuzzleButton;
 import com.mygdx.game.Game_Elements.SaveFile;
 import com.mygdx.game.Levels.LevelOne.levelOneStackManager;
 import com.mygdx.game.Multiplayer.MPHandle;
@@ -35,6 +37,7 @@ public class HostGame implements Screen {
     private final Music music;
     private final Stage stage;
     private final Image background;
+    ImagePuzzleButton confirmationButton;
     private final Array<Button> otherButtons;
     private ButtonGroup<saveSelection> buttonGroup;
 
@@ -102,13 +105,24 @@ public class HostGame implements Screen {
         hostGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new transitionScreen(current, new transitions() {
+                confirmationButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/WarningScreen.png")),2);
+                confirmationButton.setPosition(700,500);
+                confirmationButton.setSize(800,240);
+                confirmationButton.debug();
+                confirmationButton.addListener(new ClickListener()  {
                     @Override
-                    public Screen load() throws IOException {
-                            return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
+                    public void clicked(InputEvent event, float x, float y) {
+                        game.setScreen(new transitionScreen(current, new transitions() {
 
+                            @Override
+                            public Screen load() throws IOException {
+                                return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
+
+                            }
+                        }, game));
                     }
-                }, game));
+                });
+                stage.addActor(confirmationButton);
             }
         });
 
@@ -224,7 +238,9 @@ public class HostGame implements Screen {
     @Override
     public void render(float delta) {
 
-
+        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+            stage.getActors().removeValue(confirmationButton,true);
+        }
         stage.act(delta);
 
         ScreenUtils.clear(Color.WHITE);

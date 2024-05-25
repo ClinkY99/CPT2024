@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
-import sun.rmi.transport.DGCImpl_Skel;
 
 import java.awt.*;
 import java.util.zip.DeflaterInputStream;
@@ -89,7 +88,7 @@ public class RotationPuzzle extends ImagePuzzleButton {
 
 
             for (int i = 0; i < diskButtons.size;i++) {
-                diskButtons.get(i).setPosition(500,500);
+                diskButtons.get(i).setPosition((float) Gdx.graphics.getWidth()/2 - diskButtons.get(0).getWidth()/2,(float) Gdx.graphics.getHeight()/2 - diskButtons.get(0).getHeight()/2  + 50);
                 if (i != 0) {
                     diskButtons.get(i).moveBy(diskButtons.get(0).getWidth()/2 -diskButtons.get(i).getWidth()/2,diskButtons.get(0).getHeight()/2 - diskButtons.get(i).getHeight()/2);
                 }
