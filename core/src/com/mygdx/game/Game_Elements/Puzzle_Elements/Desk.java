@@ -62,9 +62,9 @@ public class Desk extends ImagePuzzleButton {
 
 
 
-            mazePuzzle = new InvisibleMazePuzzle(folderTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
+            mazePuzzle = new InvisibleMazePuzzle(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/Lore Papers.png"),new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
             mazePuzzle.setSize(folderTexture.getWidth(),folderTexture.getHeight());
-            mazePuzzle.setPosition(800,350);
+            mazePuzzle.setPosition(1000,350);
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
