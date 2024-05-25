@@ -20,9 +20,9 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 import com.ray3k.stripe.FreeTypeSkin;
-import sun.font.ScriptRun;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import java.util.*;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
@@ -78,7 +78,7 @@ public class BookShelf extends ImagePuzzleButton {
         table.setWidth(200-28);
 
         while(booksWidth < table.getWidth()){
-            Image image = new Image(tex.getRegions().get(random.nextInt(0,8)));
+            Image image = new Image(tex.getRegions().get(7));
             image.setScale(.5f);
             table.add(image).pad(1);
             table.debug();

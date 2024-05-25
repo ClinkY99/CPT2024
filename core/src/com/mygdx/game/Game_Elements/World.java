@@ -35,7 +35,7 @@ Stage stage;
         super(new FitViewport(1920,1080));
         this.stage = stage;
         map(path, level);
-        String playerPath = "Images/Players/";
+        String playerPath = "assets/Images/Players/";
         int[] spawn = new int[]{(int) ((int) rectangleHashMap.get("Spawn").get(0).getX() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2), (int) ((int) rectangleHashMap.get("Spawn").get(0).getY() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2)};
         player1 = new Player (playerPath, "Player1", spawn);
 

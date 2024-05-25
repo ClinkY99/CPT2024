@@ -1,0 +1,27 @@
+
+PuzzleElements.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+BookShelfFront
+  rotate: false
+  xy: 1, 303
+  size: 200, 300
+  orig: 200, 300
+  offset: 0, 0
+  index: -1
+BookShelfInteractive
+  rotate: false
+  xy: 1, 1
+  size: 200, 300
+  orig: 200, 300
+  offset: 0, 0
+  index: -1
+bookshelveInteractiveHover
+  rotate: false
+  xy: 203, 303
+  size: 200, 300
+  orig: 200, 300
+  offset: 0, 0
+  index: -1

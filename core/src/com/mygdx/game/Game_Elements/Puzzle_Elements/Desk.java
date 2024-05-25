@@ -47,14 +47,15 @@ public class Desk extends ImagePuzzleButton {
         Stage stage;
         int state = 0;
         ScreenStack stack;
-        public DragDropScreen dropScreen;
+         DragDropScreen dropScreen;
         InvisibleMazePuzzle mazePuzzle;
+        public ImagePuzzleButton screenBlocker;
 
         public DeskScreen(Array<Texture> tiles,ScreenStack stack) {
             this.stack = stack;
             stage = new Stage(new FitViewport(1920, 1080));
             Texture screenBlockerTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/DeskScreen.png"));
-            ImagePuzzleButton screenBlocker = new ImagePuzzleButton(screenBlockerTexture, 0);
+            screenBlocker = new ImagePuzzleButton(screenBlockerTexture, 0);
             screenBlocker.setPosition(-10, 0);
             screenBlocker.setSize(1928, 1080);
             Texture folderTexture = new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/File.png");
@@ -63,10 +64,10 @@ public class Desk extends ImagePuzzleButton {
             folderButton.setPosition(500,350);
 
 
-
+/*
             mazePuzzle = new InvisibleMazePuzzle(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/Lore Papers.png"),new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
             mazePuzzle.setSize(folderTexture.getWidth(),folderTexture.getHeight());
-            mazePuzzle.setPosition(1000,350);
+            mazePuzzle.setPosition(1000,350); */
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -79,7 +80,7 @@ public class Desk extends ImagePuzzleButton {
             });
             stage.addActor(screenBlocker);
 
-            stage.addActor(mazePuzzle);
+            //stage.addActor(mazePuzzle);
 
 
             //folderButton.debug();
@@ -153,6 +154,11 @@ public class Desk extends ImagePuzzleButton {
         }
     }
 
+    public void switchImage(Texture tex) {
+        deskScreen.screenBlocker.updateTexture(tex);
+        switchImage = true;
+    }
+
     class DragDropScreen implements stackableScreen {
         Stage stage;
         ImagePuzzleButton screenBlocker;
@@ -190,7 +196,9 @@ public class Desk extends ImagePuzzleButton {
 
         @Override
         public void render(float delta, boolean top) {
-            isComplete = deskScreen.mazePuzzle.isWon;
+             if (deskScreen.mazePuzzle != null) {
+                 isComplete = deskScreen.mazePuzzle.isWon;
+             }
             if (top) {
                 stage.act(delta);
             }
