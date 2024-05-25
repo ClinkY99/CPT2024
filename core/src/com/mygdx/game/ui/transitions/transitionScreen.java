@@ -58,7 +58,7 @@ public class transitionScreen implements Screen {
 
         if(!fadeOut.isFinished()) {
             fadeOut.render(delta);
-        } else if (next != null) {
+        } else if (next != null && delta < 1) {
             fadeIn.render(delta);
             if (fadeIn.isFinished()) {
                 game.setScreen(next);

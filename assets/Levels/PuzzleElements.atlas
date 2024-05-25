@@ -6,21 +6,147 @@ filter: Linear, Linear
 repeat: none
 BookShelfFront
   rotate: false
-  xy: 1, 303
+  xy: 1, 498
   size: 200, 300
   orig: 200, 300
   offset: 0, 0
   index: -1
 BookShelfInteractive
   rotate: false
-  xy: 1, 1
+  xy: 1, 196
   size: 200, 300
   orig: 200, 300
   offset: 0, 0
   index: -1
-bookshelveInteractiveHover
+Key1_Down
+  rotate: false
+  xy: 1, 131
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key1_Up
+  rotate: false
+  xy: 203, 433
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key2_Down
+  rotate: false
+  xy: 405, 735
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key2_Up
+  rotate: false
+  xy: 1, 66
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key3_Down
+  rotate: false
+  xy: 66, 131
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key3_Up
+  rotate: false
+  xy: 203, 368
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key4_Down
+  rotate: false
+  xy: 268, 433
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key4_Up
+  rotate: false
+  xy: 405, 670
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key5_Down
+  rotate: false
+  xy: 470, 735
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key5_Up
+  rotate: false
+  xy: 1, 1
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key6_Down
+  rotate: false
+  xy: 66, 66
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key6_Up
+  rotate: false
+  xy: 131, 131
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key7_Down
   rotate: false
   xy: 203, 303
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key7_Up
+  rotate: false
+  xy: 268, 368
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key8_Down
+  rotate: false
+  xy: 333, 433
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key8_Up
+  rotate: false
+  xy: 405, 605
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key9_Down
+  rotate: false
+  xy: 470, 670
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+Key9_Up
+  rotate: false
+  xy: 535, 735
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+bookshelveInteractiveHover
+  rotate: false
+  xy: 203, 498
   size: 200, 300
   orig: 200, 300
   offset: 0, 0
