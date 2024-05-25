@@ -74,17 +74,17 @@ public class Desk extends ImagePuzzleButton {
             folderButton.setPosition(500,350);
 
 
-            mazePuzzle = new InvisibleMazePuzzle(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/Lore Papers.png"),new Texture(Gdx.files.internal("assets/Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/MazePlayer.png")),new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/Arrow.png")),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{9,9});
+            mazePuzzle = new InvisibleMazePuzzle(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/Lore Papers.png"),new Texture(Gdx.files.internal("assets/Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/MazePlayer.png")),new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/Arrow.png")),stack,new int[][]{{5,0},{7,0},{8,0},{2,1},{6,1},{8,1},{0,2},{2,2},{3,2},{4,2},{0,3},{2,3},{4,3},{6,3},{8,3},{4,4},{5,4},{6,4},{7,4},{8,4},{1,5},{2,5},{3,5},{4,5},{8,5},{2,6},{6,6},{9,6},{0,7},{2,7},{4,7},{6,7},{7,7},{9,7},{2,8},{4,8},{8,8},{9,8},{0,9},{5,9},{6,9}},new int[][]{{1,2}}, new int[]{9,9});
             mazePuzzle.setPosition(20000,20000);
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    stack.push(dropScreen);
+                    //stack.push(dropScreen);
+                    switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
                 }
             });
             stage.addActor(screenBlocker);
 
-            //switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
 
 
             stage.addActor(folderButton);

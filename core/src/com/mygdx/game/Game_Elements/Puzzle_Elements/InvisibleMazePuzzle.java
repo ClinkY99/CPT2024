@@ -186,12 +186,13 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
             stage.draw();
         }
         public boolean isAllowed() {
-            for (int i = 0; i < allowedCoordinates.length; i++) {
+            return false;
+/*            for (int i = 0; i < allowedCoordinates.length; i++) {
                 if (lastPosition[0] == allowedCoordinates[i][0] && lastPosition[1] == allowedCoordinates[i][1]) {
                     return true;
                 }
             }
-            return false;
+            return false;*/
         }
 
 
