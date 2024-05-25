@@ -19,6 +19,8 @@ import java.awt.print.Book;
 public class Desk extends ImagePuzzleButton {
     DeskScreen deskScreen;
 
+    boolean isComplete = false;
+
     boolean switchImage = false;
 
     public Desk(Texture deskTexture, ScreenStack stack, Array<Texture> tiles) {
@@ -188,9 +190,11 @@ public class Desk extends ImagePuzzleButton {
 
         @Override
         public void render(float delta, boolean top) {
+            isComplete = deskScreen.mazePuzzle.isWon;
             if (top) {
                 stage.act(delta);
             }
+
             stage.draw();
 
             if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)  && top) {
