@@ -25,7 +25,7 @@ public class Desk extends ImagePuzzleButton {
 
     public Desk(Texture deskTexture, ScreenStack stack, Array<Texture> tiles) {
         super(deskTexture, 2);
-        deskScreen = new DeskScreen(tiles,stack);
+        deskScreen = new DeskScreen(tiles,stack,this);
         TextureRegion region = new TextureRegion(deskTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
         this.addListener(new ClickListener() {
@@ -58,7 +58,10 @@ public class Desk extends ImagePuzzleButton {
 
         public boolean switchImage;
 
-        public DeskScreen(Array<Texture> tiles,ScreenStack stack) {
+        ImagePuzzleButton superButton;
+
+        public DeskScreen(Array<Texture> tiles,ScreenStack stack, ImagePuzzleButton superButton) {
+            this.superButton = superButton;
             this.stack = stack;
             stage = new Stage(new FitViewport(1920, 1080));
             Texture screenBlockerTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/DeskScreen.png"));
@@ -76,12 +79,12 @@ public class Desk extends ImagePuzzleButton {
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
-                    //stack.push(dropScreen);
+                    stack.push(dropScreen);
                 }
             });
             stage.addActor(screenBlocker);
 
+            //switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
 
 
             stage.addActor(folderButton);
@@ -156,6 +159,7 @@ public class Desk extends ImagePuzzleButton {
             folderButton.setPosition(10000,100000);
             ImagePuzzleButton mazePuzzleBase = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/Invisible Maze Button.png")),2);
             mazePuzzleBase.setPosition(730,235);
+            superButton.updateTexture(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskMazeRevealed.png")));
 
             mazePuzzleBase.addListener(new ClickListener() {
                 @Override
