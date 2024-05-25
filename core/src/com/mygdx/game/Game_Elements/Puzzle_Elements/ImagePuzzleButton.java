@@ -25,7 +25,7 @@ public class ImagePuzzleButton extends ImageButton {
         super(new FreeTypeSkin(Gdx.files.internal("Menu/Skins/RedPixelSkin.json")), "default");
         ButtonTexture = texture;
         this.scale = scale;
-
+        setSize(ButtonTexture.getWidth(), ButtonTexture.getHeight());
         isLoaded = true;
         this.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(ButtonTexture));
         this.getStyle().imageChecked = new TextureRegionDrawable(new TextureRegion(ButtonTexture));

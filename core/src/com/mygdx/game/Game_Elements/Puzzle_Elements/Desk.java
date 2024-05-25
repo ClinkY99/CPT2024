@@ -33,6 +33,10 @@ public class Desk extends ImagePuzzleButton {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("SUS");
                 stack.push(deskScreen);
+                if (deskScreen.switchImage) {
+                    stack.push(deskScreen.mazePuzzle.mazeScreen);
+                    deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+                }
 
             }
         });
@@ -50,6 +54,9 @@ public class Desk extends ImagePuzzleButton {
          DragDropScreen dropScreen;
         InvisibleMazePuzzle mazePuzzle;
         public ImagePuzzleButton screenBlocker;
+        ImagePuzzleButton folderButton;
+
+        public boolean switchImage;
 
         public DeskScreen(Array<Texture> tiles,ScreenStack stack) {
             this.stack = stack;
@@ -59,31 +66,22 @@ public class Desk extends ImagePuzzleButton {
             screenBlocker.setPosition(-10, 0);
             screenBlocker.setSize(1928, 1080);
             Texture folderTexture = new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/File.png");
-            ImagePuzzleButton folderButton = new ImagePuzzleButton(folderTexture,2);
+            folderButton = new ImagePuzzleButton(folderTexture,2);
             folderButton.setSize(folderTexture.getWidth(),folderTexture.getHeight());
             folderButton.setPosition(500,350);
 
 
-/*
-            mazePuzzle = new InvisibleMazePuzzle(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/Lore Papers.png"),new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("assets/Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
-            mazePuzzle.setSize(folderTexture.getWidth(),folderTexture.getHeight());
-            mazePuzzle.setPosition(1000,350); */
+            mazePuzzle = new InvisibleMazePuzzle(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/Lore Papers.png"),new Texture(Gdx.files.internal("assets/Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/MazePlayer.png")),new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/Arrow.png")),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{9,9});
+            mazePuzzle.setPosition(20000,20000);
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (!switchImage) {
-                        stack.push(dropScreen);
-                    } else {
-                        stack.push(mazePuzzle.mazeScreen);
-                    }
+                    switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+                    //stack.push(dropScreen);
                 }
             });
             stage.addActor(screenBlocker);
 
-            //stage.addActor(mazePuzzle);
-
-
-            //folderButton.debug();
 
 
             stage.addActor(folderButton);
@@ -152,12 +150,26 @@ public class Desk extends ImagePuzzleButton {
         public Stage getStage() {
             return this.stage;
         }
+
+        public void switchImage(Texture tex) {
+            deskScreen.screenBlocker.updateTexture(tex);
+            folderButton.setPosition(10000,100000);
+            ImagePuzzleButton mazePuzzleBase = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/Invisible Maze Button.png")),2);
+            mazePuzzleBase.setPosition(730,235);
+
+            mazePuzzleBase.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    stack.push(mazePuzzle.mazeScreen);
+                }
+            });
+            stage.addActor(mazePuzzleBase);
+            switchImage = true;
+
+        }
     }
 
-    public void switchImage(Texture tex) {
-        deskScreen.screenBlocker.updateTexture(tex);
-        switchImage = true;
-    }
+
 
     class DragDropScreen implements stackableScreen {
         Stage stage;
