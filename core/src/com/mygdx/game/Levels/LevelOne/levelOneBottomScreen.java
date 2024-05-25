@@ -39,7 +39,7 @@ public class levelOneBottomScreen implements stackableScreen {
             testShelf.setPosition(300,300);
             stage.addActor(testShelf);
 
-            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
+            levelWorld = new World("Levels/Level_1","Level_1",stage);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));

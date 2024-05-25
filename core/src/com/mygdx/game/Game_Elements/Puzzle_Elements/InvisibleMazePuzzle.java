@@ -80,7 +80,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
             actualMazePuzzleBase.setPosition(100,0);
             stage.addActor(player);
             for (int i = 0; i < 4;i++) {
-                ImagePuzzleButton arrow = new ImagePuzzleButton((i % 2 == 0) ? arrowTexture : new Texture(Gdx.files.internal("assets/Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/updownarrow.png")),2);
+                ImagePuzzleButton arrow = new ImagePuzzleButton((i % 2 == 0) ? arrowTexture : new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/updownarrow.png")),2);
                 arrow.setOrigin(200,300);
                 arrow.setSize(arrowTexture.getWidth(),arrowTexture.getHeight());
                 arrow.setPosition(1015,205);
