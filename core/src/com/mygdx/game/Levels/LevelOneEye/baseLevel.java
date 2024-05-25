@@ -1,4 +1,4 @@
-package com.mygdx.game.Levels.LevelOne;
+package com.mygdx.game.Levels.LevelOneEye;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -43,7 +43,7 @@ public abstract class baseLevel implements Screen {
         this.levelNum = levelNum;
 
         screenStack = new ScreenStack();
-        //game.pause.setStage(stage);
+        game.pause.setStage(stage);
     }
 
     @Override

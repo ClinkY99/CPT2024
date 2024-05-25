@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.*;
 import com.mygdx.game.Game_Elements.World;
+import com.mygdx.game.Levels.Screens.pauseMenu;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
@@ -29,13 +30,16 @@ public class levelOneBottomScreen implements stackableScreen {
         TileDragPuzzle testDrag;
         World levelWorld;
 
+        ScreenStack stack;
+
         public levelOneBottomScreen(ScreenStack stack) throws IOException {
+            this.stack = stack;
             stage = new Stage(new FitViewport(1920,1080));
             testShelf = new BookShelf(10,"",stack);
             testShelf.setPosition(300,300);
             stage.addActor(testShelf);
 
-            levelWorld = new World("Levels/Level_1","Level_1",stage);
+            levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
@@ -73,12 +77,6 @@ public class levelOneBottomScreen implements stackableScreen {
             stage.addActor(lockPuzzle);
             lockPuzzle.setPosition(5700,3000);
 
-            Texture mazeButtonTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Statue.png"));
-            mazePuzzle = new InvisibleMazePuzzle(mazeButtonTexture,new Texture(Gdx.files.internal("Images/idle_0.png")),new Texture("Levels/Level_1/arrow.png"),stack,new int[][]{{2,2}},new int[][]{{1,2}}, new int[]{4,4});
-            mazePuzzle.setSize(mazeButtonTexture.getWidth(),mazeButtonTexture.getHeight());
-            stage.addActor(mazePuzzle);
-            mazePuzzle.setPosition(0,800);
-
 
             Array<Texture> tiles = new Array<>();
             tiles.add(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
@@ -102,8 +100,11 @@ public class levelOneBottomScreen implements stackableScreen {
                 stage.act(delta);
             }
             stage.draw();
-            if (mazePuzzle.isWon && puzzleKeyPad.isSolved && lockPuzzle.isCompleted) {
-
+           
+            if (top) {
+                if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                    stack.push(new pauseMenu(stack));
+                }
             }
         }
 
