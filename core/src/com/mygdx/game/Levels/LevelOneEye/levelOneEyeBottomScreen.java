@@ -3,6 +3,7 @@ package com.mygdx.game.Levels.LevelOneEye;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,6 +21,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
     Stage stage;
     CPTGame game;
     ScreenStack stack;
+    Music music;
     public levelOneEyeBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
         this.stack = stack;
         this.game = game;
@@ -30,6 +32,11 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         puzzleKeyPad.setPosition(800,200);
 
         stage.addActor(puzzleKeyPad);
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("Music/Level 1/Library_2.wav"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     @Override

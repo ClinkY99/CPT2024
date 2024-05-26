@@ -116,7 +116,7 @@ public class HostGame implements Screen {
 
                             @Override
                             public Screen load() throws IOException {
-                                return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),1,1);
+                                return new levelOneStackManager(game,new MPHandle(true), new SaveFile("Sussy"),0,1);
 
                             }
                         }, game));

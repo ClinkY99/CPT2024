@@ -3,6 +3,7 @@ package com.mygdx.game.Levels.LevelOne;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,24 +25,28 @@ import java.io.IOException;
 
 public class levelOneBottomScreen implements stackableScreen {
         Stage stage;
+        Stage renderBeforePlayer;
         BookShelf testShelf;
     KeyPad puzzleKeyPad;
     RotationPuzzle lockPuzzle;
     InvisibleMazePuzzle mazePuzzle;
         TileDragPuzzle testDrag;
         World levelWorld;
-CPTGame game;
+    CPTGame game;
         ScreenStack stack;
+
+        Music music;
 
         public levelOneBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
             this.stack = stack;
             this.game = game;
             stage = new Stage(new FitViewport(1920,1080));
+            renderBeforePlayer = new Stage(new FitViewport(1920,1080));
             testShelf = new BookShelf(10,"",stack);
             testShelf.setPosition(300,300);
             stage.addActor(testShelf);
 
-            levelWorld = new World("Levels/Level_1", "player1","Level_1",stage, false);
+            levelWorld = new World("Levels/Level_1", "player1", "Level_1", stage, false, renderBeforePlayer);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
@@ -79,7 +84,7 @@ CPTGame game;
 
             ImagePuzzleButton rune = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/DimensionRune_Unactive.png")),2);
             rune.setPosition(10300 + deskTexture.getWidth()/2 - 400,3000 - 400);
-            stage.addActor(rune);
+            renderBeforePlayer.addActor(rune);
             Array<Texture> tiles = new Array<>();
             tiles.add(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
             Desk deskPuzzle = new Desk(deskTexture,stack,tiles);
@@ -102,6 +107,11 @@ CPTGame game;
             ImagePuzzleButton chair = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/chair.png")),2);
             chair.setPosition(deskPuzzle.getX() + deskTexture.getWidth()/2 - 200,deskPuzzle.getY() - 200);
             stage.addActor(chair);
+
+            music = Gdx.audio.newMusic(Gdx.files.internal("Music/Level 1/The_Library_1.wav"));
+            music.setLooping(true);
+            music.setVolume(0.5f);
+            music.play();
 
 
         }
