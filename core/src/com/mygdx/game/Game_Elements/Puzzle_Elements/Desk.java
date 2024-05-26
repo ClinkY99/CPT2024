@@ -19,7 +19,7 @@ import java.awt.print.Book;
 public class Desk extends ImagePuzzleButton {
     DeskScreen deskScreen;
 
-    boolean isComplete = false;
+    public boolean isComplete = false;
 
     boolean switchImage = false;
 
@@ -116,6 +116,9 @@ public class Desk extends ImagePuzzleButton {
             stage.draw();
 
             Gdx.input.getInputProcessor();
+            if (mazePuzzle.isWon){
+                isComplete = true;
+            }
             return;
         }
 

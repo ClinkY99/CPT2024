@@ -25,7 +25,7 @@ public class TileDragPuzzle extends ImagePuzzleButton{
     Array<DragDropGoal> goals;
     PuzzleTable goalTable;
     PuzzleTable tileTable;
-
+    public boolean isComplete = false;
     DragDropScreen dragDropPuzzle;
     float displaceNum;
     TextureRegion region;
@@ -148,6 +148,7 @@ public class TileDragPuzzle extends ImagePuzzleButton{
                 for (int i = 0; i < tilesToDrag.size;i++) {
                     tilesToDrag.get(i).image = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00" + (tilesToDrag.get(i).data+1) + "_Active.png"));
                     tilesToDrag.get(i).inPlace = true;
+                    isComplete = true;
                 }
             }
 

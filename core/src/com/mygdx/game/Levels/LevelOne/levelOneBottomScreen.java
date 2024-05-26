@@ -37,6 +37,9 @@ public class levelOneBottomScreen implements stackableScreen {
         ScreenStack stack;
 
         Music music;
+    Array<Texture> combinationLockPictures = new Array<>();
+
+    Desk deskPuzzle;
 
         public levelOneBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
             this.stack = stack;
@@ -67,15 +70,17 @@ public class levelOneBottomScreen implements stackableScreen {
             testDrag.setSize(dragTexture.getWidth(),dragTexture.getHeight());
 
             stage.addActor(testDrag);
-            Array<Texture> combinationLockPictures = new Array<>();
+
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/OuterButton.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/OuterOuterInner.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/InnerOuterButton.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/rotationPuzzleWheelExample.png")));
 
-            lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,1});
-            stage.addActor(lockPuzzle);
-            lockPuzzle.setPosition(5500,3200);
+
+
+            ImagePuzzleButton statuePlaceHolder = new ImagePuzzleButton(statueTexture,2);
+            statuePlaceHolder.setPosition(5500,3200);
+            stage.addActor(statuePlaceHolder);
 
             Texture deskTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
 
@@ -83,9 +88,10 @@ public class levelOneBottomScreen implements stackableScreen {
             ImagePuzzleButton rune = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/DimensionRune_Unactive.png")),2);
             rune.setPosition(10100 + deskTexture.getWidth()/2 - 400,3200 - 400);
             renderBeforePlayer.addActor(rune);
+
             Array<Texture> tiles = new Array<>();
             tiles.add(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
-            Desk deskPuzzle = new Desk(deskTexture,stack,tiles);
+             deskPuzzle = new Desk(deskTexture,stack,tiles);
             deskPuzzle.setSize(deskTexture.getWidth(),deskTexture.getHeight());
             deskPuzzle.setPosition(10200,2800);
             stage.addActor(deskPuzzle);
@@ -123,16 +129,24 @@ public class levelOneBottomScreen implements stackableScreen {
         public void render(float delta, boolean top) {
 
             levelWorld.run(top);
-            if(top) {
+            if (top) {
                 stage.act(delta);
             }
             stage.draw();
 
             if (top) {
                 if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-                    stack.push(new pauseMenu(stack,game));
+                    stack.push(new pauseMenu(stack, game));
                 }
             }
+            if (deskPuzzle.isComplete && testDrag.isComplete) {
+
+                lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")), combinationLockPictures, new int[][]{{0, 1, 2, 3}, {3, 4, 3, 2}}, stack, new int[]{16, 12, 8, 1});
+                stage.addActor(lockPuzzle);
+                lockPuzzle.setPosition(5500, 3200);
+            }
+
+
         }
 
         @Override
