@@ -30,7 +30,9 @@ import java.awt.*;
 
 import java.util.Random;
 
+// Class representing a BookShelf
 public class BookShelf extends ImagePuzzleButton {
+    // Variables declaration
     public PuzzleTable textHolder;
     public boolean isTextLoaded;
     Texture text;
@@ -39,34 +41,37 @@ public class BookShelf extends ImagePuzzleButton {
     bookFocused library;
     ScreenStack stack;
 
+    // Constructor with parameters
     public BookShelf(Texture shelfTexture, int scale,Texture textTexture, ScreenStack stack) {
-       super(shelfTexture, scale);
+        super(shelfTexture, scale);
         text = textTexture;
         shelf = shelfTexture;
         region = new TextureRegion(shelfTexture);
         setBounds(region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
     }
 
+    // Default constructor
     public BookShelf() {
         super(new FreeTypeSkin(Gdx.files.internal("Levels/PuzzleElements.json")), "Bookshelf");
     }
 
+    // Constructor with different parameters
     public BookShelf(int type, String imgPath, ScreenStack stack){
         super(new FreeTypeSkin(Gdx.files.internal("Levels/PuzzleElements.json")), "BookshelfInteractable");
         library = new bookFocused(new Texture(Gdx.files.internal("Images/ftb.png")),stack);
 
+        // ClickListener to handle clicks on the bookshelf
         this.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("SUS");
-                stack.push(library);
-
+                stack.push(library); // Push the bookFocused instance onto the stack
             }
         });
         this.stack = stack;
-
     }
 
+    // Method to generate a row of books
     public Table generateRow(){
         int booksWidth = 0;
         Random random = new Random();
@@ -89,28 +94,30 @@ public class BookShelf extends ImagePuzzleButton {
         return table;
     }
 
-
+    // Overriding draw method to handle drawing of the BookShelf
     @Override
     public void draw (Batch batch, float parentAlpha) {
         super.draw(batch,parentAlpha);
 //        Color color = getColor();
 //        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 //        batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-    if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-              try {
-                  stack.remove(library);
-             } catch (Exception e) {
-
+        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+            try {
+                stack.remove(library); // Attempt to remove the library from the stack
+            } catch (Exception e) {
+                // Exception handling
             }
         }
-
     }
 
+    // Inner class representing a focused book
     class bookFocused implements stackableScreen {
 
         Stage stage;
         ImagePuzzleButton screenBlocker;
         ImagePuzzleButton text;
+
+        // Constructor for bookFocused class
         public bookFocused(Texture textTexture, ScreenStack stack) {
 
             stage = new Stage(new FitViewport(1920,1080));
@@ -124,11 +131,12 @@ public class BookShelf extends ImagePuzzleButton {
             text.setPosition(400,500);
             text.setSize(300,300);
 
-
+            // Adding actors to the stage
             stage.addActor(screenBlocker);
             stage.addActor(text);
-       }
+        }
 
+        // Overriding methods from stackableScreen interface
         @Override
         public void show() {
 
@@ -140,8 +148,7 @@ public class BookShelf extends ImagePuzzleButton {
             stage.draw();
 
             if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-                stack.remove(this);
-
+                stack.remove(this); // Attempt to remove this instance from the stack
             }
         }
 

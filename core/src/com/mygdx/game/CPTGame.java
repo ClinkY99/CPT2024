@@ -18,6 +18,8 @@ public class CPTGame extends Game {
 
 	public FreeTypeFontGenerator DefaultFont;
 
+	//this is the top most class that controls all the other classes
+
 	@Override
 	public void create ()
 	{

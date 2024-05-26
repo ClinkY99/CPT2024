@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="75" height="20" tilewidth="200" tileheight="200" infinite="0" nextlayerid="7" nextobjectid="38">
- <objectgroup id="6" name="Object Layer 1">
-  <object id="3" name="Spawn" x="5600" y="3000" width="400" height="200"/>
-  <object id="10" name="Collide" x="0" y="200" width="200" height="2200"/>
-  <object id="11" name="Collide" x="200" y="200" width="1600" height="200"/>
-  <object id="12" name="Collide" x="200" y="2200" width="1400" height="200"/>
-  <object id="13" name="Collide" x="1600" y="2000" width="1600" height="200"/>
-  <object id="14" name="Collide" x="1600" y="2200" width="200" height="200"/>
-  <object id="15" name="Collide" x="3000" y="2200" width="200" height="1000"/>
-  <object id="16" name="Collide" x="3200" y="3000" width="2400" height="200"/>
-  <object id="17" name="Collide" x="5400" y="3200" width="200" height="200"/>
-  <object id="18" name="Collide" x="5600" y="3200" width="400" height="200"/>
-  <object id="19" name="Collide" x="6000" y="3000" width="200" height="400"/>
-  <object id="21" name="Collide" x="6200" y="3000" width="2400" height="200"/>
-  <object id="22" name="Collide" x="8400" y="2000" width="200" height="1000"/>
-  <object id="23" name="Collide" x="8600" y="2000" width="3000" height="200"/>
-  <object id="24" name="Collide" x="11400" y="200" width="200" height="1800"/>
-  <object id="25" name="Collide" x="9800" y="200" width="1600" height="200"/>
-  <object id="26" name="Collide" x="7000" y="600" width="1400" height="200"/>
-  <object id="27" name="Collide" x="6800" y="400" width="200" height="200"/>
-  <object id="28" name="Collide" x="6400" y="200" width="400" height="200"/>
-  <object id="29" name="Collide" x="3200" y="600" width="1400" height="200"/>
-  <object id="32" name="Collide" x="4400" y="400" width="400" height="200"/>
-  <object id="33" name="Collide" x="4800" y="200" width="400" height="200"/>
-  <object id="34" name="Collide" x="5200" y="0" width="1200" height="200"/>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="75" height="20" tilewidth="200" tileheight="200" infinite="0" nextlayerid="8" nextobjectid="68">
+ <objectgroup id="7" name="ObjectLayer">
+  <object id="31" name="Spawn" x="5404" y="2796" width="400" height="200"/>
+  <object id="32" name="Collide" x="-196" y="-4" width="200" height="2200"/>
+  <object id="33" name="Collide" x="4" y="-4" width="1600" height="200"/>
+  <object id="34" name="Collide" x="4" y="1996" width="1400" height="200"/>
+  <object id="35" name="Collide" x="1404" y="1796" width="1600" height="200"/>
+  <object id="36" name="Collide" x="1404" y="1996" width="200" height="200"/>
+  <object id="37" name="Collide" x="2804" y="1996" width="200" height="1000"/>
+  <object id="38" name="Collide" x="3004" y="2796" width="2400" height="200"/>
+  <object id="39" name="Collide" x="5204" y="2996" width="200" height="200"/>
+  <object id="40" name="Collide" x="5404" y="2996" width="400" height="200"/>
+  <object id="41" name="Collide" x="5804" y="2796" width="200" height="400"/>
+  <object id="42" name="Collide" x="6004" y="2796" width="2400" height="200"/>
+  <object id="43" name="Collide" x="8204" y="1796" width="200" height="1000"/>
+  <object id="44" name="Collide" x="8404" y="1796" width="3000" height="200"/>
+  <object id="45" name="Collide" x="10997.9" y="-7.0303" width="200" height="1800"/>
+  <object id="46" name="Collide" x="9604" y="-4" width="1600" height="200"/>
+  <object id="47" name="Collide" x="6804" y="396" width="1400" height="200"/>
+  <object id="48" name="Collide" x="6604" y="196" width="200" height="200"/>
+  <object id="49" name="Collide" x="6204" y="-4" width="400" height="200"/>
+  <object id="50" name="Collide" x="3004" y="396" width="1400" height="200"/>
+  <object id="51" name="Collide" x="4204" y="196" width="400" height="200"/>
+  <object id="52" name="Collide" x="4604" y="-4" width="400" height="200"/>
+  <object id="53" name="Collide" x="5004" y="-204" width="1200" height="200"/>
+  <object id="55" name="Collide" x="657.333" y="713.333" width="96.6667" height="75.6667"/>
+  <object id="56" name="Collide " x="409.333" y="699.333" width="175.333" height="113.333"/>
+  <object id="58" name="Collide" x="817.333" y="694" width="174.667" height="117.333"/>
+  <object id="61" name="Collide" x="10190.7" y="936" width="412.667" height="264.667"/>
+  <object id="63" name="Collide" x="10329.3" y="1193.33" width="136.667" height="212"/>
+  <object id="64" name="Collide" x="10021.3" y="516.667" width="160.667" height="86.6667"/>
+  <object id="65" name="Collide" x="10342.7" y="571.333" width="5.33333" height="5.33333"/>
+  <object id="66" name="Collide" x="10609.3" y="502" width="173.333" height="114.667"/>
+  <object id="67" name ="Collide" x="10481.3" y="763.333"/>
  </objectgroup>
 </map>

@@ -43,11 +43,8 @@ public class levelOneBottomScreen implements stackableScreen {
             this.game = game;
             stage = new Stage(new FitViewport(1920,1080));
             renderBeforePlayer = new Stage(new FitViewport(1920,1080));
-            testShelf = new BookShelf(10,"",stack);
-            testShelf.setPosition(300,300);
-            stage.addActor(testShelf);
 
-            levelWorld = new World("Levels/Level_1", "player1", "Level_1", stage, false, renderBeforePlayer);
+            levelWorld = new World("assets/Levels/Level_1", "player1","Level_1",stage, false);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
@@ -58,15 +55,15 @@ public class levelOneBottomScreen implements stackableScreen {
             ImagePuzzleButton statue1 = new ImagePuzzleButton(statueTexture,2);
 
             statue1.setSize(statueTexture.getWidth(),statueTexture.getHeight());
-            statue1.setPosition(600,3000);
+            statue1.setPosition(400,3200);
             stage.addActor(statue1);
             ImagePuzzleButton statue2 = new ImagePuzzleButton(statueTexture,2);
             statue2.setSize(statueTexture.getWidth(),statueTexture.getHeight());
-            statue2.setPosition(1000,3000);
+            statue2.setPosition(800,3200);
             stage.addActor(statue2);
             Texture dragTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Pedastle.png"));
             testDrag = new TileDragPuzzle(dragTexture,realTileArray,goalTexture,8,new int[][]{},stack);
-            testDrag.setPosition(800,3000);
+            testDrag.setPosition(600,3200);
             testDrag.setSize(dragTexture.getWidth(),dragTexture.getHeight());
 
             stage.addActor(testDrag);
@@ -78,31 +75,31 @@ public class levelOneBottomScreen implements stackableScreen {
 
             lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")),combinationLockPictures,new int[][]{{0,1,2,3},{3,4,3,2}},stack, new int[]{16,12,8,1});
             stage.addActor(lockPuzzle);
-            lockPuzzle.setPosition(5700,3000);
+            lockPuzzle.setPosition(5500,3200);
 
             Texture deskTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
 
 
             ImagePuzzleButton rune = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/DimensionRune_Unactive.png")),2);
-            rune.setPosition(10300 + deskTexture.getWidth()/2 - 400,3000 - 400);
+            rune.setPosition(10100 + deskTexture.getWidth()/2 - 400,3200 - 400);
             renderBeforePlayer.addActor(rune);
             Array<Texture> tiles = new Array<>();
             tiles.add(new Texture("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
             Desk deskPuzzle = new Desk(deskTexture,stack,tiles);
             deskPuzzle.setSize(deskTexture.getWidth(),deskTexture.getHeight());
-            deskPuzzle.setPosition(10300,3000);
+            deskPuzzle.setPosition(10200,2800);
             stage.addActor(deskPuzzle);
 
 
             ImagePuzzleButton statue3 = new ImagePuzzleButton(statueTexture,2);
-            statue3.setPosition(10800,3400);
+            statue3.setPosition(10600,3400);
             ImagePuzzleButton statue4 = new ImagePuzzleButton(statueTexture,2);
-            statue4.setPosition(10000,3400);
+            statue4.setPosition(9800,3400);
             stage.addActor(statue3);
             stage.addActor(statue4);
 
             PuzzleStatue statuePuzzle = new PuzzleStatue(stack,2);
-            statuePuzzle.setPosition(1000,3000);
+            statuePuzzle.setPosition(800,3200);
             stage.addActor(statuePuzzle);
 
             ImagePuzzleButton chair = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/chair.png")),2);

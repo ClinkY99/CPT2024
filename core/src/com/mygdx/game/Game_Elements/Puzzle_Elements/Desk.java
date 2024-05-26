@@ -79,8 +79,8 @@ public class Desk extends ImagePuzzleButton {
             folderButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    //stack.push(dropScreen);
-                    switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+                    stack.push(dropScreen);
+                    //switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
                 }
             });
             stage.addActor(screenBlocker);
