@@ -30,10 +30,16 @@ public class World extends Stage
     public float[] true_scroll;
     SpriteBatch batch;
 
+    Stage renderBeforePlayerstage;
 
 
 Stage stage;
-    public World(String path, String player, String level, Stage stage, boolean tint) throws IOException
+
+    public World(String path, String player, String level, Stage stage, boolean tint) throws IOException {
+        this(path,player,level,stage,tint,null);
+    }
+
+    public World(String path, String player, String level, Stage stage, boolean tint, Stage renderBeforePlayerStage) throws IOException
     {
         super(new FitViewport(1920,1080));
         this.stage = stage;
@@ -47,6 +53,8 @@ Stage stage;
 
         scroll = new int[]{0, 0};
         true_scroll = new float[]{0, 0};
+
+        this.renderBeforePlayerstage = renderBeforePlayerStage;
     }
 
     public void map(String path, String level, boolean tint)
@@ -77,10 +85,14 @@ Stage stage;
         //only allows player to move if on top
 
         allowMovement = top;
-        scrolling();
+
 
         if (allowMovement) {
+            scrolling();
             player1.update(Gdx.graphics.getDeltaTime(), scroll);
+        } else {
+            scroll[0] = 0;
+            scroll[1] = 0;
         }
 
         if (printOut != null) {
@@ -104,14 +116,21 @@ Stage stage;
         }
         stage.getRoot().moveBy(-scroll[0],-scroll[1]);
         draw();
-
+        if(renderBeforePlayerstage != null) {
+            renderBeforePlayerstage.getRoot().moveBy(-scroll[0],-scroll[1]);
+            renderBeforePlayerstage.act(Gdx.graphics.getDeltaTime());
+            renderBeforePlayerstage.draw();
+        }
         batch.begin();
         player1.draw(batch);
         batch.end();
 
-        player1.isCollidingX = false;
-        player1.collision_detectionx(getActors(), rectangleHashMap.get("Collide"));
-        player1.isCollidingY = false;
-        player1.collision_detectiony(getActors(), rectangleHashMap.get("Collide"));
+        if(allowMovement) {
+            player1.isCollidingX = false;
+            player1.collision_detectionx(getActors(), rectangleHashMap.get("Collide"));
+            player1.isCollidingY = false;
+            player1.collision_detectiony(getActors(), rectangleHashMap.get("Collide"));
+        }
     }
+
 }
