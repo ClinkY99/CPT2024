@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 import java.util.ArrayList;
-
+//this class creates a grid where you need to select the correct tiles that the other player has moved over or it won't work
 public class GridButtonPuzzle extends ImagePuzzleButton{
 
     public GridButtonPuzzle(ScreenStack stack, Texture buttonTexture) {
@@ -145,6 +145,7 @@ public class GridButtonPuzzle extends ImagePuzzleButton{
             if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 stack.remove(this);
             }
+
             if (checkIfWon()) {
                 System.out.println("SIGMA");
             }

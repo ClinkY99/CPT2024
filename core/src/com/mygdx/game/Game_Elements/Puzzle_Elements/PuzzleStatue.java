@@ -11,6 +11,7 @@ import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
 public class PuzzleStatue extends ImagePuzzleButton{
+    // a statue that adds a sword around it when clicked on
     public PuzzleStatue(ScreenStack stack,int degree) {
         super(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")),2);
         statueScreen statueScreenHere = new statueScreen(stack,this,degree);
