@@ -28,7 +28,7 @@ public class levelOneStackManager extends baseLevel {
 
     public levelOneStackManager(CPTGame game, MPHandle c, SaveFile s, int Character, int levelNum) throws IOException {
         super(game, c, s, Character, levelNum);
-        screenStack.push(new levelOneBottomScreen(screenStack));
+        screenStack.push(new levelOneBottomScreen(screenStack,game));
     }
 
 

@@ -59,7 +59,10 @@ public class KeyPad extends ImagePuzzleButton {
             screenBlocker.setPosition(-10,0);
             screenBlocker.setSize(1928,1080);
             stage.addActor(screenBlocker);
-
+            Texture keypadBackTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png"));
+            ImagePuzzleButton keyPadBack = new ImagePuzzleButton(keypadBackTexture,0);
+            keyPadBack.setPosition(500,400);
+            stage.addActor(keyPadBack);
             this.code = code;
 
             this.stack=stack;

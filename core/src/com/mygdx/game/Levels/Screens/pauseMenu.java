@@ -2,12 +2,15 @@ package com.mygdx.game.Levels.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.ImagePuzzleButton;
+import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
@@ -18,7 +21,7 @@ public class pauseMenu implements stackableScreen {
 ScreenStack stack;
 
     ImagePuzzleButton warning = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/quitWarningMessage.png")),2);
-    public pauseMenu(ScreenStack stack){
+    public pauseMenu(ScreenStack stack, CPTGame game){
         pauseMenu thisMenu = this;
         this.stack = stack;
         stage = new Stage(new FitViewport(1920,1080));
@@ -31,7 +34,7 @@ ScreenStack stack;
         ImagePuzzleButton pausedText = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/pausedText.png")),2);
         pausedText.setPosition(100,800);
         ImagePuzzleButton resumeText = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/resumeText.png")),2);
-        resumeText.setPosition(100,500);
+        resumeText.setPosition(100,400);
 
         warning.setPosition(Gdx.graphics.getWidth()/2 - warning.getWidth()/2,Gdx.graphics.getHeight()/2 - warning.getHeight()/2);
         resumeText.addListener(new ClickListener() {
@@ -52,12 +55,26 @@ ScreenStack stack;
                     }
                 });
                 stage.addActor(warning);
-
             }
         });
+
+        ImagePuzzleButton mainMenuText = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/mainMenuText.png")),2);
+        mainMenuText.setPosition(100,200);
+        mainMenuText.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Music MainMenuMusic;
+                 MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"));
+
+                game.setScreen(new MainMenu(game, MainMenuMusic));
+            }
+        });
+
+
             stage.addActor(pausedText);
             stage.addActor(resumeText);
             stage.addActor(quitText);
+            stage.addActor(mainMenuText);
 
         }
 

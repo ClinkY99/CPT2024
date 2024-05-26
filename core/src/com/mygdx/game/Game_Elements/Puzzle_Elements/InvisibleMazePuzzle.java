@@ -175,7 +175,7 @@ public class InvisibleMazePuzzle extends ImagePuzzleButton {
                     currentLocation = new int[]{0,0};
                 }
             }
-            player.setPosition(165+currentLocation[0]*68,75+(float)currentLocation[1]*67);
+            player.setPosition(165+currentLocation[0]*68,75+(float)currentLocation[1]*67.70F);
 
             if (currentLocation[0] == goalLocation[0] && currentLocation[1] == goalLocation[1]) {
                 isWon = true;
