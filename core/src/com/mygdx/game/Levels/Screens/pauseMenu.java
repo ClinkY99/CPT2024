@@ -2,6 +2,7 @@ package com.mygdx.game.Levels.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +14,10 @@ import com.mygdx.game.Game_Elements.Puzzle_Elements.ImagePuzzleButton;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
+import com.mygdx.game.ui.transitions.transitionScreen;
+import com.mygdx.game.ui.transitions.transitions;
+
+import java.io.IOException;
 
 public class pauseMenu implements stackableScreen {
 
@@ -22,6 +27,8 @@ ScreenStack stack;
 
     ImagePuzzleButton warning = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/quitWarningMessage.png")),2);
     public pauseMenu(ScreenStack stack, CPTGame game){
+        stack.pause();
+
         pauseMenu thisMenu = this;
         this.stack = stack;
         stage = new Stage(new FitViewport(1920,1080));
@@ -40,6 +47,7 @@ ScreenStack stack;
         resumeText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                stack.resume();
                 stack.remove(thisMenu);
             }
         });
@@ -60,13 +68,21 @@ ScreenStack stack;
 
         ImagePuzzleButton mainMenuText = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/mainMenuText.png")),2);
         mainMenuText.setPosition(100,200);
+
         mainMenuText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Music MainMenuMusic;
-                 MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"));
 
-                game.setScreen(new MainMenu(game, MainMenuMusic));
+                warning.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        Music MainMenuMusic;
+                        MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"));
+                        game.setScreen(new transitionScreen(game.getScreen(), () -> new MainMenu(game, MainMenuMusic),game));
+                    }
+                });
+                stage.addActor(warning);
+
             }
         });
 

@@ -63,12 +63,12 @@ public class levelOneEyeBottomScreen implements stackableScreen {
 
     @Override
     public void pause() {
-
+        music.pause();
     }
 
     @Override
     public void resume() {
-
+        music.play();
     }
 
     @Override

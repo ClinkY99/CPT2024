@@ -21,6 +21,7 @@ import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class levelOneBottomScreen implements stackableScreen {
@@ -144,12 +145,12 @@ public class levelOneBottomScreen implements stackableScreen {
 
         @Override
         public void pause() {
-
+            music.pause();
         }
 
         @Override
         public void resume() {
-
+            music.play();
         }
 
         @Override
