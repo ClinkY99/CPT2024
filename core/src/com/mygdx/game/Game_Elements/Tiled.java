@@ -1,6 +1,7 @@
 package com.mygdx.game.Game_Elements;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -25,13 +26,13 @@ public class Tiled
     HashMap<String, Array<Rectangle>> objectLayers;
     HashMap<String, Integer> num;
     TiledMap tiledMap;
-    public Tiled(String path, String level)
+    public Tiled(String path, String level, boolean tint)
     {
         num = new HashMap<>();
         objectLayers = new HashMap<>();
         try
         {
-            import_map(path, level);
+            import_map(path, level, tint);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +84,7 @@ public class Tiled
         return tile;
     }
 
-    public void import_map(String path, String level) throws IOException {
+    public void import_map(String path, String level, boolean tint) throws IOException {
         HashMap<String, Array<String[]>> info = read_tile_info(path, level);
         this.map = new Array<>();
         int q = 0;
@@ -107,6 +108,10 @@ public class Tiled
                             obj = getTile(Integer.parseInt(num), type, true);
                         }
                         obj.setPosition(j,(size-1)-i);
+                        if (tint)
+                        {
+                            obj.setColor(Color.BLUE);
+                        }
                         map.add(obj);
 
                     }
@@ -135,8 +140,6 @@ public class Tiled
                      objectLayers.get(object.getName()).add(rect);
                  }
                  if (object.getName().equals("Spawn")) rect_info = new Array<>();
-
-                System.out.println(objectLayers.get(object.getName()));
             }
 
         }
@@ -153,6 +156,7 @@ public class Tiled
 
         int FlippedVer = -0x80000000;
         int FlippedHor = 0x40000000;
+        int FlippedWeird = 0x20000000;
 
 
         if (tileId <= FlippedVer + num.get(type))
@@ -185,6 +189,20 @@ public class Tiled
             tileId -= FlippedHor;
             Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
             image.setSize(image.getWidth(), -image.getHeight());
+            return image;
+        }
+        else if(tileId <= -FlippedWeird + num.get(type))
+        {
+            tileId += FlippedWeird;
+            Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
+            image.setRotation(90);
+            return image;
+        }
+        else if (tileId >= FlippedWeird)
+        {
+            tileId -= FlippedWeird;
+            Object image = new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);
+            image.setSize(-image.getWidth(), -image.getHeight());
             return image;
         }
         return new Object(this.image.get(type).get(String.valueOf(tileId)),new int[]{0,0},collide);

@@ -1,6 +1,7 @@
 package com.mygdx.game.Game_Elements;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
@@ -26,29 +27,30 @@ public class World extends Stage
     public int[] scroll;
     HashMap<String, Array<Rectangle>> rectangleHashMap;
     public float[] true_scroll;
+    SpriteBatch batch;
 
 
 
 Stage stage;
-    public World(String path, String level, Stage stage) throws IOException
+    public World(String path, String level, Stage stage, boolean tint) throws IOException
     {
         super(new FitViewport(1920,1080));
         this.stage = stage;
-        map(path, level);
+        map(path, level, tint);
+        batch = (SpriteBatch) getBatch();
         String playerPath = "Images/Players/";
         int[] spawn = new int[]{(int) ((int) rectangleHashMap.get("Spawn").get(0).getX() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2), (int) ((int) rectangleHashMap.get("Spawn").get(0).getY() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2)};
-        player1 = new Player (playerPath, "Player1", spawn);
+        player1 = new Player (playerPath, "Player2", spawn);
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
 
         scroll = new int[]{0, 0};
         true_scroll = new float[]{0, 0};
-
     }
 
-    public void map(String path, String level)
+    public void map(String path, String level, boolean tint)
     {
-        Tiled map = new Tiled(path, level);
+        Tiled map = new Tiled(path, level, tint);
         for (Object tile: map.map)
         {
             addActor(tile);
@@ -75,6 +77,7 @@ Stage stage;
 
         allowMovement = top;
         scrolling();
+
         if (allowMovement) {
             player1.update(Gdx.graphics.getDeltaTime(), scroll);
         }
@@ -101,14 +104,13 @@ Stage stage;
         stage.getRoot().moveBy(-scroll[0],-scroll[1]);
         draw();
 
-        getBatch().begin();
-        player1.draw((SpriteBatch) getBatch());
-        getBatch().end();
+        batch.begin();
+        player1.draw(batch);
+        batch.end();
 
         player1.isCollidingX = false;
         player1.collision_detectionx(getActors(), rectangleHashMap.get("Collide"));
         player1.isCollidingY = false;
         player1.collision_detectiony(getActors(), rectangleHashMap.get("Collide"));
-
     }
 }

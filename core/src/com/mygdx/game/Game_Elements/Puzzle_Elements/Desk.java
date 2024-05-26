@@ -202,7 +202,6 @@ public class Desk extends ImagePuzzleButton {
             if (top) {
                 stage.act(delta);
             }
-
             stage.draw();
 
             if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)  && top) {

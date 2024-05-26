@@ -122,6 +122,10 @@ public class Player
         }
         this.size = this.animation.anim_size.get(state);
         player_rect.setSize(size[0], size[1]);
+        if (deltaTime > 1)
+        {
+            deltaTime = 0;
+        }
         move = speed * deltaTime;
     }
 
