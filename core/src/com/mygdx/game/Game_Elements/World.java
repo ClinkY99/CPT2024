@@ -25,7 +25,7 @@ public class World extends Stage
     public Player player1;
     public Boolean allowMovement = true;
     Color[] colorList;
-    public int[] scroll;
+    public float[] scroll;
     HashMap<String, Array<Rectangle>> rectangleHashMap;
     public float[] true_scroll;
     SpriteBatch batch;
@@ -51,7 +51,7 @@ Stage stage;
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};
 
-        scroll = new int[]{0, 0};
+        scroll = new float[]{0, 0};
         true_scroll = new float[]{0, 0};
 
         this.renderBeforePlayerstage = renderBeforePlayerStage;
@@ -72,7 +72,7 @@ Stage stage;
         TableScroll[0] = true_scroll[0];
         true_scroll[1] += (player1.position.y- true_scroll[1] - 465);
         TableScroll[1] = true_scroll[1];
-        scroll[0] = (int) true_scroll[0]; scroll[1] = (int) true_scroll[1];
+        scroll[0] =  true_scroll[0]; scroll[1] =  true_scroll[1];
     }
 
 

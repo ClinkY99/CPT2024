@@ -156,8 +156,8 @@ public class Player
         {
             if (player_rect.overlaps(rect))
             {
-                int left = (int) rect.getX();
-                int right = (int) (left + Math.abs(rect.getWidth()));
+                float left = rect.getX();
+                float right = (left + Math.abs(rect.getWidth()));
 
                 isCollidingX = true;
                 if (positionChange.x < 0) {
@@ -197,8 +197,8 @@ public class Player
         }
         for (Rectangle rect: rectangle) {
             if (player_rect.overlaps(rect)) {
-                int bottom = (int) rect.getY();
-                int top = (int) (bottom + Math.abs(rect.getHeight()));
+                float bottom =  rect.getY();
+                float top = (bottom + Math.abs(rect.getHeight()));
                 isCollidingY = true;
                 if (positionChange.y > 0) {
                     position.y = bottom - player_rect.getHeight();
@@ -215,7 +215,7 @@ public class Player
     {
         animation.render(state, batch, this.loop);
     }
-    public void update(float deltaTime, int[] scroll)
+    public void update(float deltaTime, float[] scroll)
     {
         move(deltaTime);
 

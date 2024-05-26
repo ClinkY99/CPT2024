@@ -32,12 +32,12 @@ public class Object extends Image {
         return object_rect;
     }
 
-    public void updatex(int scroll) {
+    public void updatex(float scroll) {
         object_rect.x -= scroll;
         setX(getWidth()>0?object_rect.x:object_rect.x+200);
     }
 
-    public void updatey(int scroll) {
+    public void updatey(float scroll) {
         object_rect.y -= scroll;
         setY(getHeight()>0?object_rect.y:object_rect.y+200);
     }
