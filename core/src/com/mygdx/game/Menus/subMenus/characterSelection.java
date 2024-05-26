@@ -318,13 +318,7 @@ public class characterSelection implements Screen {
         //if both client and server are ready load the level
 
         if(otherReady && confirmed){
-            game.setScreen(new transitionScreen(this, () -> {
-                if (characterSelected == 0){
-                    return new levelOneStackManager(game, connection, saveFile, 0, 1);
-                } else {
-                    return null;
-                }
-            }, game));
+            game.setScreen(new transitionScreen(this, () -> new levelOneStackManager(game,connection,null,characterSelected, 1), game));
 
         }
 

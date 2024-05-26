@@ -8,6 +8,7 @@ import com.mygdx.game.Game_Elements.Puzzle_Elements.BookShelf;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.KeyPad;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.TileDragPuzzle;
 import com.mygdx.game.Game_Elements.SaveFile;
+import com.mygdx.game.Levels.LevelOneEye.levelOneEyeBottomScreen;
 import com.mygdx.game.Multiplayer.MPHandle;
 
 import javax.imageio.IIOException;
@@ -28,7 +29,11 @@ public class levelOneStackManager extends baseLevel {
 
     public levelOneStackManager(CPTGame game, MPHandle c, SaveFile s, int Character, int levelNum) throws IOException {
         super(game, c, s, Character, levelNum);
-        screenStack.push(new levelOneBottomScreen(screenStack,game));
+        if(Character ==0) {
+            screenStack.push(new levelOneBottomScreen(screenStack, game));
+        } else{
+            screenStack.push(new levelOneEyeBottomScreen(screenStack, game));
+        }
     }
 
 
