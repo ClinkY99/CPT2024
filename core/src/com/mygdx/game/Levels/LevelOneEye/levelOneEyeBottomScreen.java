@@ -24,7 +24,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         this.stack = stack;
         this.game = game;
         stage = new Stage(new FitViewport(1920,1080));
-        levelWorld = new World("assets/Levels/Level_1","Level_1",stage);
+        levelWorld = new World("`Levels/Level_1_1","Level_1_1",stage, true);
 
         KeyPad puzzleKeyPad = new KeyPad(new int[]{1,2,3,4},new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png")),stack);
         puzzleKeyPad.setPosition(800,200);

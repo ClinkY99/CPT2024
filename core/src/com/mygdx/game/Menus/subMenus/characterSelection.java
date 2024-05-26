@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.SaveFile;
+import com.mygdx.game.Levels.LevelOne.levelOneStackManager;
 import com.mygdx.game.ui.transitions.transitionScreen;
 import com.mygdx.game.ui.widgets.menus.MenuButton;
 import com.mygdx.game.Multiplayer.MPHandle;
@@ -318,15 +319,11 @@ public class characterSelection implements Screen {
 
         if(otherReady && confirmed){
             game.setScreen(new transitionScreen(this, () -> {
-                /*
-                try {
-                    return new TestLevel(game, new Texture(Gdx.files.internal("Images/whiteRectangle.png")), connection);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if (characterSelected == 0){
+                    return new levelOneStackManager(game, connection, saveFile, 0, 1);
+                } else {
+                    return null;
                 }
-
-                 */
-                return null;
             }, game));
 
         }
