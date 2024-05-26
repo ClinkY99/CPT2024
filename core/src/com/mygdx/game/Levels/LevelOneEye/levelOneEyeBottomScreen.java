@@ -26,17 +26,23 @@ public class levelOneEyeBottomScreen implements stackableScreen {
     ScreenStack stack;
     KeyPad puzzleKeyPad;
     boolean hasdone = false;
+    Stage renderBeforePlayer;
     Music music;
     public levelOneEyeBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
         this.stack = stack;
         this.game = game;
         stage = new Stage(new FitViewport(1920,1080));
+        renderBeforePlayer = new Stage(new FitViewport(1920,1080));
+
         levelWorld = new World("assets/Levels/Level_1_1","player2", "Level_1_1",stage, true);
 
         puzzleKeyPad = new KeyPad(new int[]{2,5,7,3},new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png")),stack);
         puzzleKeyPad.setPosition(700,1500);
+        stage.addActor(puzzleKeyPad);
 
-
+        ImagePuzzleButton underPedastle = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/FloorPattern.png")),2);
+        underPedastle.setPosition(600,1400);
+        renderBeforePlayer.addActor(underPedastle);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Music/Level 1/Library_2.wav"));
         music.setLooping(true);

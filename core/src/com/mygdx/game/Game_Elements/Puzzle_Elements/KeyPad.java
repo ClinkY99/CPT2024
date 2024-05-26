@@ -117,7 +117,7 @@ public class KeyPad extends ImagePuzzleButton {
             button7.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    currentInputtedCode.add(1);
+                    currentInputtedCode.add(7);
                 }
             });
             ImagePuzzleButton button8 = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Keys/Key8_Down.png")),2);
