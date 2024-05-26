@@ -22,8 +22,6 @@ public class CPTGame extends Game {
 	public void create ()
 	{
 		batch = new SpriteBatch();
-		pause = new pauseMenu();
-
 
 		DefaultFont = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Menu/tempus_sans_itc.ttf"));
 		menuLevel = new SplashScreen(this);

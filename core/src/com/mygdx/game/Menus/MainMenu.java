@@ -1,5 +1,6 @@
 package com.mygdx.game.Menus;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.audio.Music;
@@ -112,7 +113,6 @@ public class MainMenu implements Screen {
         stage.getViewport().getCamera().update();
 
         stage.draw();
-
 
 
 
