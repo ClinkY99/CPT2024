@@ -55,7 +55,6 @@ public class Player
     }
 
 
-
     public void move(float deltaTime)
     {
         speed = 2000;
@@ -108,7 +107,6 @@ public class Player
             }
             i = 0;
         }
-
         if (!press)
         {
             state = "Idle/Forward";
