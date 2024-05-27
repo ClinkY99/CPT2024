@@ -34,7 +34,6 @@ public class Desk extends ImagePuzzleButton {
                 System.out.println("SUS");
                 stack.push(deskScreen);
                 if (deskScreen.switchImage) {
-                    stack.push(deskScreen.mazePuzzle.mazeScreen);
                     deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
                 }
             }
