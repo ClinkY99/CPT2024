@@ -150,5 +150,8 @@ public interface MPInterface {
         public int locx;
         public int locy;
         public int character;
+
+        public int spawnx;
+        public int spawny;
     }
 }

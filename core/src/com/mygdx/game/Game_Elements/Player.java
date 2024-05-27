@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -34,6 +35,7 @@ public class Player
 
     public Vector2 playerPosition;
 
+    boolean FirstTime;
 
 
 
@@ -55,6 +57,7 @@ public class Player
         data = 0;
 
         playerPosition = new Vector2(loc[0], loc[1]);
+        FirstTime = true;
     }
 
 
@@ -223,8 +226,12 @@ public class Player
     {
         move(deltaTime);
 
-        playerPosition.x -= position.x-885;
-        playerPosition.y -= position.y-465;
+        if(!FirstTime) {
+            playerPosition.x -= position.x - 885;
+            playerPosition.y -= position.y - 465;
+        } else{
+            FirstTime = false;
+        }
 
         position.x -= scroll[0];
         position.y -= scroll[1];

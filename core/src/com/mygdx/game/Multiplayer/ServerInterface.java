@@ -52,7 +52,9 @@ public class ServerInterface extends Server {
                 Functions.setSize(Functions.size);
                 for (int i = 0; i < Classes.size; i++) {
                     if(Classes.get(i).equals(object.getClass())){
-                        Functions.get(i).Reaction(connection, object);
+                        if(Functions.get(i)!=null) {
+                            Functions.get(i).Reaction(connection, object);
+                        }
                     }
                 }
             }

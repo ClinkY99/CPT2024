@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.GridButtonPuzzle;
@@ -41,7 +42,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         stage = new Stage(new FitViewport(1920,1080));
         renderBeforePlayer = new Stage(new FitViewport(1920,1080));
 
-        levelWorld = new World("assets/Levels/Level_1_1","player2", "Level_1_1",stage, true, renderBeforePlayer);
+        levelWorld = new World("Levels/Level_1_1","player2", "Level_1_1",stage, true, renderBeforePlayer);
 
         puzzleKeyPad = new KeyPad(new int[]{2,5,7,3},new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png")),stack);
         puzzleKeyPad.setPosition(700,1500);
@@ -87,12 +88,24 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         levelData = level;
 
         if(levelData.connection!=null){
+            Image playerBuddy2 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy2.png")));
+            playerBuddy2.setPosition(0,0);
+            playerBuddy2.setSize(150,150);
+            renderBeforePlayer.addActor(playerBuddy2);
+
             levelData.connection.bindFunction(((connection, object) ->{
                 MPInterface.levelCompletion data = (MPInterface.levelCompletion) object;
                 if(data.confirmed){
                     game.setScreen(new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
                 }
             }), MPInterface.levelCompletion.class);
+
+            levelData.connection.bindFunction((connection, object) -> {
+                MPInterface.playerLoc data = (MPInterface.playerLoc) object;
+                if(data != null){
+                    playerBuddy2.setPosition(levelWorld.spawn[0]-data.locx+data.spawnx+100, levelWorld.spawn[1]-data.locy+data.spawny+100);
+                }
+            }, MPInterface.playerLoc.class);
         }
 
     }
@@ -139,6 +152,8 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             MPInterface.playerLoc data = new MPInterface.playerLoc();
             data.locx = (int) levelWorld.player1.playerPosition.x;
             data.locy = (int) levelWorld.player1.playerPosition.y;
+            data.spawnx = levelWorld.spawn[0];
+            data.spawny = levelWorld.spawn[1];
             levelData.connection.sendTCP(data);
         }
     }

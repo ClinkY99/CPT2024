@@ -34,6 +34,7 @@ public class World extends Stage
 
 
 Stage stage;
+    public int[] spawn;
 
     public World(String path, String player, String level, Stage stage, boolean tint) throws IOException {
         this(path,player,level,stage,tint,null);
@@ -46,7 +47,7 @@ Stage stage;
         map(path, level, tint);
         batch = (SpriteBatch) getBatch();
         String playerPath = "Images/Players/";
-        int[] spawn = new int[]{(int) ((int) rectangleHashMap.get("Spawn").get(0).getX() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2), (int) ((int) rectangleHashMap.get("Spawn").get(0).getY() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2)};
+        spawn = new int[]{(int) ((int) rectangleHashMap.get("Spawn").get(0).getX() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2), (int) ((int) rectangleHashMap.get("Spawn").get(0).getY() + rectangleHashMap.get("Spawn").get(0).getWidth() / 2)};
         player1 = new Player (playerPath, player, spawn);
 
         colorList = new Color[]{Color.BLACK,Color.GREEN,Color.BLUE,Color.YELLOW,Color.ROYAL,Color.ORANGE,Color.CORAL,Color.RED};

@@ -48,13 +48,15 @@ public class levelOneBottomScreen implements stackableScreen {
 
     baseLevel levelRef;
 
+    boolean player2Completed;
+
         public levelOneBottomScreen(ScreenStack stack, CPTGame game, baseLevel level) throws IOException {
             this.stack = stack;
             this.game = game;
             stage = new Stage(new FitViewport(1920,1080));
             renderBeforePlayer = new Stage(new FitViewport(1920,1080));
 
-            levelWorld = new World("assets/Levels/Level_1", "player1","Level_1",stage, false,renderBeforePlayer);
+            levelWorld = new World("Levels/Level_1", "player1","Level_1",stage, false,renderBeforePlayer);
             Array<Texture> realTileArray = new Array<>();
             for (int i = 0; i < 8; i++) {
                 realTileArray.add(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Tile_00"+(i+1)+".png")));
@@ -126,6 +128,7 @@ public class levelOneBottomScreen implements stackableScreen {
             music.setVolume(0.5f);
             music.play();
 
+
             levelRef = level;
             if(levelRef.connection !=null) {
                 Image playerBuddy1 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy1.png")));
@@ -137,7 +140,7 @@ public class levelOneBottomScreen implements stackableScreen {
                     MPInterface.confirm data = (MPInterface.confirm) object;
                     if (data.ID != null) {
                         if (data.ID.equals("Puzzle2")) {
-                            deskPuzzle.deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+                            player2Completed = true;
                         }
                     }
                 }, MPInterface.confirm.class);
@@ -145,7 +148,7 @@ public class levelOneBottomScreen implements stackableScreen {
                 levelRef.connection.bindFunction((connection, object) -> {
                     MPInterface.playerLoc data = (MPInterface.playerLoc) object;
                     if(data != null){
-                        playerBuddy1.setPosition(-data.locx, -data.locy);
+                        playerBuddy1.setPosition(levelWorld.spawn[0]+data.locx-data.spawnx-100, levelWorld.spawn[1]+data.locy-data.spawny-100);
                     }
                 }, MPInterface.playerLoc.class);
             } else {
@@ -193,7 +196,23 @@ public class levelOneBottomScreen implements stackableScreen {
                 MPInterface.playerLoc data = new MPInterface.playerLoc();
                 data.locx = (int) levelWorld.player1.playerPosition.x;
                 data.locy = (int) levelWorld.player1.playerPosition.y;
+                data.spawnx = levelWorld.spawn[0];
+                data.spawny = levelWorld.spawn[1];
                 levelRef.connection.sendTCP(data);
+            }
+
+            if(player2Completed){
+                deskPuzzle.deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+                player2Completed = false;
+            }
+
+            if(lockPuzzle!=null){
+                if(lockPuzzle.isCompleted){
+                    if(levelRef.connection!=null){
+                        levelRef.connection.sendTCP(new MPInterface.levelCompletion("", 1,true));
+                    }
+                    game.setScreen(new CreditsScreen(game,Gdx.audio.newMusic(Gdx.files.internal("Ignorant_Lullaby.wav"))));
+                }
             }
 
         }
