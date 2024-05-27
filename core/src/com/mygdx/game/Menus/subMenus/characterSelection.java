@@ -319,7 +319,7 @@ public class characterSelection implements Screen {
 
         if(otherReady && confirmed){
             game.setScreen(new transitionScreen(this, () -> new levelOneStackManager(game,connection,null,characterSelected, 1), game));
-
+            confirmed = false;
         }
 
         //draws to screen

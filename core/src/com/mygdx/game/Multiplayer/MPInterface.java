@@ -146,4 +146,9 @@ public interface MPInterface {
         }
     }
 
+    class playerLoc{
+        public int locx;
+        public int locy;
+        public int character;
+    }
 }

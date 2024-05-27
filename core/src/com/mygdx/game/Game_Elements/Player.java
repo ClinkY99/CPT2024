@@ -32,6 +32,8 @@ public class Player
     public int[] size;
     public int data;
 
+    public Vector2 playerPosition;
+
 
 
 
@@ -52,6 +54,7 @@ public class Player
         player_rect = new Rectangle(loc[0] - size[0], loc[1] - size[1], size[0], size[1]);
         data = 0;
 
+        playerPosition = new Vector2(loc[0], loc[1]);
     }
 
 
@@ -125,6 +128,7 @@ public class Player
             deltaTime = 0;
         }
         move = speed * deltaTime;
+
     }
 
     public void collision_detectionx(Array<Actor> tiles, Array<Rectangle> rectangle)
@@ -218,6 +222,9 @@ public class Player
     public void update(float deltaTime, float[] scroll)
     {
         move(deltaTime);
+
+        playerPosition.x -= position.x-885;
+        playerPosition.y -= position.y-465;
 
         position.x -= scroll[0];
         position.y -= scroll[1];

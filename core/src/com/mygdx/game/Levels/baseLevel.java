@@ -43,7 +43,6 @@ public abstract class baseLevel implements Screen {
         this.levelNum = levelNum;
 
         screenStack = new ScreenStack();
-        game.pause.setStage(stage);
     }
 
     @Override

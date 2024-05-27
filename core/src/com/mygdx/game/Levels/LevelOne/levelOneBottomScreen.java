@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -18,6 +19,7 @@ import com.mygdx.game.Game_Elements.Puzzle_Elements.*;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.Screens.pauseMenu;
 import com.mygdx.game.Levels.baseLevel;
+import com.mygdx.game.Menus.CreditsScreen;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
@@ -123,6 +125,11 @@ public class levelOneBottomScreen implements stackableScreen {
 
             levelRef = level;
             if(levelRef.connection !=null) {
+                Image playerBuddy1 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy1.png")));
+                playerBuddy1.setPosition(0,0);
+                playerBuddy1.setSize(150,150);
+                renderBeforePlayer.addActor(playerBuddy1);
+
                 levelRef.connection.bindFunction((connection, object) -> {
                     MPInterface.confirm data = (MPInterface.confirm) object;
                     if (data.ID != null) {
@@ -131,6 +138,13 @@ public class levelOneBottomScreen implements stackableScreen {
                         }
                     }
                 }, MPInterface.confirm.class);
+
+                levelRef.connection.bindFunction((connection, object) -> {
+                    MPInterface.playerLoc data = (MPInterface.playerLoc) object;
+                    if(data != null){
+                        playerBuddy1.setPosition(-data.locx, -data.locy);
+                    }
+                }, MPInterface.playerLoc.class);
             } else {
                 deskPuzzle.deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
             }
@@ -163,7 +177,20 @@ public class levelOneBottomScreen implements stackableScreen {
                 stage.addActor(lockPuzzle);
                 lockPuzzle.setPosition(5500, 3200);
            }
-
+            if(lockPuzzle!=null){
+                if(lockPuzzle.isCompleted){
+                    if(levelRef.connection!=null){
+                        levelRef.connection.sendTCP(new MPInterface.levelCompletion("", 1,true));
+                    }
+                    game.setScreen(new CreditsScreen(null, game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
+                }
+            }
+            if(levelRef.connection!=null){
+                MPInterface.playerLoc data = new MPInterface.playerLoc();
+                data.locx = (int) levelWorld.player1.playerPosition.x;
+                data.locy = (int) levelWorld.player1.playerPosition.y;
+                levelRef.connection.sendTCP(data);
+            }
 
         }
 

@@ -33,7 +33,7 @@ public class levelOneStackManager extends baseLevel {
         if(Character ==0) {
             screenStack.push(new levelOneBottomScreen(screenStack, game, this));
         } else{
-            screenStack.push(new levelOneEyeBottomScreen(screenStack, game));
+            screenStack.push(new levelOneEyeBottomScreen(screenStack, game,this));
         }
     }
 

@@ -14,6 +14,9 @@ import com.mygdx.game.Game_Elements.Puzzle_Elements.KeyPad;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PewButton;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.Screens.pauseMenu;
+import com.mygdx.game.Levels.baseLevel;
+import com.mygdx.game.Menus.CreditsScreen;
+import com.mygdx.game.Multiplayer.MPInterface;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
@@ -28,7 +31,9 @@ public class levelOneEyeBottomScreen implements stackableScreen {
     boolean hasdone = false;
     Stage renderBeforePlayer;
     Music music;
-    public levelOneEyeBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
+
+    baseLevel levelData;
+    public levelOneEyeBottomScreen(ScreenStack stack, CPTGame game, baseLevel level) throws IOException {
         this.stack = stack;
         this.game = game;
         stage = new Stage(new FitViewport(1920,1080));
@@ -63,6 +68,18 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         PewButton pew3 = new PewButton(stack,new Texture(Gdx.files.internal("Images/circleHintExample.png")));
         pew3.setPosition(10300,1200);
         stage.addActor(pew3);
+
+        levelData = level;
+
+        if(levelData.connection!=null){
+            levelData.connection.bindFunction(((connection, object) ->{
+                MPInterface.levelCompletion data = (MPInterface.levelCompletion) object;
+                if(data.confirmed){
+                    game.setScreen(new CreditsScreen(null, game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
+                }
+            }), MPInterface.levelCompletion.class);
+        }
+
     }
 
     @Override
@@ -89,6 +106,13 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             GridButtonPuzzle gridPuzzle = new GridButtonPuzzle(stack,gridPuzzleButton);
             gridPuzzle.setPosition(700,1500);
             stage.addActor(gridPuzzle);
+        }
+
+        if(levelData.connection!=null){
+            MPInterface.playerLoc data = new MPInterface.playerLoc();
+            data.locx = (int) levelWorld.player1.playerPosition.x;
+            data.locy = (int) levelWorld.player1.playerPosition.y;
+            levelData.connection.sendTCP(data);
         }
     }
 
