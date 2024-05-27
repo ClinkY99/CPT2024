@@ -34,7 +34,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         stage = new Stage(new FitViewport(1920,1080));
         renderBeforePlayer = new Stage(new FitViewport(1920,1080));
 
-        levelWorld = new World("Levels/Level_1_1","player2", "Level_1_1",stage, true, renderBeforePlayer);
+        levelWorld = new World("assets/Levels/Level_1_1","player2", "Level_1_1",stage, true, renderBeforePlayer);
 
         puzzleKeyPad = new KeyPad(new int[]{2,5,7,3},new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png")),stack);
         puzzleKeyPad.setPosition(700,1500);
@@ -50,13 +50,20 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         music.play();
         for (int i = 0; i < 4; i++) {
             PewButton paper = new PewButton(stack,new Texture(Gdx.files.internal("Images/journalEntry" + (i+1) + ".jpg")));
-            paper.updateTexture(new Texture(Gdx.files.internal("Images/Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
-            paper.setPosition(500 + ((i%2 == 0) ? i*100:-i*100),2000);
+            Texture paperTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png"));
+            paper.updateTexture(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
+            paper.setSize(paperTexture.getWidth(),paperTexture.getHeight());
+
+            paper.setPosition(500 + ((i%2 == 0) ? i*200:i*100),2000 - i*30);
             stage.addActor(paper);
         }
         for (int i = 0; i < 1; i++) {
             PewButton paper = new PewButton(stack,new Texture(Gdx.files.internal("Images/article.png")));
-            paper.updateTexture(new Texture(Gdx.files.internal("Images/Images/Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
+            paper.updateTexture(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
+            Texture paperTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png"));
+
+            paper.setSize(paperTexture.getWidth(),paperTexture.getHeight());
+
             paper.setPosition(500 + ((i%2 == 0) ? i*100:-i*100),1600);
             stage.addActor(paper);
         }

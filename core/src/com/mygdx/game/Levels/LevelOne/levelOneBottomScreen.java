@@ -161,7 +161,7 @@ public class levelOneBottomScreen implements stackableScreen {
                     stack.push(new pauseMenu(stack, game));
                 }
             }
-            if (!hasLoaded) {
+            if (deskPuzzle.isComplete && testDrag.isComplete && !hasLoaded) {
                 lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")), combinationLockPictures, new int[][]{{5, 0, 1, 0}}, stack, new int[]{8, 4, 4, 1});
                 stage.addActor(lockPuzzle);
                 lockPuzzle.setPosition(5500, 3200);
