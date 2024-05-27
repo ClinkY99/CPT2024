@@ -90,7 +90,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             levelData.connection.bindFunction(((connection, object) ->{
                 MPInterface.levelCompletion data = (MPInterface.levelCompletion) object;
                 if(data.confirmed){
-                    game.setScreen(new CreditsScreen(null, game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
+                    game.setScreen(new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
                 }
             }), MPInterface.levelCompletion.class);
         }
@@ -121,6 +121,8 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             gridPuzzle = new GridButtonPuzzle(stack,gridPuzzleButton);
             gridPuzzle.setPosition(700,1500);
             stage.addActor(gridPuzzle);
+
+            levelData.connection.sendTCP(new MPInterface.confirm("Puzzle2", true));
         }
         if (gridPuzzle != null) {
             if (gridPuzzle.isComplete && !newHasDone) {

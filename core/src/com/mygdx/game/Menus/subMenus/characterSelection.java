@@ -325,9 +325,12 @@ public class characterSelection implements Screen {
         //draws to screen
         ScreenUtils.clear(0,0,0,1);
 
-        stage.act(delta);
 
-        stage.draw();
+        if(connection.isConnected()) {
+            stage.act(delta);
+
+            stage.draw();
+        }
     }
 
     @Override

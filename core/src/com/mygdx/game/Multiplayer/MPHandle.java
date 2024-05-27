@@ -112,4 +112,12 @@ public class MPHandle {
     public boolean isHost() {
         return isHost;
     }
+
+    public boolean isConnected(){
+        if(isHost){
+            return server.getConnections().length > 0;
+        } else{
+            return client.isConnected();
+        }
+    }
 }

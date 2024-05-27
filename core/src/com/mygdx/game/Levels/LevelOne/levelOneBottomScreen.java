@@ -186,7 +186,7 @@ public class levelOneBottomScreen implements stackableScreen {
                     if(levelRef.connection!=null){
                         levelRef.connection.sendTCP(new MPInterface.levelCompletion("", 1,true));
                     }
-                    game.setScreen(new CreditsScreen(null, game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
+                    game.setScreen(new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
                 }
             }
             if(levelRef.connection!=null){
