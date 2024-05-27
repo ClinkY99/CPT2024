@@ -61,7 +61,9 @@ ScreenStack stack;
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         baseLevel levelRef = (baseLevel) game.getScreen();
+                        if(levelRef.connection != null){
                         levelRef.connection.close();
+                        }
                         System.exit(0);
                     }
                 });
@@ -80,7 +82,9 @@ ScreenStack stack;
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         baseLevel levelRef = (baseLevel) game.getScreen();
-                        levelRef.connection.close();
+                        if(levelRef.connection != null) {
+                            levelRef.connection.close();
+                        }
                         Music MainMenuMusic;
                         MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"));
                         game.setScreen(new transitionScreen(game.getScreen(), () -> new MainMenu(game, MainMenuMusic),game));
