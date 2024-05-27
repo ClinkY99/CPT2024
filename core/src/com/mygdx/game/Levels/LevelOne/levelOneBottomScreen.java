@@ -56,6 +56,10 @@ public class levelOneBottomScreen implements stackableScreen {
             Texture goalTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Tiles/Goal.png"));
             Texture statueTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png"));
             ImagePuzzleButton statue1 = new ImagePuzzleButton(statueTexture,2);
+            
+            ImagePuzzleButton underPedastle = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/FloorPattern.png")),2);
+            underPedastle.setPosition(400,2800);
+            renderBeforePlayer.addActor(underPedastle);
 
             statue1.setSize(statueTexture.getWidth(),statueTexture.getHeight());
             statue1.setPosition(400,3200);
@@ -75,8 +79,6 @@ public class levelOneBottomScreen implements stackableScreen {
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/OuterOuterInner.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/InnerOuterButton.png")));
             combinationLockPictures.add(new Texture(Gdx.files.internal("Images/rotationPuzzleWheelExample.png")));
-
-
 
             ImagePuzzleButton statuePlaceHolder = new ImagePuzzleButton(statueTexture,2);
             statuePlaceHolder.setPosition(5500,3200);

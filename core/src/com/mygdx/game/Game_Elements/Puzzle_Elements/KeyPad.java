@@ -13,6 +13,7 @@ import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
 import java.util.ArrayList;
+// this class creates a keypad that the player must input a certain code into to continue
 
 public class KeyPad extends ImagePuzzleButton {
     public keyPadScreen padScreen;
@@ -39,11 +40,13 @@ public class KeyPad extends ImagePuzzleButton {
     public class keyPadScreen implements stackableScreen {
         Stage stage;
         ImagePuzzleButton screenBlocker;
+        ArrayList<ImagePuzzleButton> buttonsOnScreen;
         ArrayList<Integer> currentInputtedCode;
         int[] code;
         ScreenStack stack;
 
         public keyPadScreen(int[] code, ScreenStack stack) {
+            buttonsOnScreen = new ArrayList<>();
             stage = new Stage(new FitViewport(1920,1080));
             Texture screenBlockerTexture = new Texture(Gdx.files.internal("Images/screenBlocker.png"));
             screenBlocker = new ImagePuzzleButton(screenBlockerTexture,0);
@@ -62,9 +65,7 @@ public class KeyPad extends ImagePuzzleButton {
             resetCodeButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
                         currentInputtedCode.clear();
-
                 }
             });
             TextureRegion region = new TextureRegion(resetCodeButton.getTexture());
@@ -116,7 +117,7 @@ public class KeyPad extends ImagePuzzleButton {
             button7.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    currentInputtedCode.add(1);
+                    currentInputtedCode.add(7);
                 }
             });
             ImagePuzzleButton button8 = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Keys/Key8_Down.png")),2);
@@ -195,12 +196,13 @@ public class KeyPad extends ImagePuzzleButton {
             for (int i = 0; i < currentInputtedCode.size();i++) {
                         ImagePuzzleButton temp = displayCode(currentInputtedCode.get(i));
                         temp.setPosition(780 + i*135,710 + temp.getHeight());
+                        buttonsOnScreen.add(temp);
                         stage.addActor(temp);
             }
         }
 
         public ImagePuzzleButton displayCode(int a) {
-            ImagePuzzleButton tempButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Keys/Key" + (a) +"_Down.png")),2);
+           ImagePuzzleButton tempButton = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Keys/Key" + (a) +"_Down.png")),2);
            return tempButton;
         }
         public boolean checkIfCodesAreSame() {
@@ -210,6 +212,10 @@ public class KeyPad extends ImagePuzzleButton {
                 while (i < currentInputtedCode.size() && i < code.length) {
                     if (currentInputtedCode.get(i) != code[i]) {
                         currentInputtedCode.clear();
+                            for (int k = 0; k < buttonsOnScreen.size(); k++) {
+                                stage.getActors().removeValue(buttonsOnScreen.get(k), true);
+                            }
+
                         return false;
                     }
                     i++;

@@ -11,12 +11,15 @@ import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
 public class PewButton extends ImagePuzzleButton {
+    // this class creates a pew that displays an image when clicked on
+    public PewScreen pewThing;
     public PewButton(ScreenStack stack,Texture text) {
         super(new Texture(Gdx.files.internal("Images/Church_Pew.png")),2);
+        pewThing = new PewScreen(stack,text);
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stack.push(new PewScreen(stack,text));
+                stack.push(pewThing);
             }
         });
 
@@ -24,6 +27,7 @@ public class PewButton extends ImagePuzzleButton {
     class PewScreen implements stackableScreen {
         Stage stage;
         ScreenStack stack;
+        public ImagePuzzleButton textButton;
         public PewScreen(ScreenStack stack, Texture text) {
             stage = new Stage(new FitViewport(1928,1080));
             this.stack = stack;
@@ -33,7 +37,8 @@ public class PewButton extends ImagePuzzleButton {
             screenBlocker.setSize(1928,1080);
             stage.addActor(screenBlocker);
 
-            ImagePuzzleButton textButton = new ImagePuzzleButton(text,2);
+            textButton = new ImagePuzzleButton(text,2);
+            textButton.setSize(800,1000);
             textButton.setPosition(Gdx.graphics.getWidth()/2 - textButton.getWidth()/2,Gdx.graphics.getHeight()/2-textButton.getHeight()/2);
             stage.addActor(textButton);
         }

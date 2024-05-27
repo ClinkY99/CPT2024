@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.GridButtonPuzzle;
+import com.mygdx.game.Game_Elements.Puzzle_Elements.ImagePuzzleButton;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.KeyPad;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.PewButton;
 import com.mygdx.game.Game_Elements.World;
@@ -25,27 +26,35 @@ public class levelOneEyeBottomScreen implements stackableScreen {
     ScreenStack stack;
     KeyPad puzzleKeyPad;
     boolean hasdone = false;
+    Stage renderBeforePlayer;
     Music music;
     public levelOneEyeBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
         this.stack = stack;
         this.game = game;
         stage = new Stage(new FitViewport(1920,1080));
-        levelWorld = new World("Levels/Level_1_1","player2", "Level_1_1",stage, true);
+        renderBeforePlayer = new Stage(new FitViewport(1920,1080));
 
-        puzzleKeyPad = new KeyPad(new int[]{1,2,3,4},new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png")),stack);
+        levelWorld = new World("Levels/Level_1_1","player2", "Level_1_1",stage, true, renderBeforePlayer);
+
+        puzzleKeyPad = new KeyPad(new int[]{2,5,7,3},new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/Pedastle Keypad.png")),stack);
         puzzleKeyPad.setPosition(700,1500);
-
-
         stage.addActor(puzzleKeyPad);
+
+        ImagePuzzleButton underPedastle = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/FloorPattern.png")),2);
+        underPedastle.setPosition(600,1400);
+        renderBeforePlayer.addActor(underPedastle);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Music/Level 1/Library_2.wav"));
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
+        for (int i = 0; i < 4; i++) {
+            PewButton paper = new PewButton(stack,new Texture(Gdx.files.internal("Images/journalEntry" + (i+1) + ".jpg")));
+            paper.updateTexture(new Texture(Gdx.files.internal("Images/gale.jpeg")));
+            paper.setPosition(500 + ((i%2 == 0) ? i*100:-i*100),2000);
+            stage.addActor(paper);
+        }
 
-        PewButton pew1 = new PewButton(stack,new Texture(Gdx.files.internal("Images/weirdLanguageHint.png")));
-        pew1.setPosition(10300,2000);
-        stage.addActor(pew1);
 
         PewButton pew2 = new PewButton(stack,new Texture(Gdx.files.internal("Images/eyePhoto.png")));
         pew2.setPosition(10300,1600);

@@ -12,6 +12,7 @@ import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
 public class InvisibleMazePuzzle extends ImagePuzzleButton {
+    //this class creates an invisible maze that the player must navigate with help from the other player
     int[][] badCoordinates;
     int[][] mazeStorage;
     int[] currentLocation;
