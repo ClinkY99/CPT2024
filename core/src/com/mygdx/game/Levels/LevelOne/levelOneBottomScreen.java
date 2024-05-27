@@ -89,8 +89,6 @@ public class levelOneBottomScreen implements stackableScreen {
             stage.addActor(statuePlaceHolder);
 
             Texture deskTexture = new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/desk.png"));
-
-
             ImagePuzzleButton rune = new ImagePuzzleButton(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/DimensionRune_Unactive.png")),2);
             rune.setPosition(10100 + deskTexture.getWidth()/2 - 400,3200 - 400);
             renderBeforePlayer.addActor(rune);
@@ -106,7 +104,7 @@ public class levelOneBottomScreen implements stackableScreen {
             ImagePuzzleButton statue3 = new ImagePuzzleButton(statueTexture,2);
             statue3.setPosition(10600,3400);
             ImagePuzzleButton statue4 = new ImagePuzzleButton(statueTexture,2);
-            statue4.setPosition(9800,3400);
+            statue4.setPosition(10000,3400);
             stage.addActor(statue3);
             stage.addActor(statue4);
 
@@ -138,6 +136,7 @@ public class levelOneBottomScreen implements stackableScreen {
             }
 
 
+
         }
 
         @Override
@@ -160,10 +159,10 @@ public class levelOneBottomScreen implements stackableScreen {
                 }
             }
             if (deskPuzzle.isComplete && testDrag.isComplete) {
-                lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")), combinationLockPictures, new int[][]{{0, 1, 2, 3}, {3, 4, 3, 2}}, stack, new int[]{16, 12, 8, 1});
+                lockPuzzle = new RotationPuzzle(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 3/Statue.png")), combinationLockPictures, new int[][]{{5, 0, 1, 0}}, stack, new int[]{8, 4, 4, 1});
                 stage.addActor(lockPuzzle);
                 lockPuzzle.setPosition(5500, 3200);
-            }
+           }
 
 
         }
