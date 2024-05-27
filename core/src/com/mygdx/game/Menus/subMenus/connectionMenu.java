@@ -95,7 +95,7 @@ public class connectionMenu implements Screen {
         server.BindFunction((connection, object) -> {
             MPInterface.connectionDetails connectionDetails = (MPInterface.connectionDetails) object;
 
-            connection.sendTCP(new MPInterface.serverDetails(save.getName(), "Test", MPHandle.getLocalIP(), true, 0, connectionDetails.confirm));
+            connection.sendTCP(new MPInterface.serverDetails(save.getName(), " Level# ", MPHandle.getLocalIP(), true, 0, connectionDetails.confirm));
             System.out.println(MPHandle.getLocalIP());
 
             if(connectionDetails.confirm){

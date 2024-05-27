@@ -25,6 +25,8 @@ public class transitionScreen implements Screen {
     transitions.fadeOutTransitionScreen fadeOut;
     transitions.fadeInTransitionScreen fadeIn;
 
+    boolean skipFrame;
+
     public transitionScreen(Screen c, transitions load, CPTGame game){
         this(c,load,game,0.5f);
     }
@@ -58,18 +60,21 @@ public class transitionScreen implements Screen {
 
         if(!fadeOut.isFinished()) {
             fadeOut.render(delta);
+        } else if (skipFrame) {
+            skipFrame = false;
         } else if (next != null) {
             fadeIn.render(delta);
             if (fadeIn.isFinished()) {
                 game.setScreen(next);
             }
-        } else {
+        }else {
             try {
                 next = load.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             fadeIn.current = next;
+            skipFrame = true;
         }
         stage.act(delta);
         stage.draw();

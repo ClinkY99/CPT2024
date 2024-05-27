@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.ImagePuzzleButton;
+import com.mygdx.game.Levels.baseLevel;
 import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
@@ -59,6 +60,8 @@ ScreenStack stack;
                 warning.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        baseLevel levelRef = (baseLevel) game.getScreen();
+                        levelRef.connection.close();
                         System.exit(0);
                     }
                 });
@@ -76,6 +79,8 @@ ScreenStack stack;
                 warning.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        baseLevel levelRef = (baseLevel) game.getScreen();
+                        levelRef.connection.close();
                         Music MainMenuMusic;
                         MainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"));
                         game.setScreen(new transitionScreen(game.getScreen(), () -> new MainMenu(game, MainMenuMusic),game));
@@ -107,8 +112,10 @@ ScreenStack stack;
         }
         stage.draw();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && top) {
-            stage.getActors().removeValue(warning,true);
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && top) {
+            if(warning.getStage()!=null) {
+                warning.remove();
+            }
         }
 
     }

@@ -17,9 +17,11 @@ import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.Screens.pauseMenu;
 import com.mygdx.game.Levels.baseLevel;
 import com.mygdx.game.Menus.CreditsScreen;
+import com.mygdx.game.Menus.LostConnectionScreen;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
+import com.mygdx.game.ui.transitions.transitionScreen;
 
 import java.io.IOException;
 
@@ -35,10 +37,13 @@ public class levelOneEyeBottomScreen implements stackableScreen {
     Stage renderBeforePlayer;
     Music music;
 
+    boolean goToCredits;
+
     baseLevel levelData;
     public levelOneEyeBottomScreen(ScreenStack stack, CPTGame game, baseLevel level) throws IOException {
         this.stack = stack;
         this.game = game;
+        goToCredits = false;
         stage = new Stage(new FitViewport(1920,1080));
         renderBeforePlayer = new Stage(new FitViewport(1920,1080));
 
@@ -88,7 +93,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         levelData = level;
 
         if(levelData.connection!=null){
-            Image playerBuddy2 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy2.png")));
+            Image playerBuddy2 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy1.png")));
             playerBuddy2.setPosition(0,0);
             playerBuddy2.setSize(150,150);
             renderBeforePlayer.addActor(playerBuddy2);
@@ -96,14 +101,14 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             levelData.connection.bindFunction(((connection, object) ->{
                 MPInterface.levelCompletion data = (MPInterface.levelCompletion) object;
                 if(data.confirmed){
-                    game.setScreen(new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
+                    goToCredits = true;
                 }
             }), MPInterface.levelCompletion.class);
 
             levelData.connection.bindFunction((connection, object) -> {
                 MPInterface.playerLoc data = (MPInterface.playerLoc) object;
                 if(data != null){
-                    playerBuddy2.setPosition(levelWorld.spawn[0]-data.locx+data.spawnx+100, levelWorld.spawn[1]-data.locy+data.spawny+100);
+                    playerBuddy2.setPosition(levelWorld.spawn[0]+data.locx-data.spawnx-100, levelWorld.spawn[1]+data.locy-data.spawny-100);
                 }
             }, MPInterface.playerLoc.class);
         }
@@ -151,12 +156,22 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         }
 
         if(levelData.connection!=null){
+            if(!levelData.connection.isConnected()){
+                levelData.connection.close();
+                levelData.connection = null;
+                game.setScreen(new transitionScreen(levelData, ()-> new LostConnectionScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/mainMenu.wav"))),game));
+            }
             MPInterface.playerLoc data = new MPInterface.playerLoc();
             data.locx = (int) levelWorld.player1.playerPosition.x;
             data.locy = (int) levelWorld.player1.playerPosition.y;
             data.spawnx = levelWorld.spawn[0];
             data.spawny = levelWorld.spawn[1];
             levelData.connection.sendTCP(data);
+        }
+
+        if(goToCredits){
+            game.setScreen(new transitionScreen(levelData, ()->new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))),game));
+            goToCredits = false;
         }
     }
 

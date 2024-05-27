@@ -120,4 +120,12 @@ public class MPHandle {
             return client.isConnected();
         }
     }
+
+    public void close(){
+        if(isHost){
+            server.close();
+        } else{
+            client.close();
+        }
+    }
 }

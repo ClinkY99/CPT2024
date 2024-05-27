@@ -21,6 +21,7 @@ import com.mygdx.game.Menus.MainMenu;
 import com.mygdx.game.Multiplayer.ClientInterface;
 import com.mygdx.game.Multiplayer.MPHandle;
 import com.mygdx.game.Multiplayer.MPInterface;
+import com.mygdx.game.ui.transitions.transitionScreen;
 import com.mygdx.game.ui.widgets.AutoFocusScrollpane;
 import com.mygdx.game.ui.widgets.Switcher;
 import com.mygdx.game.ui.widgets.menus.*;
@@ -46,6 +47,7 @@ public class JoinGame implements Screen {
     private final ClientInterface client;
 
     private String ip;
+    boolean loading;
 
     /**
      * Initializes the Join game class and sets up all labels and buttons to be drawn to screen.
@@ -53,6 +55,7 @@ public class JoinGame implements Screen {
      * @param menuMusic music
      */
     public JoinGame(CPTGame Game, Music menuMusic){
+        loading = false;
         this.game = Game;
 
         music = menuMusic;
@@ -207,8 +210,10 @@ public class JoinGame implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
 
-        if(ip != null){
-            game.setScreen(new characterSelection(game, ip));
+        if(ip != null&&!loading){
+            game.setScreen(new transitionScreen(this, ()->new characterSelection(game, ip), game));
+            //game.setScreen(new characterSelection(game, ip));
+            loading = true;
         }
 
         if(switcher.getFocusedIndex()==1 && client.isNewServerDetailsAvailable()){

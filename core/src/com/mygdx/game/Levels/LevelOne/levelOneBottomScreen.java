@@ -20,9 +20,11 @@ import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.Screens.pauseMenu;
 import com.mygdx.game.Levels.baseLevel;
 import com.mygdx.game.Menus.CreditsScreen;
+import com.mygdx.game.Menus.LostConnectionScreen;
 import com.mygdx.game.Multiplayer.MPInterface;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
+import com.mygdx.game.ui.transitions.transitionScreen;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -131,7 +133,7 @@ public class levelOneBottomScreen implements stackableScreen {
 
             levelRef = level;
             if(levelRef.connection !=null) {
-                Image playerBuddy1 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy1.png")));
+                Image playerBuddy1 = new Image(new Texture(Gdx.files.internal("Images/Players/EyeBuddy2.png")));
                 playerBuddy1.setPosition(0,0);
                 playerBuddy1.setSize(150,150);
                 renderBeforePlayer.addActor(playerBuddy1);
@@ -173,6 +175,20 @@ public class levelOneBottomScreen implements stackableScreen {
             }
             stage.draw();
 
+            if(levelRef.connection!=null){
+                if(!levelRef.connection.isConnected()){
+                    levelRef.connection.close();
+                    levelRef.connection = null;
+                    game.setScreen(new transitionScreen(levelRef, ()-> new LostConnectionScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/mainMenu.wav"))),game));
+                }
+                MPInterface.playerLoc data = new MPInterface.playerLoc();
+                data.locx = (int) levelWorld.player1.playerPosition.x;
+                data.locy = (int) levelWorld.player1.playerPosition.y;
+                data.spawnx = levelWorld.spawn[0];
+                data.spawny = levelWorld.spawn[1];
+                levelRef.connection.sendTCP(data);
+            }
+
             if (top) {
                 if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
                     stack.push(new pauseMenu(stack, game));
@@ -192,14 +208,7 @@ public class levelOneBottomScreen implements stackableScreen {
                     game.setScreen(new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))));
                 }
             }
-            if(levelRef.connection!=null){
-                MPInterface.playerLoc data = new MPInterface.playerLoc();
-                data.locx = (int) levelWorld.player1.playerPosition.x;
-                data.locy = (int) levelWorld.player1.playerPosition.y;
-                data.spawnx = levelWorld.spawn[0];
-                data.spawny = levelWorld.spawn[1];
-                levelRef.connection.sendTCP(data);
-            }
+
 
             if(player2Completed){
                 deskPuzzle.deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
@@ -211,9 +220,12 @@ public class levelOneBottomScreen implements stackableScreen {
                     if(levelRef.connection!=null){
                         levelRef.connection.sendTCP(new MPInterface.levelCompletion("", 1,true));
                     }
-                    game.setScreen(new CreditsScreen(game,Gdx.audio.newMusic(Gdx.files.internal("Ignorant_Lullaby.wav"))));
+                    game.setScreen(new transitionScreen(levelRef, ()-> new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))),game));
+                    lockPuzzle=null;
                 }
             }
+
+
 
         }
 
