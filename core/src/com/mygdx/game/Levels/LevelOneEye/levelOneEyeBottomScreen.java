@@ -50,8 +50,14 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         music.play();
         for (int i = 0; i < 4; i++) {
             PewButton paper = new PewButton(stack,new Texture(Gdx.files.internal("Images/journalEntry" + (i+1) + ".jpg")));
-            paper.updateTexture(new Texture(Gdx.files.internal("Images/gale.jpeg")));
+            paper.updateTexture(new Texture(Gdx.files.internal("Images/Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
             paper.setPosition(500 + ((i%2 == 0) ? i*100:-i*100),2000);
+            stage.addActor(paper);
+        }
+        for (int i = 0; i < 1; i++) {
+            PewButton paper = new PewButton(stack,new Texture(Gdx.files.internal("Images/article.png")));
+            paper.updateTexture(new Texture(Gdx.files.internal("Images/Images/Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
+            paper.setPosition(500 + ((i%2 == 0) ? i*100:-i*100),1600);
             stage.addActor(paper);
         }
 
