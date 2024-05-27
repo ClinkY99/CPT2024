@@ -17,7 +17,7 @@ import com.ray3k.stripe.FreeTypeSkin;
 import java.awt.print.Book;
 
 public class Desk extends ImagePuzzleButton {
-    DeskScreen deskScreen;
+    public DeskScreen deskScreen;
 
     public boolean isComplete = false;
 
