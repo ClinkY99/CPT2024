@@ -133,10 +133,15 @@ public interface MPInterface {
      */
     class confirm{
         public boolean confirmed;
+        public String ID;
         public confirm() {
             this.confirmed = false;
         }
         public confirm(boolean confirmed) {
+            this.confirmed = confirmed;
+        }
+        public confirm(String ID, boolean confirmed) {
+            this.ID = ID;
             this.confirmed = confirmed;
         }
     }

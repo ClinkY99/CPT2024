@@ -17,6 +17,8 @@ import com.mygdx.game.CPTGame;
 import com.mygdx.game.Game_Elements.Puzzle_Elements.*;
 import com.mygdx.game.Game_Elements.World;
 import com.mygdx.game.Levels.Screens.pauseMenu;
+import com.mygdx.game.Levels.baseLevel;
+import com.mygdx.game.Multiplayer.MPInterface;
 import com.mygdx.game.ui.ScreenStack;
 import com.mygdx.game.ui.stackableScreen;
 
@@ -41,7 +43,9 @@ public class levelOneBottomScreen implements stackableScreen {
 
     Desk deskPuzzle;
 
-        public levelOneBottomScreen(ScreenStack stack, CPTGame game) throws IOException {
+    baseLevel levelRef;
+
+        public levelOneBottomScreen(ScreenStack stack, CPTGame game, baseLevel level) throws IOException {
             this.stack = stack;
             this.game = game;
             stage = new Stage(new FitViewport(1920,1080));
@@ -118,6 +122,20 @@ public class levelOneBottomScreen implements stackableScreen {
             music.setLooping(true);
             music.setVolume(0.5f);
             music.play();
+
+            levelRef = level;
+            if(levelRef.connection !=null) {
+                levelRef.connection.bindFunction((connection, object) -> {
+                    MPInterface.confirm data = (MPInterface.confirm) object;
+                    if (data.ID != null) {
+                        if (data.ID.equals("Puzzle2")) {
+                            deskPuzzle.deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+                        }
+                    }
+                }, MPInterface.confirm.class);
+            } else {
+                deskPuzzle.deskScreen.switchImage(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 2/Maze Stuff/DeskScreenMaze.png")));
+            }
 
 
         }

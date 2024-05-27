@@ -1,4 +1,4 @@
-package com.mygdx.game.Levels.LevelOneEye;
+package com.mygdx.game.Levels;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,13 +16,13 @@ import com.mygdx.game.ui.ScreenStack;
 public abstract class baseLevel implements Screen {
 
     final CPTGame game;
-    final MPHandle connection;
+    public MPHandle connection;
     final Stage stage;
     final SaveFile save;
     int Character;
     int levelNum;
 
-    final ScreenStack screenStack;
+    protected final ScreenStack screenStack;
 
     /**
      * Default constructor for the base level
