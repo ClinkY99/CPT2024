@@ -121,8 +121,9 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             gridPuzzle = new GridButtonPuzzle(stack,gridPuzzleButton);
             gridPuzzle.setPosition(700,1500);
             stage.addActor(gridPuzzle);
-
-            levelData.connection.sendTCP(new MPInterface.confirm("Puzzle2", true));
+            if(levelData.connection != null) {
+                levelData.connection.sendTCP(new MPInterface.confirm("Puzzle2", true));
+            }
         }
         if (gridPuzzle != null) {
             if (gridPuzzle.isComplete && !newHasDone) {
