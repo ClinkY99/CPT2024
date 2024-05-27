@@ -109,7 +109,9 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
                 stack.push(new pauseMenu(stack,game));
             }
-            stage.act(delta);
+            if (!newHasDone) {
+                stage.act(delta);
+            }
         }
         stage.draw();
 
