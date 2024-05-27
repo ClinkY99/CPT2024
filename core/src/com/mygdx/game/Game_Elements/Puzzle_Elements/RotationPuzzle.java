@@ -114,7 +114,7 @@ public class RotationPuzzle extends ImagePuzzleButton {
                     //nothing
                     break;
                 case 0:
-                    System.out.println("What the sigma?");
+                    isCompleted = true;
                     break;
                 case 1:
                     System.out.println("Among Us");

@@ -21,6 +21,9 @@ public class CreditsScreen implements Screen {
         this.game =  game;
         this.music = music;
 
+        music.setLooping(true);
+        music.play();
+
     }
 
     @Override
@@ -30,12 +33,13 @@ public class CreditsScreen implements Screen {
 
     @Override
     public void render(float v) {
-        game.batch.begin();
         ScreenUtils.clear(0,0,0,1);
-        game.batch.draw(credits,0,0);
+        game.batch.begin();
+        game.batch.draw(credits,0,0,1920 , 1080);
         game.batch.end();
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(new MainMenu(game,music));
+            music.stop();
+            game.setScreen(new MainMenu(game,Gdx.audio.newMusic(Gdx.files.internal("Music/Menus/mainMenu.wav"))));
         }
     }
 

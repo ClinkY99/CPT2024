@@ -220,6 +220,7 @@ public class levelOneBottomScreen implements stackableScreen {
                     if(levelRef.connection!=null){
                         levelRef.connection.sendTCP(new MPInterface.levelCompletion("", 1,true));
                     }
+                    music.stop();
                     game.setScreen(new transitionScreen(levelRef, ()-> new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))),game));
                     lockPuzzle=null;
                 }
