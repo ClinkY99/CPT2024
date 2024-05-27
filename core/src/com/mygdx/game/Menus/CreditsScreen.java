@@ -1,6 +1,8 @@
 package com.mygdx.game.Menus;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,8 +16,8 @@ public class CreditsScreen implements Screen {
     Texture credits;
     CPTGame game;
     Music music;
-    public CreditsScreen(Texture credits, CPTGame game, Music music) {
-        this.credits = credits;
+    public CreditsScreen( CPTGame game, Music music) {
+        this.credits = new Texture(Gdx.files.internal("Images/credits.png"));
         this.game =  game;
         this.music = music;
 
@@ -32,8 +34,9 @@ public class CreditsScreen implements Screen {
         ScreenUtils.clear(0,0,0,1);
         game.batch.draw(credits,0,0);
         game.batch.end();
-
-
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new MainMenu(game,music));
+        }
     }
 
     @Override
