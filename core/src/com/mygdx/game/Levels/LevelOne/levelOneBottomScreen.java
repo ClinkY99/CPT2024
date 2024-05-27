@@ -179,6 +179,7 @@ public class levelOneBottomScreen implements stackableScreen {
                 if(!levelRef.connection.isConnected()){
                     levelRef.connection.close();
                     levelRef.connection = null;
+                    music.stop();
                     game.setScreen(new transitionScreen(levelRef, ()-> new LostConnectionScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/mainMenu.wav"))),game));
                 }
                 MPInterface.playerLoc data = new MPInterface.playerLoc();

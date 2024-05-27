@@ -159,6 +159,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             if(!levelData.connection.isConnected()){
                 levelData.connection.close();
                 levelData.connection = null;
+                music.stop();
                 game.setScreen(new transitionScreen(levelData, ()-> new LostConnectionScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/mainMenu.wav"))),game));
             }
             MPInterface.playerLoc data = new MPInterface.playerLoc();
@@ -170,6 +171,7 @@ public class levelOneEyeBottomScreen implements stackableScreen {
         }
 
         if(goToCredits){
+            music.stop();
             game.setScreen(new transitionScreen(levelData, ()->new CreditsScreen(game, Gdx.audio.newMusic(Gdx.files.internal("Music/Ignorant_Lullaby.wav"))),game));
             goToCredits = false;
         }
