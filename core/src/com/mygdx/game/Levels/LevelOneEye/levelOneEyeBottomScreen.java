@@ -25,6 +25,8 @@ public class levelOneEyeBottomScreen implements stackableScreen {
     CPTGame game;
     ScreenStack stack;
     KeyPad puzzleKeyPad;
+    GridButtonPuzzle gridPuzzle;
+    boolean newHasDone = false;
     boolean hasdone = false;
     Stage renderBeforePlayer;
     Music music;
@@ -99,9 +101,18 @@ public class levelOneEyeBottomScreen implements stackableScreen {
             stage.getActors().removeValue(puzzleKeyPad,true);
             hasdone = true;
             Texture gridPuzzleButton = new Texture(Gdx.files.internal("Images/tiles/Level1/Eye/Puzzles/PedastleMaze.png"));
-            GridButtonPuzzle gridPuzzle = new GridButtonPuzzle(stack,gridPuzzleButton);
+            gridPuzzle = new GridButtonPuzzle(stack,gridPuzzleButton);
             gridPuzzle.setPosition(700,1500);
             stage.addActor(gridPuzzle);
+        }
+        if (gridPuzzle != null) {
+            if (gridPuzzle.isComplete && !newHasDone) {
+                PewButton finalSolution = new PewButton(stack, new Texture(Gdx.files.internal("Images/finalPuzzleSolution.png")));
+                finalSolution.setPosition(5500, 2000);
+                finalSolution.updateTexture(new Texture(Gdx.files.internal("Images/tiles/Level1/Puzzles/Puzzle 1/Paper.png")));
+                newHasDone = true;
+                stage.addActor(finalSolution);
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import com.mygdx.game.ui.stackableScreen;
 import java.util.ArrayList;
 //this class creates a grid where you need to select the correct tiles that the other player has moved over or it won't work
 public class GridButtonPuzzle extends ImagePuzzleButton{
+    public boolean isComplete;
 
     public GridButtonPuzzle(ScreenStack stack, Texture buttonTexture) {
         super(buttonTexture,2);
@@ -147,7 +148,7 @@ public class GridButtonPuzzle extends ImagePuzzleButton{
             }
 
             if (checkIfWon()) {
-                System.out.println("SIGMA");
+                isComplete = true;
             }
         }
         public boolean checkIfValidCoordinate(int[] coordinate) {
