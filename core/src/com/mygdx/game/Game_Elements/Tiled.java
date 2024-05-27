@@ -64,7 +64,7 @@ public class Tiled
     }
 
     public HashMap<String, Texture> woodcutting(String path, String type) throws FileNotFoundException {
-        Scanner reader = new Scanner (new File ("assets/" + path + "/tile"));
+        Scanner reader = new Scanner (new File ( path + "/tile"));
         HashMap<String, Texture> tile = new HashMap<>();
         int i = 0;
         while (reader.hasNext())
