@@ -1,6 +1,6 @@
 ## In Pursuit Of Ignorance
 
-Hello And thank you for looking at our small game demo "In Pursuit Of Ignorance", This was created for the purpose of learning among the 4 members of our project. This project was also submitted for the Basilian STEM Awards, and won first place in the contest.
+Hello and thank you for looking at our small game demo "In Pursuit Of Ignorance", This was created for the purpose of learning among the 4 members of our project. This project was also submitted for the Basilian STEM Awards, and won first place in the contest.
 
 ### How To Play
 
