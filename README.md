@@ -22,3 +22,12 @@ If at any point, one player loses connection both games will crash
 
 
 ## Good luck and enjoy playing In Pursuit Of Ignorance
+
+## Spoiler Warning
+_Do Not Read if you Intend to play the game properly, this will spoil all of the puzzles on the human side of the veil_
+
+This file contains a walkthrough of the game designed to help you beat the game in single player (PLEASE NOTE: In single player game mode, many of the important features that require multiplayer will not function, meaning 1 of the puzzles will be skipped)
+- [In Pursuit Of Ignorance Walkthrough.docx](https://github.com/user-attachments/files/17594004/In.Pursuit.Of.Ignorance.Walkthrough.docx)
+
+
+
